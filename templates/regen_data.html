@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module regen_data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>regen_data</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Cqfrog%5Cml_beta%5Cgituploaded%5Ccomparator%5Cnn_based%5Cregen_data.py">f:\qfrog\ml_beta\gituploaded\comparator\nn_based\regen_data.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-Add_Data"><strong>Add_Data</strong></a>(filename, from_web=False)</dt><dd><tt><a href="#-Add_Data">Add_Data</a>()&nbsp;takes&nbsp;string/dataframe(filename)&nbsp;and&nbsp;bool(from_web).<br>
+Function&nbsp;adds&nbsp;new&nbsp;data&nbsp;to&nbsp;old&nbsp;data&nbsp;for&nbsp;training&nbsp;purposes.<br>
+It&nbsp;appends&nbsp;new&nbsp;files&nbsp;with&nbsp;appropriate&nbsp;columns&nbsp;to&nbsp;./datasets/train_data_prep.csv.<br>
+Returns&nbsp;nothing</tt></dd></dl>
+ <dl><dt><a name="-Partial_Regen_Data"><strong>Partial_Regen_Data</strong></a>(old_hub_code, new_hub_code, df)</dt><dd><tt><a href="#-Partial_Regen_Data">Partial_Regen_Data</a>()&nbsp;is&nbsp;a&nbsp;utility&nbsp;function&nbsp;which&nbsp;takes&nbsp;string(old_hub_code),string(new_hub_code),dataframe(df)&nbsp;as&nbsp;input/parameter.<br>
+Function&nbsp;changes&nbsp;and&nbsp;regenerate&nbsp;data&nbsp;for&nbsp;only&nbsp;old_hub_code&nbsp;and&nbsp;make&nbsp;changes&nbsp;for&nbsp;address&nbsp;which&nbsp;qualify&nbsp;nearest&nbsp;to&nbsp;new_hub_code.<br>
+This&nbsp;function&nbsp;returns&nbsp;a&nbsp;dataframe&nbsp;after&nbsp;making&nbsp;data&nbsp;changes&nbsp;for&nbsp;new&nbsp;hub&nbsp;code.</tt></dd></dl>
+ <dl><dt><a name="-Regen_Data"><strong>Regen_Data</strong></a>(df=None, default=True)</dt><dd><tt><a href="#-Regen_Data">Regen_Data</a>()&nbsp;takes&nbsp;input/parameters&nbsp;dataframe(df)&nbsp;and&nbsp;bool(default).<br>
+If&nbsp;default&nbsp;is&nbsp;true&nbsp;then&nbsp;old&nbsp;data&nbsp;is&nbsp;regenerated&nbsp;for&nbsp;new&nbsp;hubs&nbsp;by&nbsp;checking&nbsp;which&nbsp;one&nbsp;is&nbsp;closest&nbsp;hub&nbsp;for&nbsp;given&nbsp;address.<br>
+This&nbsp;function&nbsp;changes&nbsp;old&nbsp;data&nbsp;for&nbsp;new&nbsp;hubs&nbsp;if&nbsp;introduced.<br>
+Returns&nbsp;nothing.</tt></dd></dl>
+ <dl><dt><a name="-addr_to_breaked_addr"><strong>addr_to_breaked_addr</strong></a>(df)</dt><dd><tt><a href="#-addr_to_breaked_addr">addr_to_breaked_addr</a>()&nbsp;is&nbsp;a&nbsp;utility&nbsp;function&nbsp;which&nbsp;takes&nbsp;dataframe(df)&nbsp;as&nbsp;input/parameter.<br>
+This&nbsp;df&nbsp;must&nbsp;contain&nbsp;addr&nbsp;column&nbsp;in&nbsp;it.<br>
+Returns&nbsp;a&nbsp;dataframe&nbsp;with&nbsp;column&nbsp;breaked_addr&nbsp;which&nbsp;contain&nbsp;uniform&nbsp;addresses.</tt></dd></dl>
+</td></tr></table>
+</body></html>

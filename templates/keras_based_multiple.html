@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module keras_based_multiple</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>keras_based_multiple</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Cqfrog%5Cml_beta%5Cgituploaded%5Ccomparator%5Cnn_based%5Ckeras_based_multiple.py">f:\qfrog\ml_beta\gituploaded\comparator\nn_based\keras_based_multiple.py</a></font></td></tr></table>
+    <p><tt>#dependcies</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="get_add_vec.html">get_add_vec</a><br>
+<a href="inspect.html">inspect</a><br>
+<a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+<a href="os.html">os</a><br>
+<a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="pickle.html">pickle</a><br>
+<a href="preprocess_add.html">preprocess_add</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="regen_data.html">regen_data</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-add_hub"><strong>add_hub</strong></a>(df=None, new_hub_code=None, from_web=False)</dt><dd><tt><a href="#-add_hub">add_hub</a>()&nbsp;function&nbsp;takes&nbsp;dataframe(df),string(new_hub_code),bool(from_web).<br>
+Function&nbsp;add&nbsp;new&nbsp;hub&nbsp;and&nbsp;add&nbsp;its&nbsp;model.<br>
+Returns&nbsp;nothing.</tt></dd></dl>
+ <dl><dt><a name="-continous_learn_model"><strong>continous_learn_model</strong></a>(address=None, from_web=False)</dt><dd><tt><a href="#-continous_learn_model">continous_learn_model</a>()&nbsp;function&nbsp;takes&nbsp;dataframe(address),bool(from_web).<br>
+Function&nbsp;provides&nbsp;continous&nbsp;learning&nbsp;for&nbsp;learning&nbsp;for&nbsp;pre&nbsp;trained&nbsp;models&nbsp;without&nbsp;retraining&nbsp;it&nbsp;all.<br>
+Returns&nbsp;nothing.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;error&nbsp;might&nbsp;cause&nbsp;if&nbsp;models&nbsp;deosnt&nbsp;pre&nbsp;exist.</tt></dd></dl>
+ <dl><dt><a name="-correct_hub"><strong>correct_hub</strong></a>(predictions)</dt><dd><tt><a href="#-correct_hub">correct_hub</a>()&nbsp;function&nbsp;takes&nbsp;prediction&nbsp;of&nbsp;hubs&nbsp;as&nbsp;input/parameter.<br>
+Returns&nbsp;the&nbsp;index&nbsp;of&nbsp;hub&nbsp;with&nbsp;highest&nbsp;claim.</tt></dd></dl>
+ <dl><dt><a name="-delete_hub"><strong>delete_hub</strong></a>(delete_hub_code=None, merge_hub_code=None, from_web=False)</dt><dd><tt><a href="#-delete_hub">delete_hub</a>()&nbsp;function&nbsp;takes&nbsp;string(delete_hub_code),string(merge_hub_code),bool(from_web).<br>
+This&nbsp;function&nbsp;dependent&nbsp;on&nbsp;partial_trian_model()<br>
+Function&nbsp;deletes&nbsp;hub&nbsp;and&nbsp;merge&nbsp;data&nbsp;with&nbsp;someother&nbsp;near&nbsp;hub&nbsp;without&nbsp;causing&nbsp;any&nbsp;changes&nbsp;to&nbsp;other&nbsp;models.<br>
+Returns&nbsp;nothing</tt></dd></dl>
+ <dl><dt><a name="-get_hub_list"><strong>get_hub_list</strong></a>()</dt><dd><tt>get_hub()&nbsp;is&nbsp;a&nbsp;utility&nbsp;function&nbsp;which&nbsp;returns&nbsp;list&nbsp;of&nbsp;active&nbsp;hubs&nbsp;from&nbsp;database.<br>
+This&nbsp;function&nbsp;takes&nbsp;no&nbsp;input/parameter&nbsp;and&nbsp;returns&nbsp;a&nbsp;list&nbsp;of&nbsp;hubs.</tt></dd></dl>
+ <dl><dt><a name="-max_finder"><strong>max_finder</strong></a>(l)</dt><dd><tt><a href="#-max_finder">max_finder</a>()&nbsp;is&nbsp;a&nbsp;utility&nbsp;function&nbsp;for&nbsp;returning&nbsp;index&nbsp;of&nbsp;maximum&nbsp;in&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-num_max_gen"><strong>num_max_gen</strong></a>(l)</dt></dl>
+ <dl><dt><a name="-partial_train_model"><strong>partial_train_model</strong></a>(df, old_hub_code, new_hub_code, delete=False)</dt><dd><tt>partial_train_data()&nbsp;takes&nbsp;dataframe(df),string(old_hub_code),string(new_hub_code),bool(delete).<br>
+Function&nbsp;divide&nbsp;data&nbsp;and&nbsp;relabel&nbsp;it&nbsp;and&nbsp;then&nbsp;train&nbsp;it.<br>
+Returns&nbsp;nothing.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;Make&nbsp;sure&nbsp;df&nbsp;is&nbsp;not&nbsp;empty&nbsp;or&nbsp;contains&nbsp;NA&nbsp;and&nbsp;models&nbsp;pre&nbsp;exsist</tt></dd></dl>
+ <dl><dt><a name="-predict_data"><strong>predict_data</strong></a>(address=None, is_block=False, is_address=False)</dt><dd><tt><a href="#-predict_data">predict_data</a>()&nbsp;takes&nbsp;string/dataframe(address),bool(is_block),bool(is_address).<br>
+Function&nbsp;for&nbsp;getting&nbsp;prediction&nbsp;for&nbsp;data.<br>
+Returns&nbsp;a&nbsp;dict({'score':scores,'max_score':max&nbsp;score,'d_hub':hub&nbsp;code}).<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;Make&nbsp;sure&nbsp;dataframe&nbsp;input&nbsp;must&nbsp;be&nbsp;free&nbsp;from&nbsp;None/NA.</tt></dd></dl>
+ <dl><dt><a name="-split_hub"><strong>split_hub</strong></a>(old_hub_code=None, new_hub_code=None, from_web=False)</dt><dd><tt><a href="#-split_hub">split_hub</a>()&nbsp;function&nbsp;takes&nbsp;string(old_hub_code),string(new_hub_code),bool(from_web).<br>
+This&nbsp;function&nbsp;split&nbsp;a&nbsp;single&nbsp;hub&nbsp;into&nbsp;two.<br>
+It&nbsp;is&nbsp;<a href="#-partial_train_model">partial_train_model</a>()&nbsp;dependent.<br>
+Returns&nbsp;nothing.</tt></dd></dl>
+ <dl><dt><a name="-test_acc_module"><strong>test_acc_module</strong></a>()</dt><dd><tt>test&nbsp;function&nbsp;for&nbsp;internal&nbsp;testing</tt></dd></dl>
+ <dl><dt><a name="-train_data"><strong>train_data</strong></a>(new_hub_name=None, add_hub=False)</dt><dd><tt><a href="#-train_data">train_data</a>()&nbsp;function&nbsp;takes&nbsp;string(new_hub_name)&nbsp;and&nbsp;bool(add_hub)&nbsp;as&nbsp;input/parameter.<br>
+regen_data&nbsp;and&nbsp;preprocess_addr&nbsp;is&nbsp;used&nbsp;for&nbsp;train_data&nbsp;operation.<br>
+All&nbsp;saved&nbsp;data&nbsp;is&nbsp;regenerated&nbsp;with&nbsp;hub&nbsp;data&nbsp;updated&nbsp;from&nbsp;hubs.csv.<br>
+Training&nbsp;of&nbsp;5&nbsp;layered&nbsp;Neural&nbsp;Net&nbsp;takes&nbsp;place&nbsp;in&nbsp;this&nbsp;function.<br>
+Returns&nbsp;nothing.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:<br>
+*&nbsp;Make&nbsp;folder&nbsp;ready&nbsp;for&nbsp;saving&nbsp;NN&nbsp;models.<br>
+*&nbsp;Dataset&nbsp;with&nbsp;appropriate&nbsp;file&nbsp;must&nbsp;be&nbsp;ready&nbsp;firt&nbsp;for&nbsp;training.<br>
+*&nbsp;dir&nbsp;to&nbsp;be&nbsp;made&nbsp;for&nbsp;addr2vec</tt></dd></dl>
+</td></tr></table>
+</body></html>

@@ -1,0 +1,1588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module gensim.models.word2vec</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="gensim.html"><font color="#ffffff">gensim</font></a>.<a href="gensim.models.html"><font color="#ffffff">models</font></a>.word2vec</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cspidern3mo%5Cappdata%5Clocal%5Cprograms%5Cpython%5Cpython36%5Clib%5Csite-packages%5Cgensim%5Cmodels%5Cword2vec.py">c:\users\spidern3mo\appdata\local\programs\python\python36\lib\site-packages\gensim\models\word2vec.py</a></font></td></tr></table>
+    <p><tt>This&nbsp;module&nbsp;implements&nbsp;the&nbsp;word2vec&nbsp;family&nbsp;of&nbsp;algorithms,&nbsp;using&nbsp;highly&nbsp;optimized&nbsp;C&nbsp;routines,<br>
+data&nbsp;streaming&nbsp;and&nbsp;Pythonic&nbsp;interfaces.<br>
+&nbsp;<br>
+The&nbsp;word2vec&nbsp;algorithms&nbsp;include&nbsp;skip-gram&nbsp;and&nbsp;CBOW&nbsp;models,&nbsp;using&nbsp;either<br>
+hierarchical&nbsp;softmax&nbsp;or&nbsp;negative&nbsp;sampling:&nbsp;`Tomas&nbsp;Mikolov&nbsp;et&nbsp;al:&nbsp;Efficient&nbsp;Estimation&nbsp;of&nbsp;Word&nbsp;Representations<br>
+in&nbsp;Vector&nbsp;Space&nbsp;&lt;https://arxiv.org/pdf/1301.3781.pdf&gt;`_,&nbsp;`Tomas&nbsp;Mikolov&nbsp;et&nbsp;al:&nbsp;Distributed&nbsp;Representations&nbsp;of&nbsp;Words<br>
+and&nbsp;Phrases&nbsp;and&nbsp;their&nbsp;Compositionality&nbsp;&lt;https://arxiv.org/abs/1310.4546&gt;`_.<br>
+&nbsp;<br>
+Other&nbsp;embeddings<br>
+================<br>
+&nbsp;<br>
+There&nbsp;are&nbsp;more&nbsp;ways&nbsp;to&nbsp;train&nbsp;word&nbsp;vectors&nbsp;in&nbsp;Gensim&nbsp;than&nbsp;just&nbsp;<a href="#Word2Vec">Word2Vec</a>.<br>
+See&nbsp;also&nbsp;:class:`~gensim.models.doc2vec.Doc2Vec`,&nbsp;:class:`~gensim.models.fasttext.FastText`&nbsp;and<br>
+wrappers&nbsp;for&nbsp;:class:`~gensim.models.wrappers.VarEmbed`&nbsp;and&nbsp;:class:`~gensim.models.wrappers.WordRank`.<br>
+&nbsp;<br>
+The&nbsp;training&nbsp;algorithms&nbsp;were&nbsp;originally&nbsp;ported&nbsp;from&nbsp;the&nbsp;C&nbsp;package&nbsp;https://code.google.com/p/word2vec/<br>
+and&nbsp;extended&nbsp;with&nbsp;additional&nbsp;functionality&nbsp;and&nbsp;optimizations&nbsp;over&nbsp;the&nbsp;years.<br>
+&nbsp;<br>
+For&nbsp;a&nbsp;tutorial&nbsp;on&nbsp;Gensim&nbsp;word2vec,&nbsp;with&nbsp;an&nbsp;interactive&nbsp;web&nbsp;app&nbsp;trained&nbsp;on&nbsp;GoogleNews,<br>
+visit&nbsp;https://rare-technologies.com/word2vec-tutorial/.<br>
+&nbsp;<br>
+**Make&nbsp;sure&nbsp;you&nbsp;have&nbsp;a&nbsp;C&nbsp;compiler&nbsp;before&nbsp;installing&nbsp;Gensim,&nbsp;to&nbsp;use&nbsp;the&nbsp;optimized&nbsp;word2vec&nbsp;routines**<br>
+(70x&nbsp;speedup&nbsp;compared&nbsp;to&nbsp;plain&nbsp;NumPy&nbsp;implementation,&nbsp;https://rare-technologies.com/parallelizing-word2vec-in-python/).<br>
+&nbsp;<br>
+Usage&nbsp;examples<br>
+==============<br>
+&nbsp;<br>
+Initialize&nbsp;a&nbsp;model&nbsp;with&nbsp;e.g.:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.test.utils&nbsp;import&nbsp;common_texts,&nbsp;get_tmpfile<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.models&nbsp;import&nbsp;<a href="#Word2Vec">Word2Vec</a><br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;path&nbsp;=&nbsp;get_tmpfile("word2vec.model")<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;model&nbsp;=&nbsp;<a href="#Word2Vec">Word2Vec</a>(common_texts,&nbsp;size=100,&nbsp;window=5,&nbsp;min_count=1,&nbsp;workers=4)<br>
+&gt;&gt;&gt;&nbsp;model.save("word2vec.model")<br>
+&nbsp;<br>
+The&nbsp;training&nbsp;is&nbsp;streamed,&nbsp;meaning&nbsp;`sentences`&nbsp;can&nbsp;be&nbsp;a&nbsp;generator,&nbsp;reading&nbsp;input&nbsp;data<br>
+from&nbsp;disk&nbsp;on-the-fly,&nbsp;without&nbsp;loading&nbsp;the&nbsp;entire&nbsp;corpus&nbsp;into&nbsp;RAM.<br>
+&nbsp;<br>
+It&nbsp;also&nbsp;means&nbsp;you&nbsp;can&nbsp;continue&nbsp;training&nbsp;the&nbsp;model&nbsp;later:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;model&nbsp;=&nbsp;<a href="#Word2Vec">Word2Vec</a>.load("word2vec.model")<br>
+&gt;&gt;&gt;&nbsp;model.train([["hello",&nbsp;"world"]],&nbsp;total_examples=1,&nbsp;epochs=1)<br>
+(0,&nbsp;2)<br>
+&nbsp;<br>
+The&nbsp;trained&nbsp;word&nbsp;vectors&nbsp;are&nbsp;stored&nbsp;in&nbsp;a&nbsp;:class:`~gensim.models.keyedvectors.KeyedVectors`&nbsp;instance&nbsp;in&nbsp;`model.wv`:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;vector&nbsp;=&nbsp;model.wv['computer']&nbsp;&nbsp;#&nbsp;numpy&nbsp;vector&nbsp;of&nbsp;a&nbsp;word<br>
+&nbsp;<br>
+The&nbsp;reason&nbsp;for&nbsp;separating&nbsp;the&nbsp;trained&nbsp;vectors&nbsp;into&nbsp;`KeyedVectors`&nbsp;is&nbsp;that&nbsp;if&nbsp;you&nbsp;don't<br>
+need&nbsp;the&nbsp;full&nbsp;model&nbsp;state&nbsp;any&nbsp;more&nbsp;(don't&nbsp;need&nbsp;to&nbsp;continue&nbsp;training),&nbsp;the&nbsp;state&nbsp;can&nbsp;discarded,<br>
+resulting&nbsp;in&nbsp;a&nbsp;much&nbsp;smaller&nbsp;and&nbsp;faster&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;can&nbsp;be&nbsp;mmapped&nbsp;for&nbsp;lightning<br>
+fast&nbsp;loading&nbsp;and&nbsp;sharing&nbsp;the&nbsp;vectors&nbsp;in&nbsp;RAM&nbsp;between&nbsp;processes::<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.models&nbsp;import&nbsp;KeyedVectors<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;path&nbsp;=&nbsp;get_tmpfile("wordvectors.kv")<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;model.wv.save(path)<br>
+&gt;&gt;&gt;&nbsp;wv&nbsp;=&nbsp;KeyedVectors.load("model.wv",&nbsp;mmap='r')<br>
+&gt;&gt;&gt;&nbsp;vector&nbsp;=&nbsp;wv['computer']&nbsp;&nbsp;#&nbsp;numpy&nbsp;vector&nbsp;of&nbsp;a&nbsp;word<br>
+&nbsp;<br>
+Gensim&nbsp;can&nbsp;also&nbsp;load&nbsp;word&nbsp;vectors&nbsp;in&nbsp;the&nbsp;"word2vec&nbsp;C&nbsp;format",&nbsp;as&nbsp;a<br>
+:class:`~gensim.models.keyedvectors.KeyedVectors`&nbsp;instance::<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.test.utils&nbsp;import&nbsp;datapath<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;wv_from_text&nbsp;=&nbsp;KeyedVectors.load_word2vec_format(datapath('word2vec_pre_kv_c'),&nbsp;binary=False)&nbsp;&nbsp;#&nbsp;C&nbsp;text&nbsp;format<br>
+&gt;&gt;&gt;&nbsp;wv_from_bin&nbsp;=&nbsp;KeyedVectors.load_word2vec_format(datapath("euclidean_vectors.bin"),&nbsp;binary=True)&nbsp;&nbsp;#&nbsp;C&nbsp;binary&nbsp;format<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;impossible&nbsp;to&nbsp;continue&nbsp;training&nbsp;the&nbsp;vectors&nbsp;loaded&nbsp;from&nbsp;the&nbsp;C&nbsp;format&nbsp;because&nbsp;the&nbsp;hidden&nbsp;weights,<br>
+vocabulary&nbsp;frequencies&nbsp;and&nbsp;the&nbsp;binary&nbsp;tree&nbsp;are&nbsp;missing.&nbsp;To&nbsp;continue&nbsp;training,&nbsp;you'll&nbsp;need&nbsp;the<br>
+full&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`&nbsp;<a href="builtins.html#object">object</a>&nbsp;state,&nbsp;as&nbsp;stored&nbsp;by&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.save`,<br>
+not&nbsp;just&nbsp;the&nbsp;:class:`~gensim.models.keyedvectors.KeyedVectors`.<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;perform&nbsp;various&nbsp;NLP&nbsp;word&nbsp;tasks&nbsp;with&nbsp;a&nbsp;trained&nbsp;model.&nbsp;Some&nbsp;of&nbsp;them<br>
+are&nbsp;already&nbsp;built-in&nbsp;-&nbsp;you&nbsp;can&nbsp;see&nbsp;it&nbsp;in&nbsp;:mod:`gensim.models.keyedvectors`.<br>
+&nbsp;<br>
+If&nbsp;you're&nbsp;finished&nbsp;training&nbsp;a&nbsp;model&nbsp;(i.e.&nbsp;no&nbsp;more&nbsp;updates,&nbsp;only&nbsp;querying),<br>
+you&nbsp;can&nbsp;switch&nbsp;to&nbsp;the&nbsp;:class:`~gensim.models.keyedvectors.KeyedVectors`&nbsp;instance:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;word_vectors&nbsp;=&nbsp;model.wv<br>
+&gt;&gt;&gt;&nbsp;del&nbsp;model<br>
+&nbsp;<br>
+to&nbsp;trim&nbsp;unneeded&nbsp;model&nbsp;state&nbsp;=&nbsp;use&nbsp;much&nbsp;less&nbsp;RAM&nbsp;and&nbsp;allow&nbsp;fast&nbsp;loading&nbsp;and&nbsp;memory&nbsp;sharing&nbsp;(mmap).<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;there&nbsp;is&nbsp;a&nbsp;:mod:`gensim.models.phrases`&nbsp;module&nbsp;which&nbsp;lets&nbsp;you&nbsp;automatically<br>
+detect&nbsp;phrases&nbsp;longer&nbsp;than&nbsp;one&nbsp;word.&nbsp;Using&nbsp;phrases,&nbsp;you&nbsp;can&nbsp;learn&nbsp;a&nbsp;word2vec&nbsp;model<br>
+where&nbsp;"words"&nbsp;are&nbsp;actually&nbsp;multiword&nbsp;expressions,&nbsp;such&nbsp;as&nbsp;`new_york_times`&nbsp;or&nbsp;`financial_crisis`:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.test.utils&nbsp;import&nbsp;common_texts<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.models&nbsp;import&nbsp;Phrases<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;bigram_transformer&nbsp;=&nbsp;Phrases(common_texts)<br>
+&gt;&gt;&gt;&nbsp;model&nbsp;=&nbsp;<a href="#Word2Vec">Word2Vec</a>(bigram_transformer[common_texts],&nbsp;min_count=1)</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="heapq.html">heapq</a><br>
+<a href="itertools.html">itertools</a><br>
+<a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="gensim.matutils.html">gensim.matutils</a><br>
+<a href="os.html">os</a><br>
+<a href="numpy.random.html">numpy.random</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+<a href="threading.html">threading</a><br>
+<a href="gensim.utils.html">gensim.utils</a><br>
+</td><td width="25%" valign=top><a href="warnings.html">warnings</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#BrownCorpus">BrownCorpus</a>
+</font></dt><dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#LineSentence">LineSentence</a>
+</font></dt><dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#PathLineSentences">PathLineSentences</a>
+</font></dt><dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#Text8Corpus">Text8Corpus</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="gensim.models.base_any2vec.html#BaseWordEmbeddingsModel">gensim.models.base_any2vec.BaseWordEmbeddingsModel</a>(<a href="gensim.models.base_any2vec.html#BaseAny2VecModel">gensim.models.base_any2vec.BaseAny2VecModel</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#Word2Vec">Word2Vec</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#Word2VecTrainables">Word2VecTrainables</a>
+</font></dt><dt><font face="helvetica, arial"><a href="gensim.models.word2vec.html#Word2VecVocab">Word2VecVocab</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BrownCorpus">class <strong>BrownCorpus</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Iterate&nbsp;over&nbsp;sentences&nbsp;from&nbsp;the&nbsp;`Brown&nbsp;corpus&nbsp;&lt;https://en.wikipedia.org/wiki/Brown_Corpus&gt;`_<br>
+(part&nbsp;of&nbsp;`NLTK&nbsp;data&nbsp;&lt;https://www.nltk.org/data.html&gt;`_).<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BrownCorpus-__init__"><strong>__init__</strong></a>(self, dirname)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="BrownCorpus-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="LineSentence">class <strong>LineSentence</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Iterate&nbsp;over&nbsp;a&nbsp;file&nbsp;that&nbsp;contains&nbsp;sentences:&nbsp;one&nbsp;line&nbsp;=&nbsp;one&nbsp;sentence.<br>
+Words&nbsp;must&nbsp;be&nbsp;already&nbsp;preprocessed&nbsp;and&nbsp;separated&nbsp;by&nbsp;whitespace.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="LineSentence-__init__"><strong>__init__</strong></a>(self, source, max_sentence_length=10000, limit=None)</dt><dd><tt>Parameters<br>
+----------<br>
+source&nbsp;:&nbsp;string&nbsp;or&nbsp;a&nbsp;file-like&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;the&nbsp;file&nbsp;on&nbsp;disk,&nbsp;or&nbsp;an&nbsp;already-open&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;(must&nbsp;support&nbsp;`seek(0)`).<br>
+limit&nbsp;:&nbsp;int&nbsp;or&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Clip&nbsp;the&nbsp;file&nbsp;to&nbsp;the&nbsp;first&nbsp;`limit`&nbsp;lines.&nbsp;Do&nbsp;no&nbsp;clipping&nbsp;if&nbsp;`limit&nbsp;is&nbsp;None`&nbsp;(the&nbsp;default).<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.test.utils&nbsp;import&nbsp;datapath<br>
+&gt;&gt;&gt;&nbsp;sentences&nbsp;=&nbsp;<a href="#LineSentence">LineSentence</a>(datapath('lee_background.cor'))<br>
+&gt;&gt;&gt;&nbsp;for&nbsp;sentence&nbsp;in&nbsp;sentences:<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass</tt></dd></dl>
+
+<dl><dt><a name="LineSentence-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Iterate&nbsp;through&nbsp;the&nbsp;lines&nbsp;in&nbsp;the&nbsp;source.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PathLineSentences">class <strong>PathLineSentences</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Like&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`,&nbsp;but&nbsp;process&nbsp;all&nbsp;files&nbsp;in&nbsp;a&nbsp;directory<br>
+in&nbsp;alphabetical&nbsp;order&nbsp;by&nbsp;filename.<br>
+&nbsp;<br>
+The&nbsp;directory&nbsp;must&nbsp;only&nbsp;contain&nbsp;files&nbsp;that&nbsp;can&nbsp;be&nbsp;read&nbsp;by&nbsp;:class:`gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`:<br>
+.bz2,&nbsp;.gz,&nbsp;and&nbsp;text&nbsp;files.&nbsp;Any&nbsp;file&nbsp;not&nbsp;ending&nbsp;with&nbsp;.bz2&nbsp;or&nbsp;.gz&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;a&nbsp;text&nbsp;file.<br>
+&nbsp;<br>
+The&nbsp;format&nbsp;of&nbsp;files&nbsp;(either&nbsp;text,&nbsp;or&nbsp;compressed&nbsp;text&nbsp;files)&nbsp;in&nbsp;the&nbsp;path&nbsp;is&nbsp;one&nbsp;sentence&nbsp;=&nbsp;one&nbsp;line,<br>
+with&nbsp;words&nbsp;already&nbsp;preprocessed&nbsp;and&nbsp;separated&nbsp;by&nbsp;whitespace.<br>
+&nbsp;<br>
+Warnings<br>
+--------<br>
+Does&nbsp;**not&nbsp;recurse**&nbsp;into&nbsp;subdirectories.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="PathLineSentences-__init__"><strong>__init__</strong></a>(self, source, max_sentence_length=10000, limit=None)</dt><dd><tt>Parameters<br>
+----------<br>
+source&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;the&nbsp;directory.<br>
+limit&nbsp;:&nbsp;int&nbsp;or&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Read&nbsp;only&nbsp;the&nbsp;first&nbsp;`limit`&nbsp;lines&nbsp;from&nbsp;each&nbsp;file.&nbsp;Read&nbsp;all&nbsp;if&nbsp;limit&nbsp;is&nbsp;None&nbsp;(the&nbsp;default).</tt></dd></dl>
+
+<dl><dt><a name="PathLineSentences-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>iterate&nbsp;through&nbsp;the&nbsp;files</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Text8Corpus">class <strong>Text8Corpus</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Iterate&nbsp;over&nbsp;sentences&nbsp;from&nbsp;the&nbsp;"text8"&nbsp;corpus,&nbsp;unzipped&nbsp;from&nbsp;<a href="http://mattmahoney.net/dc/text8.zip">http://mattmahoney.net/dc/text8.zip</a>.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Text8Corpus-__init__"><strong>__init__</strong></a>(self, fname, max_sentence_length=10000)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Text8Corpus-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Word2Vec">class <strong>Word2Vec</strong></a>(<a href="gensim.models.base_any2vec.html#BaseWordEmbeddingsModel">gensim.models.base_any2vec.BaseWordEmbeddingsModel</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Train,&nbsp;use&nbsp;and&nbsp;evaluate&nbsp;neural&nbsp;networks&nbsp;described&nbsp;in&nbsp;https://code.google.com/p/word2vec/.<br>
+&nbsp;<br>
+Once&nbsp;you're&nbsp;finished&nbsp;training&nbsp;a&nbsp;model&nbsp;(=no&nbsp;more&nbsp;updates,&nbsp;only&nbsp;querying)<br>
+store&nbsp;and&nbsp;use&nbsp;only&nbsp;the&nbsp;:class:`~gensim.models.keyedvectors.KeyedVectors`&nbsp;instance&nbsp;in&nbsp;`self.<strong>wv</strong>`&nbsp;to&nbsp;reduce&nbsp;memory.<br>
+&nbsp;<br>
+The&nbsp;model&nbsp;can&nbsp;be&nbsp;stored/loaded&nbsp;via&nbsp;its&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.save`&nbsp;and<br>
+:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.load`&nbsp;methods.<br>
+&nbsp;<br>
+The&nbsp;trained&nbsp;word&nbsp;vectors&nbsp;can&nbsp;also&nbsp;be&nbsp;stored/loaded&nbsp;from&nbsp;a&nbsp;format&nbsp;compatible&nbsp;with&nbsp;the<br>
+original&nbsp;word2vec&nbsp;implementation&nbsp;via&nbsp;`self.<strong>wv</strong>.save_word2vec_format`<br>
+and&nbsp;:meth:`gensim.models.keyedvectors.KeyedVectors.load_word2vec_format`.<br>
+&nbsp;<br>
+Some&nbsp;important&nbsp;attributes&nbsp;are&nbsp;the&nbsp;following:<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+wv&nbsp;:&nbsp;:class:`~gensim.models.keyedvectors.Word2VecKeyedVectors`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;<a href="builtins.html#object">object</a>&nbsp;essentially&nbsp;contains&nbsp;the&nbsp;mapping&nbsp;between&nbsp;words&nbsp;and&nbsp;embeddings.&nbsp;After&nbsp;training,&nbsp;it&nbsp;can&nbsp;be&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directly&nbsp;to&nbsp;query&nbsp;those&nbsp;embeddings&nbsp;in&nbsp;various&nbsp;ways.&nbsp;See&nbsp;the&nbsp;module&nbsp;level&nbsp;docstring&nbsp;for&nbsp;examples.<br>
+&nbsp;<br>
+vocabulary&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2VecVocab">Word2VecVocab</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;<a href="builtins.html#object">object</a>&nbsp;represents&nbsp;the&nbsp;vocabulary&nbsp;(sometimes&nbsp;called&nbsp;Dictionary&nbsp;in&nbsp;gensim)&nbsp;of&nbsp;the&nbsp;model.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Besides&nbsp;keeping&nbsp;track&nbsp;of&nbsp;all&nbsp;unique&nbsp;words,&nbsp;this&nbsp;<a href="builtins.html#object">object</a>&nbsp;provides&nbsp;extra&nbsp;functionality,&nbsp;such&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;constructing&nbsp;a&nbsp;huffman&nbsp;tree&nbsp;(frequent&nbsp;words&nbsp;are&nbsp;closer&nbsp;to&nbsp;the&nbsp;root),&nbsp;or&nbsp;discarding&nbsp;extremely&nbsp;rare&nbsp;words.<br>
+&nbsp;<br>
+trainables&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2VecTrainables">Word2VecTrainables</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;<a href="builtins.html#object">object</a>&nbsp;represents&nbsp;the&nbsp;inner&nbsp;shallow&nbsp;neural&nbsp;network&nbsp;used&nbsp;to&nbsp;train&nbsp;the&nbsp;embeddings.&nbsp;The&nbsp;semantics&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;network&nbsp;differ&nbsp;slightly&nbsp;in&nbsp;the&nbsp;two&nbsp;available&nbsp;training&nbsp;modes&nbsp;(CBOW&nbsp;or&nbsp;SG)&nbsp;but&nbsp;you&nbsp;can&nbsp;think&nbsp;of&nbsp;it&nbsp;as&nbsp;a&nbsp;NN&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;single&nbsp;projection&nbsp;and&nbsp;hidden&nbsp;layer&nbsp;which&nbsp;we&nbsp;train&nbsp;on&nbsp;the&nbsp;corpus.&nbsp;The&nbsp;weights&nbsp;are&nbsp;then&nbsp;used&nbsp;as&nbsp;our&nbsp;embeddings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(which&nbsp;means&nbsp;that&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;hidden&nbsp;layer&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;number&nbsp;of&nbsp;features&nbsp;`self.<strong>size</strong>`).<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="gensim.models.word2vec.html#Word2Vec">Word2Vec</a></dd>
+<dd><a href="gensim.models.base_any2vec.html#BaseWordEmbeddingsModel">gensim.models.base_any2vec.BaseWordEmbeddingsModel</a></dd>
+<dd><a href="gensim.models.base_any2vec.html#BaseAny2VecModel">gensim.models.base_any2vec.BaseAny2VecModel</a></dd>
+<dd><a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Word2Vec-__contains__"><strong>__contains__</strong></a>(self, word)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`self.<strong>wv</strong>.__contains__`&nbsp;instead.<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.Word2VecKeyedVectors.__contains__`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-__getitem__"><strong>__getitem__</strong></a>(self, words)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`self.<strong>wv</strong>.__getitem__`&nbsp;instead.<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.Word2VecKeyedVectors.__getitem__`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-__init__"><strong>__init__</strong></a>(self, sentences=None, corpus_file=None, size=100, alpha=0.025, window=5, min_count=5, max_vocab_size=None, sample=0.001, seed=1, workers=3, min_alpha=0.0001, sg=0, hs=0, negative=5, ns_exponent=0.75, cbow_mean=1, hashfxn=&lt;built-in function hash&gt;, iter=5, null_word=0, trim_rule=None, sorted_vocab=1, batch_words=10000, compute_loss=False, callbacks=(), max_final_vocab=None)</dt><dd><tt>Parameters<br>
+----------<br>
+sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;iterables,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;`sentences`&nbsp;iterable&nbsp;can&nbsp;be&nbsp;simply&nbsp;a&nbsp;list&nbsp;of&nbsp;lists&nbsp;of&nbsp;tokens,&nbsp;but&nbsp;for&nbsp;larger&nbsp;corpora,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;consider&nbsp;an&nbsp;iterable&nbsp;that&nbsp;streams&nbsp;the&nbsp;sentences&nbsp;directly&nbsp;from&nbsp;disk/network.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;:class:`~gensim.models.word2vec.<a href="#BrownCorpus">BrownCorpus</a>`,&nbsp;:class:`~gensim.models.word2vec.<a href="#Text8Corpus">Text8Corpus</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;in&nbsp;:mod:`~gensim.models.word2vec`&nbsp;module&nbsp;for&nbsp;such&nbsp;examples.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;also&nbsp;the&nbsp;`tutorial&nbsp;on&nbsp;data&nbsp;streaming&nbsp;in&nbsp;Python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;https://rare-technologies.com/data-streaming-in-python-generators-iterators-iterables/&gt;`_.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;don't&nbsp;supply&nbsp;`sentences`,&nbsp;the&nbsp;model&nbsp;is&nbsp;left&nbsp;uninitialized&nbsp;--&nbsp;use&nbsp;if&nbsp;you&nbsp;plan&nbsp;to&nbsp;initialize&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;some&nbsp;other&nbsp;way.<br>
+corpus_file&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;a&nbsp;corpus&nbsp;file&nbsp;in&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;may&nbsp;use&nbsp;this&nbsp;argument&nbsp;instead&nbsp;of&nbsp;`sentences`&nbsp;to&nbsp;get&nbsp;performance&nbsp;boost.&nbsp;Only&nbsp;one&nbsp;of&nbsp;`sentences`&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`corpus_file`&nbsp;arguments&nbsp;need&nbsp;to&nbsp;be&nbsp;passed&nbsp;(or&nbsp;none&nbsp;of&nbsp;them).<br>
+size&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dimensionality&nbsp;of&nbsp;the&nbsp;word&nbsp;vectors.<br>
+window&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;distance&nbsp;between&nbsp;the&nbsp;current&nbsp;and&nbsp;predicted&nbsp;word&nbsp;within&nbsp;a&nbsp;sentence.<br>
+min_count&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ignores&nbsp;all&nbsp;words&nbsp;with&nbsp;total&nbsp;frequency&nbsp;lower&nbsp;than&nbsp;this.<br>
+workers&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;these&nbsp;many&nbsp;worker&nbsp;threads&nbsp;to&nbsp;train&nbsp;the&nbsp;model&nbsp;(=faster&nbsp;training&nbsp;with&nbsp;multicore&nbsp;machines).<br>
+sg&nbsp;:&nbsp;{0,&nbsp;1},&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Training&nbsp;algorithm:&nbsp;1&nbsp;for&nbsp;skip-gram;&nbsp;otherwise&nbsp;CBOW.<br>
+hs&nbsp;:&nbsp;{0,&nbsp;1},&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;1,&nbsp;hierarchical&nbsp;softmax&nbsp;will&nbsp;be&nbsp;used&nbsp;for&nbsp;model&nbsp;training.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;0,&nbsp;and&nbsp;`negative`&nbsp;is&nbsp;non-zero,&nbsp;negative&nbsp;sampling&nbsp;will&nbsp;be&nbsp;used.<br>
+negative&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;&gt;&nbsp;0,&nbsp;negative&nbsp;sampling&nbsp;will&nbsp;be&nbsp;used,&nbsp;the&nbsp;int&nbsp;for&nbsp;negative&nbsp;specifies&nbsp;how&nbsp;many&nbsp;"noise&nbsp;words"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;drawn&nbsp;(usually&nbsp;between&nbsp;5-20).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;set&nbsp;to&nbsp;0,&nbsp;no&nbsp;negative&nbsp;sampling&nbsp;is&nbsp;used.<br>
+ns_exponent&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;exponent&nbsp;used&nbsp;to&nbsp;shape&nbsp;the&nbsp;negative&nbsp;sampling&nbsp;distribution.&nbsp;A&nbsp;value&nbsp;of&nbsp;1.0&nbsp;samples&nbsp;exactly&nbsp;in&nbsp;proportion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;frequencies,&nbsp;0.0&nbsp;samples&nbsp;all&nbsp;words&nbsp;equally,&nbsp;while&nbsp;a&nbsp;negative&nbsp;value&nbsp;samples&nbsp;low-frequency&nbsp;words&nbsp;more<br>
+&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;high-frequency&nbsp;words.&nbsp;The&nbsp;popular&nbsp;default&nbsp;value&nbsp;of&nbsp;0.75&nbsp;was&nbsp;chosen&nbsp;by&nbsp;the&nbsp;original&nbsp;<a href="#Word2Vec">Word2Vec</a>&nbsp;paper.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;More&nbsp;recently,&nbsp;in&nbsp;https://arxiv.org/abs/1804.04212,&nbsp;Caselles-Dupré,&nbsp;Lesaint,&nbsp;&amp;&nbsp;Royo-Letelier&nbsp;suggest&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;values&nbsp;may&nbsp;perform&nbsp;better&nbsp;for&nbsp;recommendation&nbsp;applications.<br>
+cbow_mean&nbsp;:&nbsp;{0,&nbsp;1},&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;0,&nbsp;use&nbsp;the&nbsp;sum&nbsp;of&nbsp;the&nbsp;context&nbsp;word&nbsp;vectors.&nbsp;If&nbsp;1,&nbsp;use&nbsp;the&nbsp;mean,&nbsp;only&nbsp;applies&nbsp;when&nbsp;cbow&nbsp;is&nbsp;used.<br>
+alpha&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;initial&nbsp;learning&nbsp;rate.<br>
+min_alpha&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Learning&nbsp;rate&nbsp;will&nbsp;linearly&nbsp;drop&nbsp;to&nbsp;`min_alpha`&nbsp;as&nbsp;training&nbsp;progresses.<br>
+seed&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Seed&nbsp;for&nbsp;the&nbsp;random&nbsp;number&nbsp;generator.&nbsp;Initial&nbsp;vectors&nbsp;for&nbsp;each&nbsp;word&nbsp;are&nbsp;seeded&nbsp;with&nbsp;a&nbsp;hash&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;concatenation&nbsp;of&nbsp;word&nbsp;+&nbsp;`str(seed)`.&nbsp;Note&nbsp;that&nbsp;for&nbsp;a&nbsp;fully&nbsp;deterministically-reproducible&nbsp;run,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;must&nbsp;also&nbsp;limit&nbsp;the&nbsp;model&nbsp;to&nbsp;a&nbsp;single&nbsp;worker&nbsp;thread&nbsp;(`workers=1`),&nbsp;to&nbsp;eliminate&nbsp;ordering&nbsp;jitter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;OS&nbsp;thread&nbsp;scheduling.&nbsp;(In&nbsp;Python&nbsp;3,&nbsp;reproducibility&nbsp;between&nbsp;interpreter&nbsp;launches&nbsp;also&nbsp;requires<br>
+&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;of&nbsp;the&nbsp;`PYTHONHASHSEED`&nbsp;environment&nbsp;variable&nbsp;to&nbsp;control&nbsp;hash&nbsp;randomization).<br>
+max_vocab_size&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Limits&nbsp;the&nbsp;RAM&nbsp;during&nbsp;vocabulary&nbsp;building;&nbsp;if&nbsp;there&nbsp;are&nbsp;more&nbsp;unique<br>
+&nbsp;&nbsp;&nbsp;&nbsp;words&nbsp;than&nbsp;this,&nbsp;then&nbsp;prune&nbsp;the&nbsp;infrequent&nbsp;ones.&nbsp;Every&nbsp;10&nbsp;million&nbsp;word&nbsp;types&nbsp;need&nbsp;about&nbsp;1GB&nbsp;of&nbsp;RAM.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;to&nbsp;`None`&nbsp;for&nbsp;no&nbsp;limit.<br>
+max_final_vocab&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Limits&nbsp;the&nbsp;vocab&nbsp;to&nbsp;a&nbsp;target&nbsp;vocab&nbsp;size&nbsp;by&nbsp;automatically&nbsp;picking&nbsp;a&nbsp;matching&nbsp;min_count.&nbsp;If&nbsp;the&nbsp;specified<br>
+&nbsp;&nbsp;&nbsp;&nbsp;min_count&nbsp;is&nbsp;more&nbsp;than&nbsp;the&nbsp;calculated&nbsp;min_count,&nbsp;the&nbsp;specified&nbsp;min_count&nbsp;will&nbsp;be&nbsp;used.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;to&nbsp;`None`&nbsp;if&nbsp;not&nbsp;required.<br>
+sample&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;threshold&nbsp;for&nbsp;configuring&nbsp;which&nbsp;higher-frequency&nbsp;words&nbsp;are&nbsp;randomly&nbsp;downsampled,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;useful&nbsp;range&nbsp;is&nbsp;(0,&nbsp;1e-5).<br>
+hashfxn&nbsp;:&nbsp;function,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Hash&nbsp;function&nbsp;to&nbsp;use&nbsp;to&nbsp;randomly&nbsp;initialize&nbsp;weights,&nbsp;for&nbsp;increased&nbsp;training&nbsp;reproducibility.<br>
+iter&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;iterations&nbsp;(epochs)&nbsp;over&nbsp;the&nbsp;corpus.<br>
+trim_rule&nbsp;:&nbsp;function,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;trimming&nbsp;rule,&nbsp;specifies&nbsp;whether&nbsp;certain&nbsp;words&nbsp;should&nbsp;remain&nbsp;in&nbsp;the&nbsp;vocabulary,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;trimmed&nbsp;away,&nbsp;or&nbsp;handled&nbsp;using&nbsp;the&nbsp;default&nbsp;(discard&nbsp;if&nbsp;word&nbsp;count&nbsp;&lt;&nbsp;min_count).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Can&nbsp;be&nbsp;None&nbsp;(min_count&nbsp;will&nbsp;be&nbsp;used,&nbsp;look&nbsp;to&nbsp;:func:`~gensim.utils.keep_vocab_item`),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;a&nbsp;callable&nbsp;that&nbsp;accepts&nbsp;parameters&nbsp;(word,&nbsp;count,&nbsp;min_count)&nbsp;and&nbsp;returns&nbsp;either<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`gensim.utils.RULE_DISCARD`,&nbsp;:attr:`gensim.utils.RULE_KEEP`&nbsp;or&nbsp;:attr:`gensim.utils.RULE_DEFAULT`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;rule,&nbsp;if&nbsp;given,&nbsp;is&nbsp;only&nbsp;used&nbsp;to&nbsp;prune&nbsp;vocabulary&nbsp;during&nbsp;<a href="#Word2Vec-build_vocab">build_vocab</a>()&nbsp;and&nbsp;is&nbsp;not&nbsp;stored&nbsp;as&nbsp;part&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;input&nbsp;parameters&nbsp;are&nbsp;of&nbsp;the&nbsp;following&nbsp;types:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`word`&nbsp;(str)&nbsp;-&nbsp;the&nbsp;word&nbsp;we&nbsp;are&nbsp;examining<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;word's&nbsp;frequency&nbsp;count&nbsp;in&nbsp;the&nbsp;corpus<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`min_count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;minimum&nbsp;count&nbsp;threshold.<br>
+sorted_vocab&nbsp;:&nbsp;{0,&nbsp;1},&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;1,&nbsp;sort&nbsp;the&nbsp;vocabulary&nbsp;by&nbsp;descending&nbsp;frequency&nbsp;before&nbsp;assigning&nbsp;word&nbsp;indexes.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2VecVocab">Word2VecVocab</a>.sort_vocab()`.<br>
+batch_words&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Target&nbsp;size&nbsp;(in&nbsp;words)&nbsp;for&nbsp;batches&nbsp;of&nbsp;examples&nbsp;passed&nbsp;to&nbsp;worker&nbsp;threads&nbsp;(and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thus&nbsp;cython&nbsp;routines).(Larger&nbsp;batches&nbsp;will&nbsp;be&nbsp;passed&nbsp;if&nbsp;individual<br>
+&nbsp;&nbsp;&nbsp;&nbsp;texts&nbsp;are&nbsp;longer&nbsp;than&nbsp;10000&nbsp;words,&nbsp;but&nbsp;the&nbsp;standard&nbsp;cython&nbsp;code&nbsp;truncates&nbsp;to&nbsp;that&nbsp;maximum.)<br>
+compute_loss:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;computes&nbsp;and&nbsp;stores&nbsp;loss&nbsp;value&nbsp;which&nbsp;can&nbsp;be&nbsp;retrieved&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.get_latest_training_loss`.<br>
+callbacks&nbsp;:&nbsp;iterable&nbsp;of&nbsp;:class:`~gensim.models.callbacks.CallbackAny2Vec`,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Sequence&nbsp;of&nbsp;callbacks&nbsp;to&nbsp;be&nbsp;executed&nbsp;at&nbsp;specific&nbsp;stages&nbsp;during&nbsp;training.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+Initialize&nbsp;and&nbsp;train&nbsp;a&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`&nbsp;model<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.models&nbsp;import&nbsp;<a href="#Word2Vec">Word2Vec</a><br>
+&gt;&gt;&gt;&nbsp;sentences&nbsp;=&nbsp;[["cat",&nbsp;"say",&nbsp;"meow"],&nbsp;["dog",&nbsp;"say",&nbsp;"woof"]]<br>
+&gt;&gt;&gt;&nbsp;model&nbsp;=&nbsp;<a href="#Word2Vec">Word2Vec</a>(sentences,&nbsp;min_count=1)</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Human&nbsp;readable&nbsp;representation&nbsp;of&nbsp;the&nbsp;model's&nbsp;state.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Human&nbsp;readable&nbsp;representation&nbsp;of&nbsp;the&nbsp;model's&nbsp;state,&nbsp;including&nbsp;the&nbsp;vocabulary&nbsp;size,&nbsp;vector&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;learning&nbsp;rate.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-accuracy"><strong>accuracy</strong></a>(self, questions, restrict_vocab=30000, most_similar=None, case_insensitive=True)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`self.<strong>wv</strong>.accuracy`&nbsp;instead.<br>
+See&nbsp;:meth:`~gensim.models.word2vec.Word2VecKeyedVectors.accuracy`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-clear_sims"><strong>clear_sims</strong></a>(self)</dt><dd><tt>Remove&nbsp;all&nbsp;L2-normalized&nbsp;word&nbsp;vectors&nbsp;from&nbsp;the&nbsp;model,&nbsp;to&nbsp;free&nbsp;up&nbsp;memory.<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;recompute&nbsp;them&nbsp;later&nbsp;again&nbsp;using&nbsp;the&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.init_sims`&nbsp;method.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-delete_temporary_training_data"><strong>delete_temporary_training_data</strong></a>(self, replace_word_vectors_with_normalized=False)</dt><dd><tt>Discard&nbsp;parameters&nbsp;that&nbsp;are&nbsp;used&nbsp;in&nbsp;training&nbsp;and&nbsp;scoring,&nbsp;to&nbsp;save&nbsp;memory.<br>
+&nbsp;<br>
+Warnings<br>
+--------<br>
+Use&nbsp;only&nbsp;if&nbsp;you're&nbsp;sure&nbsp;you're&nbsp;done&nbsp;training&nbsp;a&nbsp;model.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+replace_word_vectors_with_normalized&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;forget&nbsp;the&nbsp;original&nbsp;(not&nbsp;normalized)&nbsp;word&nbsp;vectors&nbsp;and&nbsp;only&nbsp;keep<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;L2-normalized&nbsp;word&nbsp;vectors,&nbsp;to&nbsp;save&nbsp;even&nbsp;more&nbsp;memory.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-get_latest_training_loss"><strong>get_latest_training_loss</strong></a>(self)</dt><dd><tt>Get&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;training&nbsp;loss.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Current&nbsp;training&nbsp;loss.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-init_sims"><strong>init_sims</strong></a>(self, replace=False)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`self.<strong>wv</strong>.init_sims`&nbsp;instead.<br>
+See&nbsp;:meth:`~gensim.models.keyedvectors.Word2VecKeyedVectors.init_sims`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-intersect_word2vec_format"><strong>intersect_word2vec_format</strong></a>(self, fname, lockf=0.0, binary=False, encoding='utf8', unicode_errors='strict')</dt><dd><tt>Merge&nbsp;in&nbsp;an&nbsp;input-hidden&nbsp;weight&nbsp;matrix&nbsp;loaded&nbsp;from&nbsp;the&nbsp;original&nbsp;C&nbsp;word2vec-tool&nbsp;format,<br>
+where&nbsp;it&nbsp;intersects&nbsp;with&nbsp;the&nbsp;current&nbsp;vocabulary.<br>
+&nbsp;<br>
+No&nbsp;words&nbsp;are&nbsp;added&nbsp;to&nbsp;the&nbsp;existing&nbsp;vocabulary,&nbsp;but&nbsp;intersecting&nbsp;words&nbsp;adopt&nbsp;the&nbsp;file's&nbsp;weights,&nbsp;and<br>
+non-intersecting&nbsp;words&nbsp;are&nbsp;left&nbsp;alone.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;file&nbsp;path&nbsp;to&nbsp;load&nbsp;the&nbsp;vectors&nbsp;from.<br>
+lockf&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Lock-factor&nbsp;value&nbsp;to&nbsp;be&nbsp;set&nbsp;for&nbsp;any&nbsp;imported&nbsp;word-vectors;&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value&nbsp;of&nbsp;0.0&nbsp;prevents&nbsp;further&nbsp;updating&nbsp;of&nbsp;the&nbsp;vector&nbsp;during&nbsp;subsequent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;training.&nbsp;Use&nbsp;1.0&nbsp;to&nbsp;allow&nbsp;further&nbsp;training&nbsp;updates&nbsp;of&nbsp;merged&nbsp;vectors.<br>
+binary&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;`fname`&nbsp;is&nbsp;in&nbsp;the&nbsp;binary&nbsp;word2vec&nbsp;C&nbsp;format.<br>
+encoding&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Encoding&nbsp;of&nbsp;`text`&nbsp;for&nbsp;`unicode`&nbsp;function&nbsp;(python2&nbsp;only).<br>
+unicode_errors&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;handling&nbsp;behaviour,&nbsp;used&nbsp;as&nbsp;parameter&nbsp;for&nbsp;`unicode`&nbsp;function&nbsp;(python2&nbsp;only).</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-predict_output_word"><strong>predict_output_word</strong></a>(self, context_words_list, topn=10)</dt><dd><tt>Get&nbsp;the&nbsp;probability&nbsp;distribution&nbsp;of&nbsp;the&nbsp;center&nbsp;word&nbsp;given&nbsp;context&nbsp;words.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+context_words_list&nbsp;:&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;context&nbsp;words.<br>
+topn&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Return&nbsp;`topn`&nbsp;words&nbsp;and&nbsp;their&nbsp;probabilities.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+list&nbsp;of&nbsp;(str,&nbsp;float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`topn`&nbsp;length&nbsp;list&nbsp;of&nbsp;tuples&nbsp;of&nbsp;(word,&nbsp;probability).</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-reset_from"><strong>reset_from</strong></a>(self, other_model)</dt><dd><tt>Borrow&nbsp;shareable&nbsp;pre-built&nbsp;structures&nbsp;from&nbsp;`other_model`&nbsp;and&nbsp;reset&nbsp;hidden&nbsp;layer&nbsp;weights.<br>
+&nbsp;<br>
+Structures&nbsp;copied&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Vocabulary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Index&nbsp;to&nbsp;word&nbsp;mapping<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Cumulative&nbsp;frequency&nbsp;table&nbsp;(used&nbsp;for&nbsp;negative&nbsp;sampling)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Cached&nbsp;corpus&nbsp;length<br>
+&nbsp;<br>
+Useful&nbsp;when&nbsp;testing&nbsp;multiple&nbsp;models&nbsp;on&nbsp;the&nbsp;same&nbsp;corpus&nbsp;in&nbsp;parallel.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+other_model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Another&nbsp;model&nbsp;to&nbsp;copy&nbsp;the&nbsp;internal&nbsp;structures&nbsp;from.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-save"><strong>save</strong></a>(self, *args, **kwargs)</dt><dd><tt>Save&nbsp;the&nbsp;model.<br>
+This&nbsp;saved&nbsp;model&nbsp;can&nbsp;be&nbsp;loaded&nbsp;again&nbsp;using&nbsp;:func:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.load`,&nbsp;which&nbsp;supports<br>
+online&nbsp;training&nbsp;and&nbsp;getting&nbsp;vectors&nbsp;for&nbsp;vocabulary&nbsp;words.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;the&nbsp;file.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-save_word2vec_format"><strong>save_word2vec_format</strong></a>(self, fname, fvocab=None, binary=False)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`model.wv.save_word2vec_format`&nbsp;instead.<br>
+See&nbsp;:meth:`gensim.models.KeyedVectors.save_word2vec_format`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-score"><strong>score</strong></a>(self, sentences, total_sentences=1000000, chunksize=100, queue_factor=2, report_delay=1)</dt><dd><tt>Score&nbsp;the&nbsp;log&nbsp;probability&nbsp;for&nbsp;a&nbsp;sequence&nbsp;of&nbsp;sentences.<br>
+This&nbsp;does&nbsp;not&nbsp;change&nbsp;the&nbsp;fitted&nbsp;model&nbsp;in&nbsp;any&nbsp;way&nbsp;(see&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`&nbsp;for&nbsp;that).<br>
+&nbsp;<br>
+Gensim&nbsp;has&nbsp;currently&nbsp;only&nbsp;implemented&nbsp;score&nbsp;for&nbsp;the&nbsp;hierarchical&nbsp;softmax&nbsp;scheme,<br>
+so&nbsp;you&nbsp;need&nbsp;to&nbsp;have&nbsp;run&nbsp;word2vec&nbsp;with&nbsp;`hs=1`&nbsp;and&nbsp;`negative=0`&nbsp;for&nbsp;this&nbsp;to&nbsp;work.<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;you&nbsp;should&nbsp;specify&nbsp;`total_sentences`;&nbsp;you'll&nbsp;run&nbsp;into&nbsp;problems&nbsp;if&nbsp;you&nbsp;ask&nbsp;to<br>
+score&nbsp;more&nbsp;than&nbsp;this&nbsp;number&nbsp;of&nbsp;sentences&nbsp;but&nbsp;it&nbsp;is&nbsp;inefficient&nbsp;to&nbsp;set&nbsp;the&nbsp;value&nbsp;too&nbsp;high.<br>
+&nbsp;<br>
+See&nbsp;the&nbsp;`article&nbsp;by&nbsp;Matt&nbsp;Taddy:&nbsp;"Document&nbsp;Classification&nbsp;by&nbsp;Inversion&nbsp;of&nbsp;Distributed&nbsp;Language&nbsp;Representations"<br>
+&lt;https://arxiv.org/pdf/1504.07295.pdf&gt;`_&nbsp;and&nbsp;the<br>
+`gensim&nbsp;demo&nbsp;&lt;https://github.com/piskvorky/gensim/blob/develop/docs/notebooks/deepir.ipynb&gt;`_&nbsp;for&nbsp;examples&nbsp;of<br>
+how&nbsp;to&nbsp;use&nbsp;such&nbsp;scores&nbsp;in&nbsp;document&nbsp;classification.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;`sentences`&nbsp;iterable&nbsp;can&nbsp;be&nbsp;simply&nbsp;a&nbsp;list&nbsp;of&nbsp;lists&nbsp;of&nbsp;tokens,&nbsp;but&nbsp;for&nbsp;larger&nbsp;corpora,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;consider&nbsp;an&nbsp;iterable&nbsp;that&nbsp;streams&nbsp;the&nbsp;sentences&nbsp;directly&nbsp;from&nbsp;disk/network.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;:class:`~gensim.models.word2vec.<a href="#BrownCorpus">BrownCorpus</a>`,&nbsp;:class:`~gensim.models.word2vec.<a href="#Text8Corpus">Text8Corpus</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;in&nbsp;:mod:`~gensim.models.word2vec`&nbsp;module&nbsp;for&nbsp;such&nbsp;examples.<br>
+total_sentences&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;of&nbsp;sentences.<br>
+chunksize&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Chunksize&nbsp;of&nbsp;jobs<br>
+queue_factor&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Multiplier&nbsp;for&nbsp;size&nbsp;of&nbsp;queue&nbsp;(number&nbsp;of&nbsp;workers&nbsp;*&nbsp;queue_factor).<br>
+report_delay&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Seconds&nbsp;to&nbsp;wait&nbsp;before&nbsp;reporting&nbsp;progress.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-train"><strong>train</strong></a>(self, sentences=None, corpus_file=None, total_examples=None, total_words=None, epochs=None, start_alpha=None, end_alpha=None, word_count=0, queue_factor=2, report_delay=1.0, compute_loss=False, callbacks=())</dt><dd><tt>Update&nbsp;the&nbsp;model's&nbsp;neural&nbsp;weights&nbsp;from&nbsp;a&nbsp;sequence&nbsp;of&nbsp;sentences.<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+To&nbsp;support&nbsp;linear&nbsp;learning-rate&nbsp;decay&nbsp;from&nbsp;(initial)&nbsp;`alpha`&nbsp;to&nbsp;`min_alpha`,&nbsp;and&nbsp;accurate<br>
+progress-percentage&nbsp;logging,&nbsp;either&nbsp;`total_examples`&nbsp;(count&nbsp;of&nbsp;sentences)&nbsp;or&nbsp;`total_words`&nbsp;(count&nbsp;of<br>
+raw&nbsp;words&nbsp;in&nbsp;sentences)&nbsp;**MUST**&nbsp;be&nbsp;provided.&nbsp;If&nbsp;`sentences`&nbsp;is&nbsp;the&nbsp;same&nbsp;corpus<br>
+that&nbsp;was&nbsp;provided&nbsp;to&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.build_vocab`&nbsp;earlier,<br>
+you&nbsp;can&nbsp;simply&nbsp;use&nbsp;`total_examples=self.<strong>corpus_count</strong>`.<br>
+&nbsp;<br>
+Warnings<br>
+--------<br>
+To&nbsp;avoid&nbsp;common&nbsp;mistakes&nbsp;around&nbsp;the&nbsp;model's&nbsp;ability&nbsp;to&nbsp;do&nbsp;multiple&nbsp;training&nbsp;passes&nbsp;itself,&nbsp;an<br>
+explicit&nbsp;`epochs`&nbsp;argument&nbsp;**MUST**&nbsp;be&nbsp;provided.&nbsp;In&nbsp;the&nbsp;common&nbsp;and&nbsp;recommended&nbsp;case<br>
+where&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`&nbsp;is&nbsp;only&nbsp;called&nbsp;once,&nbsp;you&nbsp;can&nbsp;set&nbsp;`epochs=self.<strong>iter</strong>`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;`sentences`&nbsp;iterable&nbsp;can&nbsp;be&nbsp;simply&nbsp;a&nbsp;list&nbsp;of&nbsp;lists&nbsp;of&nbsp;tokens,&nbsp;but&nbsp;for&nbsp;larger&nbsp;corpora,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;consider&nbsp;an&nbsp;iterable&nbsp;that&nbsp;streams&nbsp;the&nbsp;sentences&nbsp;directly&nbsp;from&nbsp;disk/network.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;:class:`~gensim.models.word2vec.<a href="#BrownCorpus">BrownCorpus</a>`,&nbsp;:class:`~gensim.models.word2vec.<a href="#Text8Corpus">Text8Corpus</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;in&nbsp;:mod:`~gensim.models.word2vec`&nbsp;module&nbsp;for&nbsp;such&nbsp;examples.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;also&nbsp;the&nbsp;`tutorial&nbsp;on&nbsp;data&nbsp;streaming&nbsp;in&nbsp;Python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;https://rare-technologies.com/data-streaming-in-python-generators-iterators-iterables/&gt;`_.<br>
+corpus_file&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;a&nbsp;corpus&nbsp;file&nbsp;in&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;may&nbsp;use&nbsp;this&nbsp;argument&nbsp;instead&nbsp;of&nbsp;`sentences`&nbsp;to&nbsp;get&nbsp;performance&nbsp;boost.&nbsp;Only&nbsp;one&nbsp;of&nbsp;`sentences`&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`corpus_file`&nbsp;arguments&nbsp;need&nbsp;to&nbsp;be&nbsp;passed&nbsp;(not&nbsp;both&nbsp;of&nbsp;them).<br>
+total_examples&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;of&nbsp;sentences.<br>
+total_words&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;of&nbsp;raw&nbsp;words&nbsp;in&nbsp;sentences.<br>
+epochs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;iterations&nbsp;(epochs)&nbsp;over&nbsp;the&nbsp;corpus.<br>
+start_alpha&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Initial&nbsp;learning&nbsp;rate.&nbsp;If&nbsp;supplied,&nbsp;replaces&nbsp;the&nbsp;starting&nbsp;`alpha`&nbsp;from&nbsp;the&nbsp;constructor,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;this&nbsp;one&nbsp;call&nbsp;to`<a href="#Word2Vec-train">train</a>()`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;only&nbsp;if&nbsp;making&nbsp;multiple&nbsp;calls&nbsp;to&nbsp;`<a href="#Word2Vec-train">train</a>()`,&nbsp;when&nbsp;you&nbsp;want&nbsp;to&nbsp;manage&nbsp;the&nbsp;alpha&nbsp;learning-rate&nbsp;yourself<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(not&nbsp;recommended).<br>
+end_alpha&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Final&nbsp;learning&nbsp;rate.&nbsp;Drops&nbsp;linearly&nbsp;from&nbsp;`start_alpha`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;supplied,&nbsp;this&nbsp;replaces&nbsp;the&nbsp;final&nbsp;`min_alpha`&nbsp;from&nbsp;the&nbsp;constructor,&nbsp;for&nbsp;this&nbsp;one&nbsp;call&nbsp;to&nbsp;`<a href="#Word2Vec-train">train</a>()`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;only&nbsp;if&nbsp;making&nbsp;multiple&nbsp;calls&nbsp;to&nbsp;`<a href="#Word2Vec-train">train</a>()`,&nbsp;when&nbsp;you&nbsp;want&nbsp;to&nbsp;manage&nbsp;the&nbsp;alpha&nbsp;learning-rate&nbsp;yourself<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(not&nbsp;recommended).<br>
+word_count&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Count&nbsp;of&nbsp;words&nbsp;already&nbsp;trained.&nbsp;Set&nbsp;this&nbsp;to&nbsp;0&nbsp;for&nbsp;the&nbsp;usual<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;of&nbsp;training&nbsp;on&nbsp;all&nbsp;words&nbsp;in&nbsp;sentences.<br>
+queue_factor&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Multiplier&nbsp;for&nbsp;size&nbsp;of&nbsp;queue&nbsp;(number&nbsp;of&nbsp;workers&nbsp;*&nbsp;queue_factor).<br>
+report_delay&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Seconds&nbsp;to&nbsp;wait&nbsp;before&nbsp;reporting&nbsp;progress.<br>
+compute_loss:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;computes&nbsp;and&nbsp;stores&nbsp;loss&nbsp;value&nbsp;which&nbsp;can&nbsp;be&nbsp;retrieved&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.get_latest_training_loss`.<br>
+callbacks&nbsp;:&nbsp;iterable&nbsp;of&nbsp;:class:`~gensim.models.callbacks.CallbackAny2Vec`,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Sequence&nbsp;of&nbsp;callbacks&nbsp;to&nbsp;be&nbsp;executed&nbsp;at&nbsp;specific&nbsp;stages&nbsp;during&nbsp;training.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;gensim.models&nbsp;import&nbsp;<a href="#Word2Vec">Word2Vec</a><br>
+&gt;&gt;&gt;&nbsp;sentences&nbsp;=&nbsp;[["cat",&nbsp;"say",&nbsp;"meow"],&nbsp;["dog",&nbsp;"say",&nbsp;"woof"]]<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&nbsp;model&nbsp;=&nbsp;<a href="#Word2Vec">Word2Vec</a>(min_count=1)<br>
+&gt;&gt;&gt;&nbsp;model.<a href="#Word2Vec-build_vocab">build_vocab</a>(sentences)&nbsp;&nbsp;#&nbsp;prepare&nbsp;the&nbsp;model&nbsp;vocabulary<br>
+&gt;&gt;&gt;&nbsp;model.<a href="#Word2Vec-train">train</a>(sentences,&nbsp;total_examples=model.corpus_count,&nbsp;epochs=model.iter)&nbsp;&nbsp;#&nbsp;train&nbsp;word&nbsp;vectors<br>
+(1,&nbsp;30)</tt></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="Word2Vec-load"><strong>load</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Load&nbsp;a&nbsp;previously&nbsp;saved&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`&nbsp;model.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.save`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;model.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;the&nbsp;saved&nbsp;file.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Loaded&nbsp;model.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-load_word2vec_format"><strong>load_word2vec_format</strong></a>(fname, fvocab=None, binary=False, encoding='utf8', unicode_errors='strict', limit=None, datatype=&lt;class 'numpy.float32'&gt;)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Deprecated.&nbsp;Use&nbsp;:meth:`gensim.models.KeyedVectors.load_word2vec_format`&nbsp;instead.</tt></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Word2Vec-log_accuracy"><strong>log_accuracy</strong></a>(section)</dt><dd><tt>Deprecated.&nbsp;Use&nbsp;`self.<strong>wv</strong>.log_accuracy`&nbsp;instead.<br>
+See&nbsp;:meth:`~gensim.models.word2vec.Word2VecKeyedVectors.log_accuracy`.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="gensim.models.base_any2vec.html#BaseWordEmbeddingsModel">gensim.models.base_any2vec.BaseWordEmbeddingsModel</a>:<br>
+<dl><dt><a name="Word2Vec-build_vocab"><strong>build_vocab</strong></a>(self, sentences=None, corpus_file=None, update=False, progress_per=10000, keep_raw_vocab=False, trim_rule=None, **kwargs)</dt><dd><tt>Build&nbsp;vocabulary&nbsp;from&nbsp;a&nbsp;sequence&nbsp;of&nbsp;sentences&nbsp;(can&nbsp;be&nbsp;a&nbsp;once-only&nbsp;generator&nbsp;stream).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Can&nbsp;be&nbsp;simply&nbsp;a&nbsp;list&nbsp;of&nbsp;lists&nbsp;of&nbsp;tokens,&nbsp;but&nbsp;for&nbsp;larger&nbsp;corpora,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;consider&nbsp;an&nbsp;iterable&nbsp;that&nbsp;streams&nbsp;the&nbsp;sentences&nbsp;directly&nbsp;from&nbsp;disk/network.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;:class:`~gensim.models.word2vec.<a href="#BrownCorpus">BrownCorpus</a>`,&nbsp;:class:`~gensim.models.word2vec.<a href="#Text8Corpus">Text8Corpus</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;module&nbsp;for&nbsp;such&nbsp;examples.<br>
+corpus_file&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;a&nbsp;corpus&nbsp;file&nbsp;in&nbsp;:class:`~gensim.models.word2vec.<a href="#LineSentence">LineSentence</a>`&nbsp;format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;may&nbsp;use&nbsp;this&nbsp;argument&nbsp;instead&nbsp;of&nbsp;`sentences`&nbsp;to&nbsp;get&nbsp;performance&nbsp;boost.&nbsp;Only&nbsp;one&nbsp;of&nbsp;`sentences`&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`corpus_file`&nbsp;arguments&nbsp;need&nbsp;to&nbsp;be&nbsp;passed&nbsp;(not&nbsp;both&nbsp;of&nbsp;them).<br>
+update&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;true,&nbsp;the&nbsp;new&nbsp;words&nbsp;in&nbsp;`sentences`&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;model's&nbsp;vocab.<br>
+progress_per&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Indicates&nbsp;how&nbsp;many&nbsp;words&nbsp;to&nbsp;process&nbsp;before&nbsp;showing/updating&nbsp;the&nbsp;progress.<br>
+keep_raw_vocab&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;False,&nbsp;the&nbsp;raw&nbsp;vocabulary&nbsp;will&nbsp;be&nbsp;deleted&nbsp;after&nbsp;the&nbsp;scaling&nbsp;is&nbsp;done&nbsp;to&nbsp;free&nbsp;up&nbsp;RAM.<br>
+trim_rule&nbsp;:&nbsp;function,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;trimming&nbsp;rule,&nbsp;specifies&nbsp;whether&nbsp;certain&nbsp;words&nbsp;should&nbsp;remain&nbsp;in&nbsp;the&nbsp;vocabulary,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;trimmed&nbsp;away,&nbsp;or&nbsp;handled&nbsp;using&nbsp;the&nbsp;default&nbsp;(discard&nbsp;if&nbsp;word&nbsp;count&nbsp;&lt;&nbsp;min_count).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Can&nbsp;be&nbsp;None&nbsp;(min_count&nbsp;will&nbsp;be&nbsp;used,&nbsp;look&nbsp;to&nbsp;:func:`~gensim.utils.keep_vocab_item`),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;a&nbsp;callable&nbsp;that&nbsp;accepts&nbsp;parameters&nbsp;(word,&nbsp;count,&nbsp;min_count)&nbsp;and&nbsp;returns&nbsp;either<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`gensim.utils.RULE_DISCARD`,&nbsp;:attr:`gensim.utils.RULE_KEEP`&nbsp;or&nbsp;:attr:`gensim.utils.RULE_DEFAULT`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;rule,&nbsp;if&nbsp;given,&nbsp;is&nbsp;only&nbsp;used&nbsp;to&nbsp;prune&nbsp;vocabulary&nbsp;during&nbsp;current&nbsp;method&nbsp;call&nbsp;and&nbsp;is&nbsp;not&nbsp;stored&nbsp;as&nbsp;part<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;model.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;input&nbsp;parameters&nbsp;are&nbsp;of&nbsp;the&nbsp;following&nbsp;types:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`word`&nbsp;(str)&nbsp;-&nbsp;the&nbsp;word&nbsp;we&nbsp;are&nbsp;examining<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;word's&nbsp;frequency&nbsp;count&nbsp;in&nbsp;the&nbsp;corpus<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`min_count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;minimum&nbsp;count&nbsp;threshold.<br>
+&nbsp;<br>
+**kwargs&nbsp;:&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Key&nbsp;word&nbsp;arguments&nbsp;propagated&nbsp;to&nbsp;`self.<strong>vocabulary</strong>.prepare_vocab`</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-build_vocab_from_freq"><strong>build_vocab_from_freq</strong></a>(self, word_freq, keep_raw_vocab=False, corpus_count=None, trim_rule=None, update=False)</dt><dd><tt>Build&nbsp;vocabulary&nbsp;from&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;word&nbsp;frequencies.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+word_freq&nbsp;:&nbsp;dict&nbsp;of&nbsp;(str,&nbsp;int)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;mapping&nbsp;from&nbsp;a&nbsp;word&nbsp;in&nbsp;the&nbsp;vocabulary&nbsp;to&nbsp;its&nbsp;frequency&nbsp;count.<br>
+keep_raw_vocab&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;False,&nbsp;delete&nbsp;the&nbsp;raw&nbsp;vocabulary&nbsp;after&nbsp;the&nbsp;scaling&nbsp;is&nbsp;done&nbsp;to&nbsp;free&nbsp;up&nbsp;RAM.<br>
+corpus_count&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Even&nbsp;if&nbsp;no&nbsp;corpus&nbsp;is&nbsp;provided,&nbsp;this&nbsp;argument&nbsp;can&nbsp;set&nbsp;corpus_count&nbsp;explicitly.<br>
+trim_rule&nbsp;:&nbsp;function,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;trimming&nbsp;rule,&nbsp;specifies&nbsp;whether&nbsp;certain&nbsp;words&nbsp;should&nbsp;remain&nbsp;in&nbsp;the&nbsp;vocabulary,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;trimmed&nbsp;away,&nbsp;or&nbsp;handled&nbsp;using&nbsp;the&nbsp;default&nbsp;(discard&nbsp;if&nbsp;word&nbsp;count&nbsp;&lt;&nbsp;min_count).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Can&nbsp;be&nbsp;None&nbsp;(min_count&nbsp;will&nbsp;be&nbsp;used,&nbsp;look&nbsp;to&nbsp;:func:`~gensim.utils.keep_vocab_item`),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;a&nbsp;callable&nbsp;that&nbsp;accepts&nbsp;parameters&nbsp;(word,&nbsp;count,&nbsp;min_count)&nbsp;and&nbsp;returns&nbsp;either<br>
+&nbsp;&nbsp;&nbsp;&nbsp;:attr:`gensim.utils.RULE_DISCARD`,&nbsp;:attr:`gensim.utils.RULE_KEEP`&nbsp;or&nbsp;:attr:`gensim.utils.RULE_DEFAULT`.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;rule,&nbsp;if&nbsp;given,&nbsp;is&nbsp;only&nbsp;used&nbsp;to&nbsp;prune&nbsp;vocabulary&nbsp;during&nbsp;current&nbsp;method&nbsp;call&nbsp;and&nbsp;is&nbsp;not&nbsp;stored&nbsp;as&nbsp;part<br>
+&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;model.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;input&nbsp;parameters&nbsp;are&nbsp;of&nbsp;the&nbsp;following&nbsp;types:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`word`&nbsp;(str)&nbsp;-&nbsp;the&nbsp;word&nbsp;we&nbsp;are&nbsp;examining<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;word's&nbsp;frequency&nbsp;count&nbsp;in&nbsp;the&nbsp;corpus<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;`min_count`&nbsp;(int)&nbsp;-&nbsp;the&nbsp;minimum&nbsp;count&nbsp;threshold.<br>
+&nbsp;<br>
+update&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;true,&nbsp;the&nbsp;new&nbsp;provided&nbsp;words&nbsp;in&nbsp;`word_freq`&nbsp;dict&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;model's&nbsp;vocab.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-doesnt_match"><strong>doesnt_match</strong></a>(self, words)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-doesnt_match">doesnt_match</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.doesnt_match`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-estimate_memory"><strong>estimate_memory</strong></a>(self, vocab_size=None, report=None)</dt><dd><tt>Estimate&nbsp;required&nbsp;memory&nbsp;for&nbsp;a&nbsp;model&nbsp;using&nbsp;current&nbsp;settings&nbsp;and&nbsp;provided&nbsp;vocabulary&nbsp;size.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+vocab_size&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;unique&nbsp;tokens&nbsp;in&nbsp;the&nbsp;vocabulary<br>
+report&nbsp;:&nbsp;dict&nbsp;of&nbsp;(str,&nbsp;int),&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;dictionary&nbsp;from&nbsp;string&nbsp;representations&nbsp;of&nbsp;the&nbsp;model's&nbsp;memory&nbsp;consuming&nbsp;members&nbsp;to&nbsp;their&nbsp;size&nbsp;in&nbsp;bytes.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+dict&nbsp;of&nbsp;(str,&nbsp;int)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;dictionary&nbsp;from&nbsp;string&nbsp;representations&nbsp;of&nbsp;the&nbsp;model's&nbsp;memory&nbsp;consuming&nbsp;members&nbsp;to&nbsp;their&nbsp;size&nbsp;in&nbsp;bytes.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-evaluate_word_pairs"><strong>evaluate_word_pairs</strong></a>(self, pairs, delimiter='\t', restrict_vocab=300000, case_insensitive=True, dummy4unknown=False)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-evaluate_word_pairs">evaluate_word_pairs</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for<br>
+:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.evaluate_word_pairs`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-most_similar"><strong>most_similar</strong></a>(self, positive=None, negative=None, topn=10, restrict_vocab=None, indexer=None)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-most_similar">most_similar</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-most_similar_cosmul"><strong>most_similar_cosmul</strong></a>(self, positive=None, negative=None, topn=10)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-most_similar_cosmul">most_similar_cosmul</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for<br>
+:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar_cosmul`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-n_similarity"><strong>n_similarity</strong></a>(self, ws1, ws2)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-n_similarity">n_similarity</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.n_similarity`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-similar_by_vector"><strong>similar_by_vector</strong></a>(self, vector, topn=10, restrict_vocab=None)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-similar_by_vector">similar_by_vector</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.similar_by_vector`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-similar_by_word"><strong>similar_by_word</strong></a>(self, word, topn=10, restrict_vocab=None)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-similar_by_word">similar_by_word</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.similar_by_word`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-similarity"><strong>similarity</strong></a>(self, w1, w2)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-similarity">similarity</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.similarity`.</tt></dd></dl>
+
+<dl><dt><a name="Word2Vec-wmdistance"><strong>wmdistance</strong></a>(self, document1, document2)</dt><dd><tt>Deprecated,&nbsp;use&nbsp;self.<strong>wv</strong>.<a href="#Word2Vec-wmdistance">wmdistance</a>()&nbsp;instead.<br>
+&nbsp;<br>
+Refer&nbsp;to&nbsp;the&nbsp;documentation&nbsp;for&nbsp;:meth:`~gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.wmdistance`.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="gensim.models.base_any2vec.html#BaseWordEmbeddingsModel">gensim.models.base_any2vec.BaseWordEmbeddingsModel</a>:<br>
+<dl><dt><strong>cum_table</strong></dt>
+</dl>
+<dl><dt><strong>hashfxn</strong></dt>
+</dl>
+<dl><dt><strong>iter</strong></dt>
+</dl>
+<dl><dt><strong>layer1_size</strong></dt>
+</dl>
+<dl><dt><strong>min_count</strong></dt>
+</dl>
+<dl><dt><strong>sample</strong></dt>
+</dl>
+<dl><dt><strong>syn0_lockf</strong></dt>
+</dl>
+<dl><dt><strong>syn1</strong></dt>
+</dl>
+<dl><dt><strong>syn1neg</strong></dt>
+</dl>
+<hr>
+Data descriptors inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Word2VecTrainables">class <strong>Word2VecTrainables</strong></a>(<a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Represents&nbsp;the&nbsp;inner&nbsp;shallow&nbsp;neural&nbsp;network&nbsp;used&nbsp;to&nbsp;train&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="gensim.models.word2vec.html#Word2VecTrainables">Word2VecTrainables</a></dd>
+<dd><a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Word2VecTrainables-__init__"><strong>__init__</strong></a>(self, vector_size=100, seed=1, hashfxn=&lt;built-in function hash&gt;)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecTrainables-prepare_weights"><strong>prepare_weights</strong></a>(self, hs, negative, wv, update=False, vocabulary=None)</dt><dd><tt>Build&nbsp;tables&nbsp;and&nbsp;model&nbsp;weights&nbsp;based&nbsp;on&nbsp;final&nbsp;vocabulary&nbsp;settings.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecTrainables-reset_weights"><strong>reset_weights</strong></a>(self, hs, negative, wv)</dt><dd><tt>Reset&nbsp;all&nbsp;projection&nbsp;weights&nbsp;to&nbsp;an&nbsp;initial&nbsp;(untrained)&nbsp;state,&nbsp;but&nbsp;keep&nbsp;the&nbsp;existing&nbsp;vocabulary.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecTrainables-seeded_vector"><strong>seeded_vector</strong></a>(self, seed_string, vector_size)</dt><dd><tt>Get&nbsp;a&nbsp;random&nbsp;vector&nbsp;(but&nbsp;deterministic&nbsp;by&nbsp;seed_string).</tt></dd></dl>
+
+<dl><dt><a name="Word2VecTrainables-update_weights"><strong>update_weights</strong></a>(self, hs, negative, wv)</dt><dd><tt>Copy&nbsp;all&nbsp;the&nbsp;existing&nbsp;weights,&nbsp;and&nbsp;reset&nbsp;the&nbsp;weights&nbsp;for&nbsp;the&nbsp;newly&nbsp;added&nbsp;vocabulary.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><a name="Word2VecTrainables-save"><strong>save</strong></a>(self, fname_or_handle, separately=None, sep_limit=10485760, ignore=frozenset(), pickle_protocol=2)</dt><dd><tt>Save&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname_or_handle&nbsp;:&nbsp;str&nbsp;or&nbsp;file-like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;output&nbsp;file&nbsp;or&nbsp;already&nbsp;opened&nbsp;file-like&nbsp;<a href="builtins.html#object">object</a>.&nbsp;If&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;a&nbsp;file&nbsp;handle,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;special&nbsp;array&nbsp;handling&nbsp;will&nbsp;be&nbsp;performed,&nbsp;all&nbsp;attributes&nbsp;will&nbsp;be&nbsp;saved&nbsp;to&nbsp;the&nbsp;same&nbsp;file.<br>
+separately&nbsp;:&nbsp;list&nbsp;of&nbsp;str&nbsp;or&nbsp;None,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;None,&nbsp;automatically&nbsp;detect&nbsp;large&nbsp;numpy/scipy.sparse&nbsp;arrays&nbsp;in&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;being&nbsp;stored,&nbsp;and&nbsp;store<br>
+&nbsp;&nbsp;&nbsp;&nbsp;them&nbsp;into&nbsp;separate&nbsp;files.&nbsp;This&nbsp;prevent&nbsp;memory&nbsp;errors&nbsp;for&nbsp;large&nbsp;objects,&nbsp;and&nbsp;also&nbsp;allows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`memory-mapping&nbsp;&lt;https://en.wikipedia.org/wiki/Mmap&gt;`_&nbsp;the&nbsp;large&nbsp;arrays&nbsp;for&nbsp;efficient<br>
+&nbsp;&nbsp;&nbsp;&nbsp;loading&nbsp;and&nbsp;sharing&nbsp;the&nbsp;large&nbsp;arrays&nbsp;in&nbsp;RAM&nbsp;between&nbsp;multiple&nbsp;processes.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;list&nbsp;of&nbsp;str:&nbsp;store&nbsp;these&nbsp;attributes&nbsp;into&nbsp;separate&nbsp;files.&nbsp;The&nbsp;automated&nbsp;size&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;not&nbsp;performed&nbsp;in&nbsp;this&nbsp;case.<br>
+sep_limit&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Don't&nbsp;store&nbsp;arrays&nbsp;smaller&nbsp;than&nbsp;this&nbsp;separately.&nbsp;In&nbsp;bytes.<br>
+ignore&nbsp;:&nbsp;frozenset&nbsp;of&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Attributes&nbsp;that&nbsp;shouldn't&nbsp;be&nbsp;stored&nbsp;at&nbsp;all.<br>
+pickle_protocol&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Protocol&nbsp;number&nbsp;for&nbsp;pickle.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.load`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;file.</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><a name="Word2VecTrainables-load"><strong>load</strong></a>(fname, mmap=None)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Load&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;previously&nbsp;saved&nbsp;using&nbsp;:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.save`&nbsp;from&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;file&nbsp;that&nbsp;contains&nbsp;needed&nbsp;<a href="builtins.html#object">object</a>.<br>
+mmap&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Memory-map&nbsp;option.&nbsp;&nbsp;If&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;was&nbsp;saved&nbsp;with&nbsp;large&nbsp;arrays&nbsp;stored&nbsp;separately,&nbsp;you&nbsp;can&nbsp;load&nbsp;these&nbsp;arrays<br>
+&nbsp;&nbsp;&nbsp;&nbsp;via&nbsp;mmap&nbsp;(shared&nbsp;memory)&nbsp;using&nbsp;`mmap='r'.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;file&nbsp;being&nbsp;loaded&nbsp;is&nbsp;compressed&nbsp;(either&nbsp;'.gz'&nbsp;or&nbsp;'.bz2'),&nbsp;then&nbsp;`mmap=None`&nbsp;**must&nbsp;be**&nbsp;set.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.save`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;file.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Object&nbsp;loaded&nbsp;from&nbsp;`fname`.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+AttributeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;called&nbsp;on&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;instance&nbsp;instead&nbsp;of&nbsp;class&nbsp;(this&nbsp;is&nbsp;a&nbsp;class&nbsp;method).</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Word2VecVocab">class <strong>Word2VecVocab</strong></a>(<a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Vocabulary&nbsp;used&nbsp;by&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="gensim.models.word2vec.html#Word2VecVocab">Word2VecVocab</a></dd>
+<dd><a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Word2VecVocab-__init__"><strong>__init__</strong></a>(self, max_vocab_size=None, min_count=5, sample=0.001, sorted_vocab=True, null_word=0, max_final_vocab=None, ns_exponent=0.75)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecVocab-add_null_word"><strong>add_null_word</strong></a>(self, wv)</dt></dl>
+
+<dl><dt><a name="Word2VecVocab-create_binary_tree"><strong>create_binary_tree</strong></a>(self, wv)</dt><dd><tt>Create&nbsp;a&nbsp;`binary&nbsp;Huffman&nbsp;tree&nbsp;&lt;https://en.wikipedia.org/wiki/Huffman_coding&gt;`_&nbsp;using&nbsp;stored&nbsp;vocabulary<br>
+word&nbsp;counts.&nbsp;Frequent&nbsp;words&nbsp;will&nbsp;have&nbsp;shorter&nbsp;binary&nbsp;codes.<br>
+Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2VecVocab">Word2VecVocab</a>.build_vocab`.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecVocab-make_cum_table"><strong>make_cum_table</strong></a>(self, wv, domain=2147483647)</dt><dd><tt>Create&nbsp;a&nbsp;cumulative-distribution&nbsp;table&nbsp;using&nbsp;stored&nbsp;vocabulary&nbsp;word&nbsp;counts&nbsp;for<br>
+drawing&nbsp;random&nbsp;words&nbsp;in&nbsp;the&nbsp;negative-sampling&nbsp;training&nbsp;routines.<br>
+&nbsp;<br>
+To&nbsp;draw&nbsp;a&nbsp;word&nbsp;index,&nbsp;choose&nbsp;a&nbsp;random&nbsp;integer&nbsp;up&nbsp;to&nbsp;the&nbsp;maximum&nbsp;value&nbsp;in&nbsp;the&nbsp;table&nbsp;(cum_table[-1]),<br>
+then&nbsp;finding&nbsp;that&nbsp;integer's&nbsp;sorted&nbsp;insertion&nbsp;point&nbsp;(as&nbsp;if&nbsp;by&nbsp;`bisect_left`&nbsp;or&nbsp;`ndarray.searchsorted()`).<br>
+That&nbsp;insertion&nbsp;point&nbsp;is&nbsp;the&nbsp;drawn&nbsp;index,&nbsp;coming&nbsp;up&nbsp;in&nbsp;proportion&nbsp;equal&nbsp;to&nbsp;the&nbsp;increment&nbsp;at&nbsp;that&nbsp;slot.<br>
+&nbsp;<br>
+Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2VecVocab">Word2VecVocab</a>.build_vocab`.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecVocab-prepare_vocab"><strong>prepare_vocab</strong></a>(self, hs, negative, wv, update=False, keep_raw_vocab=False, trim_rule=None, min_count=None, sample=None, dry_run=False)</dt><dd><tt>Apply&nbsp;vocabulary&nbsp;settings&nbsp;for&nbsp;`min_count`&nbsp;(discarding&nbsp;less-frequent&nbsp;words)<br>
+and&nbsp;`sample`&nbsp;(controlling&nbsp;the&nbsp;downsampling&nbsp;of&nbsp;more-frequent&nbsp;words).<br>
+&nbsp;<br>
+Calling&nbsp;with&nbsp;`dry_run=True`&nbsp;will&nbsp;only&nbsp;simulate&nbsp;the&nbsp;provided&nbsp;settings&nbsp;and<br>
+report&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;retained&nbsp;vocabulary,&nbsp;effective&nbsp;corpus&nbsp;length,&nbsp;and<br>
+estimated&nbsp;memory&nbsp;requirements.&nbsp;Results&nbsp;are&nbsp;both&nbsp;printed&nbsp;via&nbsp;logging&nbsp;and<br>
+returned&nbsp;as&nbsp;a&nbsp;dict.<br>
+&nbsp;<br>
+Delete&nbsp;the&nbsp;raw&nbsp;vocabulary&nbsp;after&nbsp;the&nbsp;scaling&nbsp;is&nbsp;done&nbsp;to&nbsp;free&nbsp;up&nbsp;RAM,<br>
+unless&nbsp;`keep_raw_vocab`&nbsp;is&nbsp;set.</tt></dd></dl>
+
+<dl><dt><a name="Word2VecVocab-scan_vocab"><strong>scan_vocab</strong></a>(self, sentences=None, corpus_file=None, progress_per=10000, workers=None, trim_rule=None)</dt></dl>
+
+<dl><dt><a name="Word2VecVocab-sort_vocab"><strong>sort_vocab</strong></a>(self, wv)</dt><dd><tt>Sort&nbsp;the&nbsp;vocabulary&nbsp;so&nbsp;the&nbsp;most&nbsp;frequent&nbsp;words&nbsp;have&nbsp;the&nbsp;lowest&nbsp;indexes.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><a name="Word2VecVocab-save"><strong>save</strong></a>(self, fname_or_handle, separately=None, sep_limit=10485760, ignore=frozenset(), pickle_protocol=2)</dt><dd><tt>Save&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname_or_handle&nbsp;:&nbsp;str&nbsp;or&nbsp;file-like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;output&nbsp;file&nbsp;or&nbsp;already&nbsp;opened&nbsp;file-like&nbsp;<a href="builtins.html#object">object</a>.&nbsp;If&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;a&nbsp;file&nbsp;handle,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;special&nbsp;array&nbsp;handling&nbsp;will&nbsp;be&nbsp;performed,&nbsp;all&nbsp;attributes&nbsp;will&nbsp;be&nbsp;saved&nbsp;to&nbsp;the&nbsp;same&nbsp;file.<br>
+separately&nbsp;:&nbsp;list&nbsp;of&nbsp;str&nbsp;or&nbsp;None,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;None,&nbsp;automatically&nbsp;detect&nbsp;large&nbsp;numpy/scipy.sparse&nbsp;arrays&nbsp;in&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;being&nbsp;stored,&nbsp;and&nbsp;store<br>
+&nbsp;&nbsp;&nbsp;&nbsp;them&nbsp;into&nbsp;separate&nbsp;files.&nbsp;This&nbsp;prevent&nbsp;memory&nbsp;errors&nbsp;for&nbsp;large&nbsp;objects,&nbsp;and&nbsp;also&nbsp;allows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`memory-mapping&nbsp;&lt;https://en.wikipedia.org/wiki/Mmap&gt;`_&nbsp;the&nbsp;large&nbsp;arrays&nbsp;for&nbsp;efficient<br>
+&nbsp;&nbsp;&nbsp;&nbsp;loading&nbsp;and&nbsp;sharing&nbsp;the&nbsp;large&nbsp;arrays&nbsp;in&nbsp;RAM&nbsp;between&nbsp;multiple&nbsp;processes.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;list&nbsp;of&nbsp;str:&nbsp;store&nbsp;these&nbsp;attributes&nbsp;into&nbsp;separate&nbsp;files.&nbsp;The&nbsp;automated&nbsp;size&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;not&nbsp;performed&nbsp;in&nbsp;this&nbsp;case.<br>
+sep_limit&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Don't&nbsp;store&nbsp;arrays&nbsp;smaller&nbsp;than&nbsp;this&nbsp;separately.&nbsp;In&nbsp;bytes.<br>
+ignore&nbsp;:&nbsp;frozenset&nbsp;of&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Attributes&nbsp;that&nbsp;shouldn't&nbsp;be&nbsp;stored&nbsp;at&nbsp;all.<br>
+pickle_protocol&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Protocol&nbsp;number&nbsp;for&nbsp;pickle.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.load`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;file.</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><a name="Word2VecVocab-load"><strong>load</strong></a>(fname, mmap=None)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Load&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;previously&nbsp;saved&nbsp;using&nbsp;:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.save`&nbsp;from&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;to&nbsp;file&nbsp;that&nbsp;contains&nbsp;needed&nbsp;<a href="builtins.html#object">object</a>.<br>
+mmap&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Memory-map&nbsp;option.&nbsp;&nbsp;If&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;was&nbsp;saved&nbsp;with&nbsp;large&nbsp;arrays&nbsp;stored&nbsp;separately,&nbsp;you&nbsp;can&nbsp;load&nbsp;these&nbsp;arrays<br>
+&nbsp;&nbsp;&nbsp;&nbsp;via&nbsp;mmap&nbsp;(shared&nbsp;memory)&nbsp;using&nbsp;`mmap='r'.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;file&nbsp;being&nbsp;loaded&nbsp;is&nbsp;compressed&nbsp;(either&nbsp;'.gz'&nbsp;or&nbsp;'.bz2'),&nbsp;then&nbsp;`mmap=None`&nbsp;**must&nbsp;be**&nbsp;set.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+:meth:`~gensim.utils.<a href="gensim.utils.html#SaveLoad">SaveLoad</a>.save`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;file.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Object&nbsp;loaded&nbsp;from&nbsp;`fname`.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+AttributeError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;called&nbsp;on&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;instance&nbsp;instead&nbsp;of&nbsp;class&nbsp;(this&nbsp;is&nbsp;a&nbsp;class&nbsp;method).</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="gensim.utils.html#SaveLoad">gensim.utils.SaveLoad</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-array"><strong>array</strong></a>(...)</dt><dd><tt><a href="#-array">array</a>(<a href="builtins.html#object">object</a>,&nbsp;dtype=None,&nbsp;copy=True,&nbsp;order='K',&nbsp;subok=False,&nbsp;ndmin=0)<br>
+&nbsp;<br>
+Create&nbsp;an&nbsp;array.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+<a href="builtins.html#object">object</a>&nbsp;:&nbsp;array_like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;array,&nbsp;any&nbsp;<a href="builtins.html#object">object</a>&nbsp;exposing&nbsp;the&nbsp;array&nbsp;interface,&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;whose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;__array__&nbsp;method&nbsp;returns&nbsp;an&nbsp;array,&nbsp;or&nbsp;any&nbsp;(nested)&nbsp;sequence.<br>
+dtype&nbsp;:&nbsp;data-type,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;desired&nbsp;data-type&nbsp;for&nbsp;the&nbsp;array.&nbsp;&nbsp;If&nbsp;not&nbsp;given,&nbsp;then&nbsp;the&nbsp;type&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;determined&nbsp;as&nbsp;the&nbsp;minimum&nbsp;type&nbsp;required&nbsp;to&nbsp;hold&nbsp;the&nbsp;objects&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sequence.&nbsp;&nbsp;This&nbsp;argument&nbsp;can&nbsp;only&nbsp;be&nbsp;used&nbsp;to&nbsp;'upcast'&nbsp;the&nbsp;array.&nbsp;&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;downcasting,&nbsp;use&nbsp;the&nbsp;.astype(t)&nbsp;method.<br>
+copy&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;true&nbsp;(default),&nbsp;then&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;copied.&nbsp;&nbsp;Otherwise,&nbsp;a&nbsp;copy&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;be&nbsp;made&nbsp;if&nbsp;__array__&nbsp;returns&nbsp;a&nbsp;copy,&nbsp;if&nbsp;obj&nbsp;is&nbsp;a&nbsp;nested&nbsp;sequence,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;if&nbsp;a&nbsp;copy&nbsp;is&nbsp;needed&nbsp;to&nbsp;satisfy&nbsp;any&nbsp;of&nbsp;the&nbsp;other&nbsp;requirements<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(`dtype`,&nbsp;`order`,&nbsp;etc.).<br>
+order&nbsp;:&nbsp;{'K',&nbsp;'A',&nbsp;'C',&nbsp;'F'},&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Specify&nbsp;the&nbsp;memory&nbsp;layout&nbsp;of&nbsp;the&nbsp;array.&nbsp;If&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;not&nbsp;an&nbsp;array,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;newly&nbsp;created&nbsp;array&nbsp;will&nbsp;be&nbsp;in&nbsp;C&nbsp;order&nbsp;(row&nbsp;major)&nbsp;unless&nbsp;'F'&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;specified,&nbsp;in&nbsp;which&nbsp;case&nbsp;it&nbsp;will&nbsp;be&nbsp;in&nbsp;Fortran&nbsp;order&nbsp;(column&nbsp;major).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;an&nbsp;array&nbsp;the&nbsp;following&nbsp;holds.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=====&nbsp;=========&nbsp;===================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;order&nbsp;&nbsp;no&nbsp;copy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copy=True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=====&nbsp;=========&nbsp;===================================================<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'K'&nbsp;&nbsp;&nbsp;unchanged&nbsp;F&nbsp;&amp;&nbsp;C&nbsp;order&nbsp;preserved,&nbsp;otherwise&nbsp;most&nbsp;similar&nbsp;order<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'A'&nbsp;&nbsp;&nbsp;unchanged&nbsp;F&nbsp;order&nbsp;if&nbsp;input&nbsp;is&nbsp;F&nbsp;and&nbsp;not&nbsp;C,&nbsp;otherwise&nbsp;C&nbsp;order<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'C'&nbsp;&nbsp;&nbsp;C&nbsp;order&nbsp;&nbsp;&nbsp;C&nbsp;order<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'F'&nbsp;&nbsp;&nbsp;F&nbsp;order&nbsp;&nbsp;&nbsp;F&nbsp;order<br>
+&nbsp;&nbsp;&nbsp;&nbsp;=====&nbsp;=========&nbsp;===================================================<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;When&nbsp;``copy=False``&nbsp;and&nbsp;a&nbsp;copy&nbsp;is&nbsp;made&nbsp;for&nbsp;other&nbsp;reasons,&nbsp;the&nbsp;result&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;same&nbsp;as&nbsp;if&nbsp;``copy=True``,&nbsp;with&nbsp;some&nbsp;exceptions&nbsp;for&nbsp;`A`,&nbsp;see&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Notes&nbsp;section.&nbsp;The&nbsp;default&nbsp;order&nbsp;is&nbsp;'K'.<br>
+subok&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;then&nbsp;sub-classes&nbsp;will&nbsp;be&nbsp;passed-through,&nbsp;otherwise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;returned&nbsp;array&nbsp;will&nbsp;be&nbsp;forced&nbsp;to&nbsp;be&nbsp;a&nbsp;base-class&nbsp;array&nbsp;(default).<br>
+ndmin&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Specifies&nbsp;the&nbsp;minimum&nbsp;number&nbsp;of&nbsp;dimensions&nbsp;that&nbsp;the&nbsp;resulting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;array&nbsp;should&nbsp;have.&nbsp;&nbsp;Ones&nbsp;will&nbsp;be&nbsp;pre-pended&nbsp;to&nbsp;the&nbsp;shape&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;needed&nbsp;to&nbsp;meet&nbsp;this&nbsp;requirement.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+out&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;array&nbsp;<a href="builtins.html#object">object</a>&nbsp;satisfying&nbsp;the&nbsp;specified&nbsp;requirements.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+empty_like&nbsp;:&nbsp;Return&nbsp;an&nbsp;empty&nbsp;array&nbsp;with&nbsp;shape&nbsp;and&nbsp;type&nbsp;of&nbsp;input.<br>
+ones_like&nbsp;:&nbsp;Return&nbsp;an&nbsp;array&nbsp;of&nbsp;ones&nbsp;with&nbsp;shape&nbsp;and&nbsp;type&nbsp;of&nbsp;input.<br>
+zeros_like&nbsp;:&nbsp;Return&nbsp;an&nbsp;array&nbsp;of&nbsp;zeros&nbsp;with&nbsp;shape&nbsp;and&nbsp;type&nbsp;of&nbsp;input.<br>
+full_like&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;with&nbsp;shape&nbsp;of&nbsp;input&nbsp;filled&nbsp;with&nbsp;value.<br>
+empty&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;uninitialized&nbsp;array.<br>
+ones&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;setting&nbsp;values&nbsp;to&nbsp;one.<br>
+zeros&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;setting&nbsp;values&nbsp;to&nbsp;zero.<br>
+full&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;of&nbsp;given&nbsp;shape&nbsp;filled&nbsp;with&nbsp;value.<br>
+&nbsp;<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+When&nbsp;order&nbsp;is&nbsp;'A'&nbsp;and&nbsp;`<a href="builtins.html#object">object</a>`&nbsp;is&nbsp;an&nbsp;array&nbsp;in&nbsp;neither&nbsp;'C'&nbsp;nor&nbsp;'F'&nbsp;order,<br>
+and&nbsp;a&nbsp;copy&nbsp;is&nbsp;forced&nbsp;by&nbsp;a&nbsp;change&nbsp;in&nbsp;dtype,&nbsp;then&nbsp;the&nbsp;order&nbsp;of&nbsp;the&nbsp;result&nbsp;is<br>
+not&nbsp;necessarily&nbsp;'C'&nbsp;as&nbsp;expected.&nbsp;This&nbsp;is&nbsp;likely&nbsp;a&nbsp;bug.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>([1,&nbsp;2,&nbsp;3])<br>
+<a href="#-array">array</a>([1,&nbsp;2,&nbsp;3])<br>
+&nbsp;<br>
+Upcasting:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>([1,&nbsp;2,&nbsp;3.0])<br>
+<a href="#-array">array</a>([&nbsp;1.,&nbsp;&nbsp;2.,&nbsp;&nbsp;3.])<br>
+&nbsp;<br>
+More&nbsp;than&nbsp;one&nbsp;dimension:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>([[1,&nbsp;2],&nbsp;[3,&nbsp;4]])<br>
+<a href="#-array">array</a>([[1,&nbsp;2],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3,&nbsp;4]])<br>
+&nbsp;<br>
+Minimum&nbsp;dimensions&nbsp;2:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>([1,&nbsp;2,&nbsp;3],&nbsp;ndmin=2)<br>
+<a href="#-array">array</a>([[1,&nbsp;2,&nbsp;3]])<br>
+&nbsp;<br>
+Type&nbsp;provided:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>([1,&nbsp;2,&nbsp;3],&nbsp;dtype=complex)<br>
+<a href="#-array">array</a>([&nbsp;1.+0.j,&nbsp;&nbsp;2.+0.j,&nbsp;&nbsp;3.+0.j])<br>
+&nbsp;<br>
+Data-type&nbsp;consisting&nbsp;of&nbsp;more&nbsp;than&nbsp;one&nbsp;element:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;x&nbsp;=&nbsp;np.<a href="#-array">array</a>([(1,2),(3,4)],dtype=[('a','&lt;i4'),('b','&lt;i4')])<br>
+&gt;&gt;&gt;&nbsp;x['a']<br>
+<a href="#-array">array</a>([1,&nbsp;3])<br>
+&nbsp;<br>
+Creating&nbsp;an&nbsp;array&nbsp;from&nbsp;sub-classes:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>(np.mat('1&nbsp;2;&nbsp;3&nbsp;4'))<br>
+<a href="#-array">array</a>([[1,&nbsp;2],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3,&nbsp;4]])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-array">array</a>(np.mat('1&nbsp;2;&nbsp;3&nbsp;4'),&nbsp;subok=True)<br>
+matrix([[1,&nbsp;2],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3,&nbsp;4]])</tt></dd></dl>
+ <dl><dt><a name="-default_timer"><strong>default_timer</strong></a> = perf_counter(...)</dt><dd><tt>perf_counter()&nbsp;-&gt;&nbsp;float<br>
+&nbsp;<br>
+Performance&nbsp;counter&nbsp;for&nbsp;benchmarking.</tt></dd></dl>
+ <dl><dt><a name="-dot"><strong>dot</strong></a>(...)</dt><dd><tt><a href="#-dot">dot</a>(a,&nbsp;b,&nbsp;out=None)<br>
+&nbsp;<br>
+Dot&nbsp;product&nbsp;of&nbsp;two&nbsp;arrays.&nbsp;Specifically,<br>
+&nbsp;<br>
+-&nbsp;If&nbsp;both&nbsp;`a`&nbsp;and&nbsp;`b`&nbsp;are&nbsp;1-D&nbsp;arrays,&nbsp;it&nbsp;is&nbsp;inner&nbsp;product&nbsp;of&nbsp;vectors<br>
+&nbsp;&nbsp;(without&nbsp;complex&nbsp;conjugation).<br>
+&nbsp;<br>
+-&nbsp;If&nbsp;both&nbsp;`a`&nbsp;and&nbsp;`b`&nbsp;are&nbsp;2-D&nbsp;arrays,&nbsp;it&nbsp;is&nbsp;matrix&nbsp;multiplication,<br>
+&nbsp;&nbsp;but&nbsp;using&nbsp;:func:`matmul`&nbsp;or&nbsp;``a&nbsp;@&nbsp;b``&nbsp;is&nbsp;preferred.<br>
+&nbsp;<br>
+-&nbsp;If&nbsp;either&nbsp;`a`&nbsp;or&nbsp;`b`&nbsp;is&nbsp;0-D&nbsp;(scalar),&nbsp;it&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;:func:`multiply`<br>
+&nbsp;&nbsp;and&nbsp;using&nbsp;``numpy.multiply(a,&nbsp;b)``&nbsp;or&nbsp;``a&nbsp;*&nbsp;b``&nbsp;is&nbsp;preferred.<br>
+&nbsp;<br>
+-&nbsp;If&nbsp;`a`&nbsp;is&nbsp;an&nbsp;N-D&nbsp;array&nbsp;and&nbsp;`b`&nbsp;is&nbsp;a&nbsp;1-D&nbsp;array,&nbsp;it&nbsp;is&nbsp;a&nbsp;sum&nbsp;product&nbsp;over<br>
+&nbsp;&nbsp;the&nbsp;last&nbsp;axis&nbsp;of&nbsp;`a`&nbsp;and&nbsp;`b`.<br>
+&nbsp;<br>
+-&nbsp;If&nbsp;`a`&nbsp;is&nbsp;an&nbsp;N-D&nbsp;array&nbsp;and&nbsp;`b`&nbsp;is&nbsp;an&nbsp;M-D&nbsp;array&nbsp;(where&nbsp;``M&gt;=2``),&nbsp;it&nbsp;is&nbsp;a<br>
+&nbsp;&nbsp;sum&nbsp;product&nbsp;over&nbsp;the&nbsp;last&nbsp;axis&nbsp;of&nbsp;`a`&nbsp;and&nbsp;the&nbsp;second-to-last&nbsp;axis&nbsp;of&nbsp;`b`::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-dot">dot</a>(a,&nbsp;b)[i,j,k,m]&nbsp;=&nbsp;sum(a[i,j,:]&nbsp;*&nbsp;b[k,:,m])<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+a&nbsp;:&nbsp;array_like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;First&nbsp;argument.<br>
+b&nbsp;:&nbsp;array_like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Second&nbsp;argument.<br>
+out&nbsp;:&nbsp;ndarray,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Output&nbsp;argument.&nbsp;This&nbsp;must&nbsp;have&nbsp;the&nbsp;exact&nbsp;kind&nbsp;that&nbsp;would&nbsp;be&nbsp;returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;it&nbsp;was&nbsp;not&nbsp;used.&nbsp;In&nbsp;particular,&nbsp;it&nbsp;must&nbsp;have&nbsp;the&nbsp;right&nbsp;type,&nbsp;must&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;C-contiguous,&nbsp;and&nbsp;its&nbsp;dtype&nbsp;must&nbsp;be&nbsp;the&nbsp;dtype&nbsp;that&nbsp;would&nbsp;be&nbsp;returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;`<a href="#-dot">dot</a>(a,b)`.&nbsp;This&nbsp;is&nbsp;a&nbsp;performance&nbsp;feature.&nbsp;Therefore,&nbsp;if&nbsp;these<br>
+&nbsp;&nbsp;&nbsp;&nbsp;conditions&nbsp;are&nbsp;not&nbsp;met,&nbsp;an&nbsp;exception&nbsp;is&nbsp;raised,&nbsp;instead&nbsp;of&nbsp;attempting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;flexible.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+output&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;the&nbsp;dot&nbsp;product&nbsp;of&nbsp;`a`&nbsp;and&nbsp;`b`.&nbsp;&nbsp;If&nbsp;`a`&nbsp;and&nbsp;`b`&nbsp;are&nbsp;both<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scalars&nbsp;or&nbsp;both&nbsp;1-D&nbsp;arrays&nbsp;then&nbsp;a&nbsp;scalar&nbsp;is&nbsp;returned;&nbsp;otherwise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;is&nbsp;returned.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;`out`&nbsp;is&nbsp;given,&nbsp;then&nbsp;it&nbsp;is&nbsp;returned.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+ValueError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;last&nbsp;dimension&nbsp;of&nbsp;`a`&nbsp;is&nbsp;not&nbsp;the&nbsp;same&nbsp;size&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;second-to-last&nbsp;dimension&nbsp;of&nbsp;`b`.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+vdot&nbsp;:&nbsp;Complex-conjugating&nbsp;dot&nbsp;product.<br>
+tensordot&nbsp;:&nbsp;Sum&nbsp;products&nbsp;over&nbsp;arbitrary&nbsp;axes.<br>
+einsum&nbsp;:&nbsp;Einstein&nbsp;summation&nbsp;convention.<br>
+matmul&nbsp;:&nbsp;'@'&nbsp;operator&nbsp;as&nbsp;method&nbsp;with&nbsp;out&nbsp;parameter.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-dot">dot</a>(3,&nbsp;4)<br>
+12<br>
+&nbsp;<br>
+Neither&nbsp;argument&nbsp;is&nbsp;complex-conjugated:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-dot">dot</a>([2j,&nbsp;3j],&nbsp;[2j,&nbsp;3j])<br>
+(-13+0j)<br>
+&nbsp;<br>
+For&nbsp;2-D&nbsp;arrays&nbsp;it&nbsp;is&nbsp;the&nbsp;matrix&nbsp;product:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;a&nbsp;=&nbsp;[[1,&nbsp;0],&nbsp;[0,&nbsp;1]]<br>
+&gt;&gt;&gt;&nbsp;b&nbsp;=&nbsp;[[4,&nbsp;1],&nbsp;[2,&nbsp;2]]<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-dot">dot</a>(a,&nbsp;b)<br>
+<a href="#-array">array</a>([[4,&nbsp;1],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2,&nbsp;2]])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;a&nbsp;=&nbsp;np.arange(3*4*5*6).reshape((3,4,5,6))<br>
+&gt;&gt;&gt;&nbsp;b&nbsp;=&nbsp;np.arange(3*4*5*6)[::-1].reshape((5,4,6,3))<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-dot">dot</a>(a,&nbsp;b)[2,3,2,1,2,2]<br>
+499128<br>
+&gt;&gt;&gt;&nbsp;sum(a[2,3,2,:]&nbsp;*&nbsp;b[1,2,:,2])<br>
+499128</tt></dd></dl>
+ <dl><dt><a name="-empty"><strong>empty</strong></a>(...)</dt><dd><tt><a href="#-empty">empty</a>(shape,&nbsp;dtype=float,&nbsp;order='C')<br>
+&nbsp;<br>
+Return&nbsp;a&nbsp;new&nbsp;array&nbsp;of&nbsp;given&nbsp;shape&nbsp;and&nbsp;type,&nbsp;without&nbsp;initializing&nbsp;entries.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+shape&nbsp;:&nbsp;int&nbsp;or&nbsp;tuple&nbsp;of&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Shape&nbsp;of&nbsp;the&nbsp;empty&nbsp;array,&nbsp;e.g.,&nbsp;``(2,&nbsp;3)``&nbsp;or&nbsp;``2``.<br>
+dtype&nbsp;:&nbsp;data-type,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Desired&nbsp;output&nbsp;data-type&nbsp;for&nbsp;the&nbsp;array,&nbsp;e.g,&nbsp;`numpy.int8`.&nbsp;Default&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`numpy.float64`.<br>
+order&nbsp;:&nbsp;{'C',&nbsp;'F'},&nbsp;optional,&nbsp;default:&nbsp;'C'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;store&nbsp;multi-dimensional&nbsp;data&nbsp;in&nbsp;row-major<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(C-style)&nbsp;or&nbsp;column-major&nbsp;(Fortran-style)&nbsp;order&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;memory.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+out&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Array&nbsp;of&nbsp;uninitialized&nbsp;(arbitrary)&nbsp;data&nbsp;of&nbsp;the&nbsp;given&nbsp;shape,&nbsp;dtype,&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;order.&nbsp;&nbsp;Object&nbsp;arrays&nbsp;will&nbsp;be&nbsp;initialized&nbsp;to&nbsp;None.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+empty_like&nbsp;:&nbsp;Return&nbsp;an&nbsp;empty&nbsp;array&nbsp;with&nbsp;shape&nbsp;and&nbsp;type&nbsp;of&nbsp;input.<br>
+ones&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;setting&nbsp;values&nbsp;to&nbsp;one.<br>
+zeros&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;setting&nbsp;values&nbsp;to&nbsp;zero.<br>
+full&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;of&nbsp;given&nbsp;shape&nbsp;filled&nbsp;with&nbsp;value.<br>
+&nbsp;<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+`empty`,&nbsp;unlike&nbsp;`zeros`,&nbsp;does&nbsp;not&nbsp;set&nbsp;the&nbsp;array&nbsp;values&nbsp;to&nbsp;zero,<br>
+and&nbsp;may&nbsp;therefore&nbsp;be&nbsp;marginally&nbsp;faster.&nbsp;&nbsp;On&nbsp;the&nbsp;other&nbsp;hand,&nbsp;it&nbsp;requires<br>
+the&nbsp;user&nbsp;to&nbsp;manually&nbsp;set&nbsp;all&nbsp;the&nbsp;values&nbsp;in&nbsp;the&nbsp;array,&nbsp;and&nbsp;should&nbsp;be<br>
+used&nbsp;with&nbsp;caution.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-empty">empty</a>([2,&nbsp;2])<br>
+<a href="#-array">array</a>([[&nbsp;-9.74499359e+001,&nbsp;&nbsp;&nbsp;6.69583040e-309],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;2.13182611e-314,&nbsp;&nbsp;&nbsp;3.06959433e-309]])&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#random<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-empty">empty</a>([2,&nbsp;2],&nbsp;dtype=int)<br>
+<a href="#-array">array</a>([[-1073741821,&nbsp;-1067949133],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;496041986,&nbsp;&nbsp;&nbsp;&nbsp;19249760]])&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#random</tt></dd></dl>
+ <dl><dt><a name="-fromstring"><strong>fromstring</strong></a>(...)</dt><dd><tt><a href="#-fromstring">fromstring</a>(string,&nbsp;dtype=float,&nbsp;count=-1,&nbsp;sep='')<br>
+&nbsp;<br>
+A&nbsp;new&nbsp;1-D&nbsp;array&nbsp;initialized&nbsp;from&nbsp;text&nbsp;data&nbsp;in&nbsp;a&nbsp;string.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+string&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;string&nbsp;containing&nbsp;the&nbsp;data.<br>
+dtype&nbsp;:&nbsp;data-type,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;data&nbsp;type&nbsp;of&nbsp;the&nbsp;array;&nbsp;default:&nbsp;float.&nbsp;&nbsp;For&nbsp;binary&nbsp;input&nbsp;data,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;data&nbsp;must&nbsp;be&nbsp;in&nbsp;exactly&nbsp;this&nbsp;format.<br>
+count&nbsp;:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Read&nbsp;this&nbsp;number&nbsp;of&nbsp;`dtype`&nbsp;elements&nbsp;from&nbsp;the&nbsp;data.&nbsp;&nbsp;If&nbsp;this&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;negative&nbsp;(the&nbsp;default),&nbsp;the&nbsp;count&nbsp;will&nbsp;be&nbsp;determined&nbsp;from&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;the&nbsp;data.<br>
+sep&nbsp;:&nbsp;str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;string&nbsp;separating&nbsp;numbers&nbsp;in&nbsp;the&nbsp;data;&nbsp;extra&nbsp;whitespace&nbsp;between<br>
+&nbsp;&nbsp;&nbsp;&nbsp;elements&nbsp;is&nbsp;also&nbsp;ignored.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;deprecated::&nbsp;1.14<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;argument&nbsp;is&nbsp;not&nbsp;provided,&nbsp;`fromstring`&nbsp;falls&nbsp;back&nbsp;on&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;behaviour&nbsp;of&nbsp;`frombuffer`&nbsp;after&nbsp;encoding&nbsp;unicode&nbsp;string&nbsp;inputs&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;either&nbsp;utf-8&nbsp;(python&nbsp;3),&nbsp;or&nbsp;the&nbsp;default&nbsp;encoding&nbsp;(python&nbsp;2).<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+arr&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;constructed&nbsp;array.<br>
+&nbsp;<br>
+Raises<br>
+------<br>
+ValueError<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;string&nbsp;is&nbsp;not&nbsp;the&nbsp;correct&nbsp;size&nbsp;to&nbsp;satisfy&nbsp;the&nbsp;requested<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`dtype`&nbsp;and&nbsp;`count`.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+frombuffer,&nbsp;fromfile,&nbsp;fromiter<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-fromstring">fromstring</a>('1&nbsp;2',&nbsp;dtype=int,&nbsp;sep='&nbsp;')<br>
+<a href="#-array">array</a>([1,&nbsp;2])<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-fromstring">fromstring</a>('1,&nbsp;2',&nbsp;dtype=int,&nbsp;sep=',')<br>
+<a href="#-array">array</a>([1,&nbsp;2])</tt></dd></dl>
+ <dl><dt><a name="-score_cbow_pair"><strong>score_cbow_pair</strong></a>(model, word, l1)</dt><dd><tt>Score&nbsp;the&nbsp;trained&nbsp;CBOW&nbsp;model&nbsp;on&nbsp;a&nbsp;pair&nbsp;of&nbsp;words.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;trained&nbsp;model.<br>
+word&nbsp;:&nbsp;:class:`~gensim.models.keyedvectors.Vocab`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;representation&nbsp;of&nbsp;the&nbsp;first&nbsp;word.<br>
+l1&nbsp;:&nbsp;list&nbsp;of&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;representation&nbsp;of&nbsp;the&nbsp;second&nbsp;word.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Logarithm&nbsp;of&nbsp;the&nbsp;sum&nbsp;of&nbsp;exponentiations&nbsp;of&nbsp;input&nbsp;words.</tt></dd></dl>
+ <dl><dt><a name="-score_sentence_cbow"><strong>score_sentence_cbow</strong></a>(...)</dt><dd><tt><a href="#-score_sentence_cbow">score_sentence_cbow</a>(model,&nbsp;sentence,&nbsp;_work,&nbsp;_neu1)<br>
+Obtain&nbsp;likelihood&nbsp;score&nbsp;for&nbsp;a&nbsp;single&nbsp;sentence&nbsp;in&nbsp;a&nbsp;fitted&nbsp;CBOW&nbsp;representation.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Notes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;scoring&nbsp;function&nbsp;is&nbsp;only&nbsp;implemented&nbsp;for&nbsp;hierarchical&nbsp;softmax&nbsp;(`model.hs&nbsp;==&nbsp;1`).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;model&nbsp;should&nbsp;have&nbsp;been&nbsp;trained&nbsp;using&nbsp;the&nbsp;skip-gram&nbsp;model&nbsp;(`model.cbow`&nbsp;==&nbsp;1`).<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;trained&nbsp;model.&nbsp;It&nbsp;**MUST**&nbsp;have&nbsp;been&nbsp;trained&nbsp;using&nbsp;hierarchical&nbsp;softmax&nbsp;and&nbsp;the&nbsp;CBOW&nbsp;algorithm.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sentence&nbsp;:&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;words&nbsp;comprising&nbsp;the&nbsp;sentence&nbsp;to&nbsp;be&nbsp;scored.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_neu1&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;probability&nbsp;assigned&nbsp;to&nbsp;this&nbsp;sentence&nbsp;by&nbsp;the&nbsp;Skip-Gram&nbsp;model.</tt></dd></dl>
+ <dl><dt><a name="-score_sentence_sg"><strong>score_sentence_sg</strong></a>(...)</dt><dd><tt><a href="#-score_sentence_sg">score_sentence_sg</a>(model,&nbsp;sentence,&nbsp;_work)<br>
+Obtain&nbsp;likelihood&nbsp;score&nbsp;for&nbsp;a&nbsp;single&nbsp;sentence&nbsp;in&nbsp;a&nbsp;fitted&nbsp;skip-gram&nbsp;representation.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Notes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;scoring&nbsp;function&nbsp;is&nbsp;only&nbsp;implemented&nbsp;for&nbsp;hierarchical&nbsp;softmax&nbsp;(`model.hs&nbsp;==&nbsp;1`).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;model&nbsp;should&nbsp;have&nbsp;been&nbsp;trained&nbsp;using&nbsp;the&nbsp;skip-gram&nbsp;model&nbsp;(`model.sg`&nbsp;==&nbsp;1`).<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;trained&nbsp;model.&nbsp;It&nbsp;**MUST**&nbsp;have&nbsp;been&nbsp;trained&nbsp;using&nbsp;hierarchical&nbsp;softmax&nbsp;and&nbsp;the&nbsp;skip-gram&nbsp;algorithm.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sentence&nbsp;:&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;words&nbsp;comprising&nbsp;the&nbsp;sentence&nbsp;to&nbsp;be&nbsp;scored.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;probability&nbsp;assigned&nbsp;to&nbsp;this&nbsp;sentence&nbsp;by&nbsp;the&nbsp;Skip-Gram&nbsp;model.</tt></dd></dl>
+ <dl><dt><a name="-score_sg_pair"><strong>score_sg_pair</strong></a>(model, word, word2)</dt><dd><tt>Score&nbsp;the&nbsp;trained&nbsp;Skip-gram&nbsp;model&nbsp;on&nbsp;a&nbsp;pair&nbsp;of&nbsp;words.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;trained&nbsp;model.<br>
+word&nbsp;:&nbsp;:class:`~gensim.models.keyedvectors.Vocab`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;representation&nbsp;of&nbsp;the&nbsp;first&nbsp;word.<br>
+word2&nbsp;:&nbsp;:class:`~gensim.models.keyedvectors.Vocab`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vocabulary&nbsp;representation&nbsp;of&nbsp;the&nbsp;second&nbsp;word.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Logarithm&nbsp;of&nbsp;the&nbsp;sum&nbsp;of&nbsp;exponentiations&nbsp;of&nbsp;input&nbsp;words.</tt></dd></dl>
+ <dl><dt><a name="-train_batch_cbow"><strong>train_batch_cbow</strong></a>(...)</dt><dd><tt><a href="#-train_batch_cbow">train_batch_cbow</a>(model,&nbsp;sentences,&nbsp;alpha,&nbsp;_work,&nbsp;_neu1,&nbsp;compute_loss)<br>
+Update&nbsp;CBOW&nbsp;model&nbsp;by&nbsp;training&nbsp;on&nbsp;a&nbsp;batch&nbsp;of&nbsp;sentences.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;<a href="#Word2Vec">Word2Vec</a>&nbsp;model&nbsp;instance&nbsp;to&nbsp;train.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;corpus&nbsp;used&nbsp;to&nbsp;train&nbsp;the&nbsp;model.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;learning&nbsp;rate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_neu1&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;compute_loss&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed&nbsp;in&nbsp;this&nbsp;batch.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;words&nbsp;in&nbsp;the&nbsp;vocabulary&nbsp;actually&nbsp;used&nbsp;for&nbsp;training&nbsp;(They&nbsp;already&nbsp;existed&nbsp;in&nbsp;the&nbsp;vocabulary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;were&nbsp;not&nbsp;discarded&nbsp;by&nbsp;negative&nbsp;sampling).</tt></dd></dl>
+ <dl><dt><a name="-train_batch_sg"><strong>train_batch_sg</strong></a>(...)</dt><dd><tt><a href="#-train_batch_sg">train_batch_sg</a>(model,&nbsp;sentences,&nbsp;alpha,&nbsp;_work,&nbsp;compute_loss)<br>
+Update&nbsp;skip-gram&nbsp;model&nbsp;by&nbsp;training&nbsp;on&nbsp;a&nbsp;batch&nbsp;of&nbsp;sentences.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2Vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;<a href="#Word2Vec">Word2Vec</a>&nbsp;model&nbsp;instance&nbsp;to&nbsp;train.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sentences&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;corpus&nbsp;used&nbsp;to&nbsp;train&nbsp;the&nbsp;model.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;learning&nbsp;rate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;compute_loss&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed&nbsp;in&nbsp;this&nbsp;batch.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;words&nbsp;in&nbsp;the&nbsp;vocabulary&nbsp;actually&nbsp;used&nbsp;for&nbsp;training&nbsp;(They&nbsp;already&nbsp;existed&nbsp;in&nbsp;the&nbsp;vocabulary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;were&nbsp;not&nbsp;discarded&nbsp;by&nbsp;negative&nbsp;sampling).</tt></dd></dl>
+ <dl><dt><a name="-train_cbow_pair"><strong>train_cbow_pair</strong></a>(model, word, input_word_indices, l1, alpha, learn_vectors=True, learn_hidden=True, compute_loss=False, context_vectors=None, context_locks=None, is_ft=False)</dt><dd><tt>Train&nbsp;the&nbsp;passed&nbsp;model&nbsp;instance&nbsp;on&nbsp;a&nbsp;word&nbsp;and&nbsp;its&nbsp;context,&nbsp;using&nbsp;the&nbsp;CBOW&nbsp;algorithm.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;model&nbsp;to&nbsp;be&nbsp;trained.<br>
+word&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;label&nbsp;(predicted)&nbsp;word.<br>
+input_word_indices&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;vocabulary&nbsp;indices&nbsp;of&nbsp;the&nbsp;words&nbsp;in&nbsp;the&nbsp;context.<br>
+l1&nbsp;:&nbsp;list&nbsp;of&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;representation&nbsp;of&nbsp;the&nbsp;label&nbsp;word.<br>
+alpha&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Learning&nbsp;rate.<br>
+learn_vectors&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;the&nbsp;vectors&nbsp;should&nbsp;be&nbsp;updated.<br>
+learn_hidden&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;the&nbsp;weights&nbsp;of&nbsp;the&nbsp;hidden&nbsp;layer&nbsp;should&nbsp;be&nbsp;updated.<br>
+compute_loss&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed.<br>
+context_vectors&nbsp;:&nbsp;list&nbsp;of&nbsp;list&nbsp;of&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;representations&nbsp;of&nbsp;the&nbsp;words&nbsp;in&nbsp;the&nbsp;context.&nbsp;If&nbsp;None,&nbsp;these&nbsp;will&nbsp;be&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;model.<br>
+context_locks&nbsp;:&nbsp;list&nbsp;of&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;lock&nbsp;factors&nbsp;for&nbsp;each&nbsp;word&nbsp;in&nbsp;the&nbsp;context.<br>
+is_ft&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;weights&nbsp;will&nbsp;be&nbsp;computed&nbsp;using&nbsp;`model.wv.syn0_vocab`&nbsp;and&nbsp;`model.wv.syn0_ngrams`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;instead&nbsp;of&nbsp;`model.wv.syn0`.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+numpy.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;vector&nbsp;to&nbsp;be&nbsp;back-propagated.</tt></dd></dl>
+ <dl><dt><a name="-train_epoch_cbow"><strong>train_epoch_cbow</strong></a>(...)</dt><dd><tt><a href="#-train_epoch_cbow">train_epoch_cbow</a>(model,&nbsp;corpus_file,&nbsp;offset,&nbsp;_cython_vocab,&nbsp;_cur_epoch,&nbsp;_expected_examples,&nbsp;_expected_words,&nbsp;_work,&nbsp;_neu1,&nbsp;compute_loss)<br>
+Train&nbsp;CBOW&nbsp;model&nbsp;for&nbsp;one&nbsp;epoch&nbsp;by&nbsp;training&nbsp;on&nbsp;an&nbsp;input&nbsp;stream.&nbsp;This&nbsp;function&nbsp;is&nbsp;used&nbsp;only&nbsp;in&nbsp;multistream&nbsp;mode.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;<a href="#Word2Vec">Word2Vec</a>&nbsp;model&nbsp;instance&nbsp;to&nbsp;train.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;input_stream&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;corpus&nbsp;used&nbsp;to&nbsp;train&nbsp;the&nbsp;model.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_cur_epoch&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current&nbsp;epoch&nbsp;number.&nbsp;Used&nbsp;for&nbsp;calculating&nbsp;and&nbsp;decaying&nbsp;learning&nbsp;rate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_neu1&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;compute_loss&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed&nbsp;in&nbsp;this&nbsp;batch.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;words&nbsp;in&nbsp;the&nbsp;vocabulary&nbsp;actually&nbsp;used&nbsp;for&nbsp;training&nbsp;(They&nbsp;already&nbsp;existed&nbsp;in&nbsp;the&nbsp;vocabulary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;were&nbsp;not&nbsp;discarded&nbsp;by&nbsp;negative&nbsp;sampling).</tt></dd></dl>
+ <dl><dt><a name="-train_epoch_sg"><strong>train_epoch_sg</strong></a>(...)</dt><dd><tt><a href="#-train_epoch_sg">train_epoch_sg</a>(model,&nbsp;corpus_file,&nbsp;offset,&nbsp;_cython_vocab,&nbsp;_cur_epoch,&nbsp;_expected_examples,&nbsp;_expected_words,&nbsp;_work,&nbsp;_neu1,&nbsp;compute_loss)<br>
+Train&nbsp;Skipgram&nbsp;model&nbsp;for&nbsp;one&nbsp;epoch&nbsp;by&nbsp;training&nbsp;on&nbsp;an&nbsp;input&nbsp;stream.&nbsp;This&nbsp;function&nbsp;is&nbsp;used&nbsp;only&nbsp;in&nbsp;multistream&nbsp;mode.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Called&nbsp;internally&nbsp;from&nbsp;:meth:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>.train`.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;<a href="#Word2Vec">Word2Vec</a>&nbsp;model&nbsp;instance&nbsp;to&nbsp;train.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;input_stream&nbsp;:&nbsp;iterable&nbsp;of&nbsp;list&nbsp;of&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;corpus&nbsp;used&nbsp;to&nbsp;train&nbsp;the&nbsp;model.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_cur_epoch&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Current&nbsp;epoch&nbsp;number.&nbsp;Used&nbsp;for&nbsp;calculating&nbsp;and&nbsp;decaying&nbsp;learning&nbsp;rate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_work&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_neu1&nbsp;:&nbsp;np.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Private&nbsp;working&nbsp;memory&nbsp;for&nbsp;each&nbsp;worker.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;compute_loss&nbsp;:&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed&nbsp;in&nbsp;this&nbsp;batch.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;words&nbsp;in&nbsp;the&nbsp;vocabulary&nbsp;actually&nbsp;used&nbsp;for&nbsp;training&nbsp;(They&nbsp;already&nbsp;existed&nbsp;in&nbsp;the&nbsp;vocabulary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;were&nbsp;not&nbsp;discarded&nbsp;by&nbsp;negative&nbsp;sampling).</tt></dd></dl>
+ <dl><dt><a name="-train_sg_pair"><strong>train_sg_pair</strong></a>(model, word, context_index, alpha, learn_vectors=True, learn_hidden=True, context_vectors=None, context_locks=None, compute_loss=False, is_ft=False)</dt><dd><tt>Train&nbsp;the&nbsp;passed&nbsp;model&nbsp;instance&nbsp;on&nbsp;a&nbsp;word&nbsp;and&nbsp;its&nbsp;context,&nbsp;using&nbsp;the&nbsp;Skip-gram&nbsp;algorithm.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+model&nbsp;:&nbsp;:class:`~gensim.models.word2vec.<a href="#Word2Vec">Word2Vec</a>`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;model&nbsp;to&nbsp;be&nbsp;trained.<br>
+word&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;label&nbsp;(predicted)&nbsp;word.<br>
+context_index&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;vocabulary&nbsp;indices&nbsp;of&nbsp;the&nbsp;words&nbsp;in&nbsp;the&nbsp;context.<br>
+alpha&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Learning&nbsp;rate.<br>
+learn_vectors&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;the&nbsp;vectors&nbsp;should&nbsp;be&nbsp;updated.<br>
+learn_hidden&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;the&nbsp;weights&nbsp;of&nbsp;the&nbsp;hidden&nbsp;layer&nbsp;should&nbsp;be&nbsp;updated.<br>
+context_vectors&nbsp;:&nbsp;list&nbsp;of&nbsp;list&nbsp;of&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;representations&nbsp;of&nbsp;the&nbsp;words&nbsp;in&nbsp;the&nbsp;context.&nbsp;If&nbsp;None,&nbsp;these&nbsp;will&nbsp;be&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;model.<br>
+context_locks&nbsp;:&nbsp;list&nbsp;of&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;lock&nbsp;factors&nbsp;for&nbsp;each&nbsp;word&nbsp;in&nbsp;the&nbsp;context.<br>
+compute_loss&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;training&nbsp;loss&nbsp;should&nbsp;be&nbsp;computed.<br>
+is_ft&nbsp;:&nbsp;bool,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;weights&nbsp;will&nbsp;be&nbsp;computed&nbsp;using&nbsp;`model.wv.syn0_vocab`&nbsp;and&nbsp;`model.wv.syn0_ngrams`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;instead&nbsp;of&nbsp;`model.wv.syn0`.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+numpy.ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;vector&nbsp;to&nbsp;be&nbsp;back-propagated.</tt></dd></dl>
+ <dl><dt><a name="-zeros"><strong>zeros</strong></a>(...)</dt><dd><tt><a href="#-zeros">zeros</a>(shape,&nbsp;dtype=float,&nbsp;order='C')<br>
+&nbsp;<br>
+Return&nbsp;a&nbsp;new&nbsp;array&nbsp;of&nbsp;given&nbsp;shape&nbsp;and&nbsp;type,&nbsp;filled&nbsp;with&nbsp;zeros.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+shape&nbsp;:&nbsp;int&nbsp;or&nbsp;tuple&nbsp;of&nbsp;ints<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Shape&nbsp;of&nbsp;the&nbsp;new&nbsp;array,&nbsp;e.g.,&nbsp;``(2,&nbsp;3)``&nbsp;or&nbsp;``2``.<br>
+dtype&nbsp;:&nbsp;data-type,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;desired&nbsp;data-type&nbsp;for&nbsp;the&nbsp;array,&nbsp;e.g.,&nbsp;`numpy.int8`.&nbsp;&nbsp;Default&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`numpy.float64`.<br>
+order&nbsp;:&nbsp;{'C',&nbsp;'F'},&nbsp;optional,&nbsp;default:&nbsp;'C'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;store&nbsp;multi-dimensional&nbsp;data&nbsp;in&nbsp;row-major<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(C-style)&nbsp;or&nbsp;column-major&nbsp;(Fortran-style)&nbsp;order&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;memory.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+out&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Array&nbsp;of&nbsp;zeros&nbsp;with&nbsp;the&nbsp;given&nbsp;shape,&nbsp;dtype,&nbsp;and&nbsp;order.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+zeros_like&nbsp;:&nbsp;Return&nbsp;an&nbsp;array&nbsp;of&nbsp;zeros&nbsp;with&nbsp;shape&nbsp;and&nbsp;type&nbsp;of&nbsp;input.<br>
+empty&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;uninitialized&nbsp;array.<br>
+ones&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;setting&nbsp;values&nbsp;to&nbsp;one.<br>
+full&nbsp;:&nbsp;Return&nbsp;a&nbsp;new&nbsp;array&nbsp;of&nbsp;given&nbsp;shape&nbsp;filled&nbsp;with&nbsp;value.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-zeros">zeros</a>(5)<br>
+<a href="#-array">array</a>([&nbsp;0.,&nbsp;&nbsp;0.,&nbsp;&nbsp;0.,&nbsp;&nbsp;0.,&nbsp;&nbsp;0.])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-zeros">zeros</a>((5,),&nbsp;dtype=int)<br>
+<a href="#-array">array</a>([0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-zeros">zeros</a>((2,&nbsp;1))<br>
+<a href="#-array">array</a>([[&nbsp;0.],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;0.]])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;s&nbsp;=&nbsp;(2,2)<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-zeros">zeros</a>(s)<br>
+<a href="#-array">array</a>([[&nbsp;0.,&nbsp;&nbsp;0.],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;0.,&nbsp;&nbsp;0.]])<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.<a href="#-zeros">zeros</a>((2,),&nbsp;dtype=[('x',&nbsp;'i4'),&nbsp;('y',&nbsp;'i4')])&nbsp;#&nbsp;custom&nbsp;dtype<br>
+<a href="#-array">array</a>([(0,&nbsp;0),&nbsp;(0,&nbsp;0)],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dtype=[('x',&nbsp;'&lt;i4'),&nbsp;('y',&nbsp;'&lt;i4')])</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>CORPUSFILE_VERSION</strong> = 1<br>
+<strong>FAST_VERSION</strong> = 0<br>
+<strong>MAX_WORDS_IN_BATCH</strong> = 10000<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)<br>
+<strong>exp</strong> = &lt;ufunc 'exp'&gt;<br>
+<strong>expit</strong> = &lt;ufunc 'expit'&gt;<br>
+<strong>log</strong> = &lt;ufunc 'log'&gt;<br>
+<strong>logaddexp</strong> = &lt;ufunc 'logaddexp'&gt;<br>
+<strong>logger</strong> = &lt;Logger gensim.models.word2vec (WARNING)&gt;<br>
+<strong>sqrt</strong> = &lt;ufunc 'sqrt'&gt;<br>
+<strong>string_types</strong> = (&lt;class 'str'&gt;,)</td></tr></table>
+</body></html>

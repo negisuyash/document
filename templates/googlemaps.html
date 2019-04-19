@@ -1,0 +1,733 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package googlemaps</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>googlemaps</strong></big></big> (version 3.0.2)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cspidern3mo%5Cappdata%5Clocal%5Cprograms%5Cpython%5Cpython36%5Clib%5Csite-packages%5Cgooglemaps%5C__init__.py">c:\users\spidern3mo\appdata\local\programs\python\python36\lib\site-packages\googlemaps\__init__.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Copyright&nbsp;2014&nbsp;Google&nbsp;Inc.&nbsp;All&nbsp;rights&nbsp;reserved.<br>
+#<br>
+#<br>
+#&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");&nbsp;you&nbsp;may&nbsp;not<br>
+#&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of<br>
+#&nbsp;the&nbsp;License&nbsp;at<br>
+#<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br>
+#<br>
+#&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software<br>
+#&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,&nbsp;WITHOUT<br>
+#&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;implied.&nbsp;See&nbsp;the<br>
+#&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under<br>
+#&nbsp;the&nbsp;License.<br>
+#</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="googlemaps.client.html">client</a><br>
+<a href="googlemaps.convert.html">convert</a><br>
+<a href="googlemaps.directions.html">directions</a><br>
+</td><td width="25%" valign=top><a href="googlemaps.distance_matrix.html">distance_matrix</a><br>
+<a href="googlemaps.elevation.html">elevation</a><br>
+<a href="googlemaps.exceptions.html">exceptions</a><br>
+</td><td width="25%" valign=top><a href="googlemaps.geocoding.html">geocoding</a><br>
+<a href="googlemaps.geolocation.html">geolocation</a><br>
+<a href="googlemaps.places.html">places</a><br>
+</td><td width="25%" valign=top><a href="googlemaps.roads.html">roads</a><br>
+<a href="googlemaps.timezone.html">timezone</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="googlemaps.client.html#Client">googlemaps.client.Client</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Client">class <strong>Client</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Performs&nbsp;requests&nbsp;to&nbsp;the&nbsp;Google&nbsp;Maps&nbsp;API&nbsp;web&nbsp;services.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Client-__init__"><strong>__init__</strong></a>(self, key=None, client_id=None, client_secret=None, timeout=None, connect_timeout=None, read_timeout=None, retry_timeout=60, requests_kwargs=None, queries_per_second=50, channel=None, retry_over_query_limit=True)</dt><dd><tt>:param&nbsp;key:&nbsp;Maps&nbsp;API&nbsp;key.&nbsp;Required,&nbsp;unless&nbsp;"client_id"&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"client_secret"&nbsp;are&nbsp;set.<br>
+:type&nbsp;key:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;client_id:&nbsp;(for&nbsp;Maps&nbsp;API&nbsp;for&nbsp;Work&nbsp;customers)&nbsp;Your&nbsp;client&nbsp;ID.<br>
+:type&nbsp;client_id:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;client_secret:&nbsp;(for&nbsp;Maps&nbsp;API&nbsp;for&nbsp;Work&nbsp;customers)&nbsp;Your&nbsp;client<br>
+&nbsp;&nbsp;&nbsp;&nbsp;secret&nbsp;(base64&nbsp;encoded).<br>
+:type&nbsp;client_secret:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;channel:&nbsp;(for&nbsp;Maps&nbsp;API&nbsp;for&nbsp;Work&nbsp;customers)&nbsp;When&nbsp;set,&nbsp;a&nbsp;channel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameter&nbsp;with&nbsp;this&nbsp;value&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;requests.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;tracking&nbsp;purpose.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Can&nbsp;only&nbsp;be&nbsp;used&nbsp;with&nbsp;a&nbsp;Maps&nbsp;API&nbsp;client&nbsp;ID.<br>
+:type&nbsp;channel:&nbsp;str<br>
+&nbsp;<br>
+:param&nbsp;timeout:&nbsp;Combined&nbsp;connect&nbsp;and&nbsp;read&nbsp;timeout&nbsp;for&nbsp;HTTP&nbsp;requests,&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seconds.&nbsp;Specify&nbsp;"None"&nbsp;for&nbsp;no&nbsp;timeout.<br>
+:type&nbsp;timeout:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;connect_timeout:&nbsp;Connection&nbsp;timeout&nbsp;for&nbsp;HTTP&nbsp;requests,&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seconds.&nbsp;You&nbsp;should&nbsp;specify&nbsp;read_timeout&nbsp;in&nbsp;addition&nbsp;to&nbsp;this&nbsp;option.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Note&nbsp;that&nbsp;this&nbsp;requires&nbsp;requests&nbsp;&gt;=&nbsp;2.4.0.<br>
+:type&nbsp;connect_timeout:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;read_timeout:&nbsp;Read&nbsp;timeout&nbsp;for&nbsp;HTTP&nbsp;requests,&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seconds.&nbsp;You&nbsp;should&nbsp;specify&nbsp;connect_timeout&nbsp;in&nbsp;addition&nbsp;to&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;option.&nbsp;Note&nbsp;that&nbsp;this&nbsp;requires&nbsp;requests&nbsp;&gt;=&nbsp;2.4.0.<br>
+:type&nbsp;read_timeout:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;retry_timeout:&nbsp;Timeout&nbsp;across&nbsp;multiple&nbsp;retriable&nbsp;requests,&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seconds.<br>
+:type&nbsp;retry_timeout:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;queries_per_second:&nbsp;Number&nbsp;of&nbsp;queries&nbsp;per&nbsp;second&nbsp;permitted.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;rate&nbsp;limit&nbsp;is&nbsp;reached,&nbsp;the&nbsp;client&nbsp;will&nbsp;sleep&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;amount&nbsp;of&nbsp;time&nbsp;before&nbsp;it&nbsp;runs&nbsp;the&nbsp;current&nbsp;query.<br>
+:type&nbsp;queries_per_second:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;retry_over_query_limit:&nbsp;If&nbsp;True,&nbsp;requests&nbsp;that&nbsp;result&nbsp;in&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;response&nbsp;indicating&nbsp;the&nbsp;query&nbsp;rate&nbsp;limit&nbsp;was&nbsp;exceeded&nbsp;will&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;retried.&nbsp;Defaults&nbsp;to&nbsp;True.<br>
+:type&nbsp;retry_over_query_limit:&nbsp;bool<br>
+&nbsp;<br>
+:raises&nbsp;ValueError:&nbsp;when&nbsp;either&nbsp;credentials&nbsp;are&nbsp;missing,&nbsp;incomplete<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;invalid.<br>
+:raises&nbsp;NotImplementedError:&nbsp;if&nbsp;connect_timeout&nbsp;and&nbsp;read_timeout&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;requests&nbsp;prior&nbsp;to&nbsp;2.4.0.<br>
+&nbsp;<br>
+:param&nbsp;requests_kwargs:&nbsp;Extra&nbsp;keyword&nbsp;arguments&nbsp;for&nbsp;the&nbsp;requests<br>
+&nbsp;&nbsp;&nbsp;&nbsp;library,&nbsp;which&nbsp;among&nbsp;other&nbsp;things&nbsp;allow&nbsp;for&nbsp;proxy&nbsp;auth&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;implemented.&nbsp;See&nbsp;the&nbsp;official&nbsp;requests&nbsp;docs&nbsp;for&nbsp;more&nbsp;info:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.python-requests.org/en/latest/api/#main-interface">http://docs.python-requests.org/en/latest/api/#main-interface</a><br>
+:type&nbsp;requests_kwargs:&nbsp;dict</tt></dd></dl>
+
+<dl><dt><a name="Client-directions"><strong>directions</strong></a>(client, origin, destination, mode=None, waypoints=None, alternatives=False, avoid=None, language=None, units=None, region=None, departure_time=None, arrival_time=None, optimize_waypoints=False, transit_mode=None, transit_routing_preference=None, traffic_model=None)</dt><dd><tt>Get&nbsp;directions&nbsp;between&nbsp;an&nbsp;origin&nbsp;point&nbsp;and&nbsp;a&nbsp;destination&nbsp;point.<br>
+&nbsp;<br>
+:param&nbsp;origin:&nbsp;The&nbsp;address&nbsp;or&nbsp;latitude/longitude&nbsp;value&nbsp;from&nbsp;which&nbsp;you&nbsp;wish<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;calculate&nbsp;directions.<br>
+:type&nbsp;origin:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;destination:&nbsp;The&nbsp;address&nbsp;or&nbsp;latitude/longitude&nbsp;value&nbsp;from&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;wish&nbsp;to&nbsp;calculate&nbsp;directions.&nbsp;You&nbsp;can&nbsp;use&nbsp;a&nbsp;place_id&nbsp;as&nbsp;destination<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;putting&nbsp;'place_id:'&nbsp;as&nbsp;a&nbsp;preffix&nbsp;in&nbsp;the&nbsp;passing&nbsp;parameter.<br>
+:type&nbsp;destination:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;mode:&nbsp;Specifies&nbsp;the&nbsp;mode&nbsp;of&nbsp;transport&nbsp;to&nbsp;use&nbsp;when&nbsp;calculating<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directions.&nbsp;One&nbsp;of&nbsp;"driving",&nbsp;"walking",&nbsp;"bicycling"&nbsp;or&nbsp;"transit"<br>
+:type&nbsp;mode:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;waypoints:&nbsp;Specifies&nbsp;an&nbsp;array&nbsp;of&nbsp;waypoints.&nbsp;Waypoints&nbsp;alter&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;by&nbsp;routing&nbsp;it&nbsp;through&nbsp;the&nbsp;specified&nbsp;location(s).<br>
+:type&nbsp;waypoints:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;alternatives:&nbsp;If&nbsp;True,&nbsp;more&nbsp;than&nbsp;one&nbsp;route&nbsp;may&nbsp;be&nbsp;returned&nbsp;in&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;response.<br>
+:type&nbsp;alternatives:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;avoid:&nbsp;Indicates&nbsp;that&nbsp;the&nbsp;calculated&nbsp;route(s)&nbsp;should&nbsp;avoid&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indicated&nbsp;features.<br>
+:type&nbsp;avoid:&nbsp;list&nbsp;or&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;language:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;units:&nbsp;Specifies&nbsp;the&nbsp;unit&nbsp;system&nbsp;to&nbsp;use&nbsp;when&nbsp;displaying&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"metric"&nbsp;or&nbsp;"imperial"<br>
+:type&nbsp;units:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;region:&nbsp;The&nbsp;region&nbsp;code,&nbsp;specified&nbsp;as&nbsp;a&nbsp;ccTLD&nbsp;("top-level&nbsp;domain"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;two-character&nbsp;value.<br>
+:type&nbsp;region:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;departure_time:&nbsp;Specifies&nbsp;the&nbsp;desired&nbsp;time&nbsp;of&nbsp;departure.<br>
+:type&nbsp;departure_time:&nbsp;int&nbsp;or&nbsp;datetime.datetime<br>
+&nbsp;<br>
+:param&nbsp;arrival_time:&nbsp;Specifies&nbsp;the&nbsp;desired&nbsp;time&nbsp;of&nbsp;arrival&nbsp;for&nbsp;transit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directions.&nbsp;Note:&nbsp;you&nbsp;can't&nbsp;specify&nbsp;both&nbsp;departure_time&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arrival_time.<br>
+:type&nbsp;arrival_time:&nbsp;int&nbsp;or&nbsp;datetime.datetime<br>
+&nbsp;<br>
+:param&nbsp;optimize_waypoints:&nbsp;Optimize&nbsp;the&nbsp;provided&nbsp;route&nbsp;by&nbsp;rearranging&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;waypoints&nbsp;in&nbsp;a&nbsp;more&nbsp;efficient&nbsp;order.<br>
+:type&nbsp;optimize_waypoints:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;transit_mode:&nbsp;Specifies&nbsp;one&nbsp;or&nbsp;more&nbsp;preferred&nbsp;modes&nbsp;of&nbsp;transit.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;parameter&nbsp;may&nbsp;only&nbsp;be&nbsp;specified&nbsp;for&nbsp;requests&nbsp;where&nbsp;the&nbsp;mode&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;transit.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"bus",&nbsp;"subway",&nbsp;"train",&nbsp;"tram",&nbsp;"rail".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"rail"&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;["train",&nbsp;"tram",&nbsp;"subway"].<br>
+:type&nbsp;transit_mode:&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;transit_routing_preference:&nbsp;Specifies&nbsp;preferences&nbsp;for&nbsp;transit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requests.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"less_walking"&nbsp;or&nbsp;"fewer_transfers"<br>
+:type&nbsp;transit_routing_preference:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;traffic_model:&nbsp;Specifies&nbsp;the&nbsp;predictive&nbsp;travel&nbsp;time&nbsp;model&nbsp;to&nbsp;use.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"best_guess"&nbsp;or&nbsp;"optimistic"&nbsp;or&nbsp;"pessimistic".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;traffic_model&nbsp;parameter&nbsp;may&nbsp;only&nbsp;be&nbsp;specified&nbsp;for&nbsp;requests&nbsp;where<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;travel&nbsp;mode&nbsp;is&nbsp;driving,&nbsp;and&nbsp;where&nbsp;the&nbsp;request&nbsp;includes&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;departure_time.<br>
+:type&nbsp;units:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;routes</tt></dd></dl>
+
+<dl><dt><a name="Client-distance_matrix"><strong>distance_matrix</strong></a>(client, origins, destinations, mode=None, language=None, avoid=None, units=None, departure_time=None, arrival_time=None, transit_mode=None, transit_routing_preference=None, traffic_model=None, region=None)</dt><dd><tt>Gets&nbsp;travel&nbsp;distance&nbsp;and&nbsp;time&nbsp;for&nbsp;a&nbsp;matrix&nbsp;of&nbsp;origins&nbsp;and&nbsp;destinations.<br>
+&nbsp;<br>
+:param&nbsp;origins:&nbsp;One&nbsp;or&nbsp;more&nbsp;locations&nbsp;and/or&nbsp;latitude/longitude&nbsp;values,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;which&nbsp;to&nbsp;calculate&nbsp;distance&nbsp;and&nbsp;time.&nbsp;If&nbsp;you&nbsp;pass&nbsp;an&nbsp;address&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;string,&nbsp;the&nbsp;service&nbsp;will&nbsp;geocode&nbsp;the&nbsp;string&nbsp;and&nbsp;convert&nbsp;it&nbsp;to&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;latitude/longitude&nbsp;coordinate&nbsp;to&nbsp;calculate&nbsp;directions.<br>
+:type&nbsp;origins:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;destinations:&nbsp;One&nbsp;or&nbsp;more&nbsp;addresses&nbsp;and/or&nbsp;lat/lng&nbsp;values,&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;to&nbsp;calculate&nbsp;distance&nbsp;and&nbsp;time.&nbsp;If&nbsp;you&nbsp;pass&nbsp;an&nbsp;address&nbsp;as&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string,&nbsp;the&nbsp;service&nbsp;will&nbsp;geocode&nbsp;the&nbsp;string&nbsp;and&nbsp;convert&nbsp;it&nbsp;to&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;latitude/longitude&nbsp;coordinate&nbsp;to&nbsp;calculate&nbsp;directions.<br>
+:type&nbsp;destinations:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;mode:&nbsp;Specifies&nbsp;the&nbsp;mode&nbsp;of&nbsp;transport&nbsp;to&nbsp;use&nbsp;when&nbsp;calculating<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directions.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"driving",&nbsp;"walking",&nbsp;"transit"&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"bicycling".<br>
+:type&nbsp;mode:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;language:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;avoid:&nbsp;Indicates&nbsp;that&nbsp;the&nbsp;calculated&nbsp;route(s)&nbsp;should&nbsp;avoid&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indicated&nbsp;features.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"tolls",&nbsp;"highways"&nbsp;or&nbsp;"ferries".<br>
+:type&nbsp;avoid:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;units:&nbsp;Specifies&nbsp;the&nbsp;unit&nbsp;system&nbsp;to&nbsp;use&nbsp;when&nbsp;displaying&nbsp;results.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"metric"&nbsp;or&nbsp;"imperial".<br>
+:type&nbsp;units:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;departure_time:&nbsp;Specifies&nbsp;the&nbsp;desired&nbsp;time&nbsp;of&nbsp;departure.<br>
+:type&nbsp;departure_time:&nbsp;int&nbsp;or&nbsp;datetime.datetime<br>
+&nbsp;<br>
+:param&nbsp;arrival_time:&nbsp;Specifies&nbsp;the&nbsp;desired&nbsp;time&nbsp;of&nbsp;arrival&nbsp;for&nbsp;transit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directions.&nbsp;Note:&nbsp;you&nbsp;can't&nbsp;specify&nbsp;both&nbsp;departure_time&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arrival_time.<br>
+:type&nbsp;arrival_time:&nbsp;int&nbsp;or&nbsp;datetime.datetime<br>
+&nbsp;<br>
+:param&nbsp;transit_mode:&nbsp;Specifies&nbsp;one&nbsp;or&nbsp;more&nbsp;preferred&nbsp;modes&nbsp;of&nbsp;transit.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;parameter&nbsp;may&nbsp;only&nbsp;be&nbsp;specified&nbsp;for&nbsp;requests&nbsp;where&nbsp;the&nbsp;mode&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;transit.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"bus",&nbsp;"subway",&nbsp;"train",&nbsp;"tram",&nbsp;"rail".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"rail"&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;["train",&nbsp;"tram",&nbsp;"subway"].<br>
+:type&nbsp;transit_mode:&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;transit_routing_preference:&nbsp;Specifies&nbsp;preferences&nbsp;for&nbsp;transit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requests.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"less_walking"&nbsp;or&nbsp;"fewer_transfers".<br>
+:type&nbsp;transit_routing_preference:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;traffic_model:&nbsp;Specifies&nbsp;the&nbsp;predictive&nbsp;travel&nbsp;time&nbsp;model&nbsp;to&nbsp;use.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valid&nbsp;values&nbsp;are&nbsp;"best_guess"&nbsp;or&nbsp;"optimistic"&nbsp;or&nbsp;"pessimistic".<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;traffic_model&nbsp;parameter&nbsp;may&nbsp;only&nbsp;be&nbsp;specified&nbsp;for&nbsp;requests&nbsp;where<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;travel&nbsp;mode&nbsp;is&nbsp;driving,&nbsp;and&nbsp;where&nbsp;the&nbsp;request&nbsp;includes&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;departure_time.<br>
+&nbsp;<br>
+:param&nbsp;region:&nbsp;Specifies&nbsp;the&nbsp;prefered&nbsp;region&nbsp;the&nbsp;geocoder&nbsp;should&nbsp;search<br>
+&nbsp;&nbsp;&nbsp;&nbsp;first,&nbsp;but&nbsp;it&nbsp;will&nbsp;not&nbsp;restrict&nbsp;the&nbsp;results&nbsp;to&nbsp;only&nbsp;this&nbsp;region.&nbsp;Valid<br>
+&nbsp;&nbsp;&nbsp;&nbsp;values&nbsp;are&nbsp;a&nbsp;ccTLD&nbsp;code.<br>
+:type&nbsp;region:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;matrix&nbsp;of&nbsp;distances.&nbsp;Results&nbsp;are&nbsp;returned&nbsp;in&nbsp;rows,&nbsp;each&nbsp;row<br>
+&nbsp;&nbsp;&nbsp;&nbsp;containing&nbsp;one&nbsp;origin&nbsp;paired&nbsp;with&nbsp;each&nbsp;destination.</tt></dd></dl>
+
+<dl><dt><a name="Client-elevation"><strong>elevation</strong></a>(client, locations)</dt><dd><tt>Provides&nbsp;elevation&nbsp;data&nbsp;for&nbsp;locations&nbsp;provided&nbsp;on&nbsp;the&nbsp;surface&nbsp;of&nbsp;the<br>
+earth,&nbsp;including&nbsp;depth&nbsp;locations&nbsp;on&nbsp;the&nbsp;ocean&nbsp;floor&nbsp;(which&nbsp;return&nbsp;negative<br>
+values)<br>
+&nbsp;<br>
+:param&nbsp;locations:&nbsp;List&nbsp;of&nbsp;latitude/longitude&nbsp;values&nbsp;from&nbsp;which&nbsp;you&nbsp;wish<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;calculate&nbsp;elevation&nbsp;data.<br>
+:type&nbsp;locations:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;elevation&nbsp;data&nbsp;responses</tt></dd></dl>
+
+<dl><dt><a name="Client-elevation_along_path"><strong>elevation_along_path</strong></a>(client, path, samples)</dt><dd><tt>Provides&nbsp;elevation&nbsp;data&nbsp;sampled&nbsp;along&nbsp;a&nbsp;path&nbsp;on&nbsp;the&nbsp;surface&nbsp;of&nbsp;the&nbsp;earth.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;An&nbsp;encoded&nbsp;polyline&nbsp;string,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;latitude/longitude<br>
+&nbsp;&nbsp;&nbsp;&nbsp;values&nbsp;from&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;calculate&nbsp;elevation&nbsp;data.<br>
+:type&nbsp;path:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;samples:&nbsp;The&nbsp;number&nbsp;of&nbsp;sample&nbsp;points&nbsp;along&nbsp;a&nbsp;path&nbsp;for&nbsp;which&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;elevation&nbsp;data.<br>
+:type&nbsp;samples:&nbsp;int<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;elevation&nbsp;data&nbsp;responses</tt></dd></dl>
+
+<dl><dt><a name="Client-find_place"><strong>find_place</strong></a>(client, input, input_type, fields=None, location_bias=None, language=None)</dt><dd><tt>A&nbsp;Find&nbsp;Place&nbsp;request&nbsp;takes&nbsp;a&nbsp;text&nbsp;input,&nbsp;and&nbsp;returns&nbsp;a&nbsp;place.<br>
+The&nbsp;text&nbsp;input&nbsp;can&nbsp;be&nbsp;any&nbsp;kind&nbsp;of&nbsp;Places&nbsp;data,&nbsp;for&nbsp;example,<br>
+a&nbsp;name,&nbsp;address,&nbsp;or&nbsp;phone&nbsp;number.<br>
+&nbsp;<br>
+:param&nbsp;input:&nbsp;The&nbsp;text&nbsp;input&nbsp;specifying&nbsp;which&nbsp;place&nbsp;to&nbsp;search&nbsp;for&nbsp;(for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;example,&nbsp;a&nbsp;name,&nbsp;address,&nbsp;or&nbsp;phone&nbsp;number).<br>
+:type&nbsp;input:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;input_type:&nbsp;The&nbsp;type&nbsp;of&nbsp;input.&nbsp;This&nbsp;can&nbsp;be&nbsp;one&nbsp;of&nbsp;either&nbsp;'textquery'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;'phonenumber'.<br>
+:type&nbsp;input_type:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;fields:&nbsp;The&nbsp;fields&nbsp;specifying&nbsp;the&nbsp;types&nbsp;of&nbsp;place&nbsp;data&nbsp;to&nbsp;return,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;separated&nbsp;by&nbsp;a&nbsp;comma.&nbsp;For&nbsp;full&nbsp;details&nbsp;see:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/web-service/search#FindPlaceRequests<br>
+:type&nbsp;input:&nbsp;list<br>
+&nbsp;<br>
+:param&nbsp;location_bias:&nbsp;Prefer&nbsp;results&nbsp;in&nbsp;a&nbsp;specified&nbsp;area,&nbsp;by&nbsp;specifying<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;either&nbsp;a&nbsp;radius&nbsp;plus&nbsp;lat/lng,&nbsp;or&nbsp;two&nbsp;lat/lng&nbsp;pairs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;representing&nbsp;the&nbsp;points&nbsp;of&nbsp;a&nbsp;rectangle.&nbsp;See:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/web-service/search#FindPlaceRequests<br>
+:type&nbsp;location_bias:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;result&nbsp;dict&nbsp;with&nbsp;the&nbsp;following&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;status&nbsp;code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;candidates:&nbsp;list&nbsp;of&nbsp;places</tt></dd></dl>
+
+<dl><dt><a name="Client-geocode"><strong>geocode</strong></a>(client, address=None, components=None, bounds=None, region=None, language=None)</dt><dd><tt>Geocoding&nbsp;is&nbsp;the&nbsp;process&nbsp;of&nbsp;converting&nbsp;addresses<br>
+(like&nbsp;``"1600&nbsp;Amphitheatre&nbsp;Parkway,&nbsp;Mountain&nbsp;View,&nbsp;CA"``)&nbsp;into&nbsp;geographic<br>
+coordinates&nbsp;(like&nbsp;latitude&nbsp;37.423021&nbsp;and&nbsp;longitude&nbsp;-122.083739),&nbsp;which&nbsp;you<br>
+can&nbsp;use&nbsp;to&nbsp;place&nbsp;markers&nbsp;or&nbsp;position&nbsp;the&nbsp;map.<br>
+&nbsp;<br>
+:param&nbsp;address:&nbsp;The&nbsp;address&nbsp;to&nbsp;geocode.<br>
+:type&nbsp;address:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;components:&nbsp;A&nbsp;component&nbsp;filter&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;geocode,&nbsp;for&nbsp;example:&nbsp;``{'administrative_area':&nbsp;'TX','country':&nbsp;'US'}``<br>
+:type&nbsp;components:&nbsp;dict<br>
+&nbsp;<br>
+:param&nbsp;bounds:&nbsp;The&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;viewport&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;geocode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;more&nbsp;prominently.<br>
+:type&nbsp;bounds:&nbsp;string&nbsp;or&nbsp;dict&nbsp;with&nbsp;northeast&nbsp;and&nbsp;southwest&nbsp;keys.<br>
+&nbsp;<br>
+:param&nbsp;region:&nbsp;The&nbsp;region&nbsp;code,&nbsp;specified&nbsp;as&nbsp;a&nbsp;ccTLD&nbsp;("top-level&nbsp;domain")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;two-character&nbsp;value.<br>
+:type&nbsp;region:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;geocoding&nbsp;results.</tt></dd></dl>
+
+<dl><dt><a name="Client-geolocate"><strong>geolocate</strong></a>(client, home_mobile_country_code=None, home_mobile_network_code=None, radio_type=None, carrier=None, consider_ip=None, cell_towers=None, wifi_access_points=None)</dt><dd><tt>The&nbsp;Google&nbsp;Maps&nbsp;Geolocation&nbsp;API&nbsp;returns&nbsp;a&nbsp;location&nbsp;and&nbsp;accuracy<br>
+radius&nbsp;based&nbsp;on&nbsp;information&nbsp;about&nbsp;cell&nbsp;towers&nbsp;and&nbsp;WiFi&nbsp;nodes&nbsp;given.<br>
+&nbsp;<br>
+See&nbsp;https://developers.google.com/maps/documentation/geolocation/intro<br>
+for&nbsp;more&nbsp;info,&nbsp;including&nbsp;more&nbsp;detail&nbsp;for&nbsp;each&nbsp;parameter&nbsp;below.<br>
+&nbsp;<br>
+:param&nbsp;home_mobile_country_code:&nbsp;The&nbsp;mobile&nbsp;country&nbsp;code&nbsp;(MCC)&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;device's&nbsp;home&nbsp;network.<br>
+:type&nbsp;home_mobile_country_code:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;home_mobile_network_code:&nbsp;The&nbsp;mobile&nbsp;network&nbsp;code&nbsp;(MCC)&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;device's&nbsp;home&nbsp;network.<br>
+:type&nbsp;home_mobile_network_code:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;radio_type:&nbsp;The&nbsp;mobile&nbsp;radio&nbsp;type.&nbsp;Supported&nbsp;values&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lte,&nbsp;gsm,&nbsp;cdma,&nbsp;and&nbsp;wcdma.&nbsp;While&nbsp;this&nbsp;field&nbsp;is&nbsp;optional,&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;included&nbsp;if&nbsp;a&nbsp;value&nbsp;is&nbsp;available,&nbsp;for&nbsp;more&nbsp;accurate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results.<br>
+:type&nbsp;radio_type:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;carrier:&nbsp;The&nbsp;carrier&nbsp;name.<br>
+:type&nbsp;carrier:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;consider_ip:&nbsp;Specifies&nbsp;whether&nbsp;to&nbsp;fall&nbsp;back&nbsp;to&nbsp;IP&nbsp;geolocation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;wifi&nbsp;and&nbsp;cell&nbsp;tower&nbsp;signals&nbsp;are&nbsp;not&nbsp;available.&nbsp;Note&nbsp;that&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IP&nbsp;address&nbsp;in&nbsp;the&nbsp;request&nbsp;header&nbsp;may&nbsp;not&nbsp;be&nbsp;the&nbsp;IP&nbsp;of&nbsp;the&nbsp;device.<br>
+:type&nbsp;consider_ip:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;cell_towers:&nbsp;A&nbsp;list&nbsp;of&nbsp;cell&nbsp;tower&nbsp;dicts.&nbsp;See<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/maps/documentation/geolocation/intro#cell_tower_object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;detail.<br>
+:type&nbsp;cell_towers:&nbsp;list&nbsp;of&nbsp;dicts<br>
+&nbsp;<br>
+:param&nbsp;wifi_access_points:&nbsp;A&nbsp;list&nbsp;of&nbsp;WiFi&nbsp;access&nbsp;point&nbsp;dicts.&nbsp;See<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/maps/documentation/geolocation/intro#wifi_access_point_object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;detail.<br>
+:type&nbsp;wifi_access_points:&nbsp;list&nbsp;of&nbsp;dicts</tt></dd></dl>
+
+<dl><dt><a name="Client-nearest_roads"><strong>nearest_roads</strong></a>(client, points)</dt><dd><tt>Find&nbsp;the&nbsp;closest&nbsp;road&nbsp;segments&nbsp;for&nbsp;each&nbsp;point<br>
+&nbsp;<br>
+Takes&nbsp;up&nbsp;to&nbsp;100&nbsp;independent&nbsp;coordinates,&nbsp;and&nbsp;returns&nbsp;the&nbsp;closest&nbsp;road<br>
+segment&nbsp;for&nbsp;each&nbsp;point.&nbsp;The&nbsp;points&nbsp;passed&nbsp;do&nbsp;not&nbsp;need&nbsp;to&nbsp;be&nbsp;part&nbsp;of&nbsp;a<br>
+continuous&nbsp;path.<br>
+&nbsp;<br>
+:param&nbsp;points:&nbsp;The&nbsp;points&nbsp;for&nbsp;which&nbsp;the&nbsp;nearest&nbsp;road&nbsp;segments&nbsp;are&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;located.<br>
+:type&nbsp;points:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:rtype:&nbsp;A&nbsp;list&nbsp;of&nbsp;snapped&nbsp;points.</tt></dd></dl>
+
+<dl><dt><a name="Client-place"><strong>place</strong></a>(client, place_id, session_token=None, fields=None, language=None)</dt><dd><tt>Comprehensive&nbsp;details&nbsp;for&nbsp;an&nbsp;individual&nbsp;place.<br>
+&nbsp;<br>
+:param&nbsp;place_id:&nbsp;A&nbsp;textual&nbsp;identifier&nbsp;that&nbsp;uniquely&nbsp;identifies&nbsp;a&nbsp;place,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returned&nbsp;from&nbsp;a&nbsp;Places&nbsp;search.<br>
+:type&nbsp;place_id:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;session_token:&nbsp;A&nbsp;random&nbsp;string&nbsp;which&nbsp;identifies&nbsp;an&nbsp;autocomplete<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session&nbsp;for&nbsp;billing&nbsp;purposes.<br>
+:type&nbsp;session_token:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;fields:&nbsp;The&nbsp;fields&nbsp;specifying&nbsp;the&nbsp;types&nbsp;of&nbsp;place&nbsp;data&nbsp;to&nbsp;return,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;separated&nbsp;by&nbsp;a&nbsp;comma.&nbsp;For&nbsp;full&nbsp;details&nbsp;see:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://cloud.google.com/maps-platform/user-guide/product-changes/#places<br>
+:type&nbsp;input:&nbsp;list<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;language:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;result&nbsp;dict&nbsp;with&nbsp;the&nbsp;following&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result:&nbsp;dict&nbsp;containing&nbsp;place&nbsp;details<br>
+&nbsp;&nbsp;&nbsp;&nbsp;html_attributions:&nbsp;set&nbsp;of&nbsp;attributions&nbsp;which&nbsp;must&nbsp;be&nbsp;displayed</tt></dd></dl>
+
+<dl><dt><a name="Client-places"><strong>places</strong></a>(client, query, location=None, radius=None, language=None, min_price=None, max_price=None, open_now=False, type=None, region=None, page_token=None)</dt><dd><tt>Places&nbsp;search.<br>
+&nbsp;<br>
+:param&nbsp;query:&nbsp;The&nbsp;text&nbsp;string&nbsp;on&nbsp;which&nbsp;to&nbsp;search,&nbsp;for&nbsp;example:&nbsp;"restaurant".<br>
+:type&nbsp;query:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;radius:&nbsp;Distance&nbsp;in&nbsp;meters&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;results.<br>
+:type&nbsp;radius:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;min_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;less&nbsp;than<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range&nbsp;from&nbsp;0&nbsp;(most&nbsp;affordable)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;min_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;max_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;greater<br>
+&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range&nbsp;from&nbsp;0&nbsp;(most<br>
+&nbsp;&nbsp;&nbsp;&nbsp;affordable)&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;max_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;open_now:&nbsp;Return&nbsp;only&nbsp;those&nbsp;places&nbsp;that&nbsp;are&nbsp;open&nbsp;for&nbsp;business&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;time&nbsp;the&nbsp;query&nbsp;is&nbsp;sent.<br>
+:type&nbsp;open_now:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Restricts&nbsp;the&nbsp;results&nbsp;to&nbsp;places&nbsp;matching&nbsp;the&nbsp;specified&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;full&nbsp;list&nbsp;of&nbsp;supported&nbsp;types&nbsp;is&nbsp;available&nbsp;here:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/supported_types<br>
+:type&nbsp;type:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;region:&nbsp;The&nbsp;region&nbsp;code,&nbsp;optional&nbsp;parameter.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;more&nbsp;@&nbsp;https://developers.google.com/places/web-service/search<br>
+:type&nbsp;region:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;page_token:&nbsp;Token&nbsp;from&nbsp;a&nbsp;previous&nbsp;search&nbsp;that&nbsp;when&nbsp;provided&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;the&nbsp;next&nbsp;page&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;same&nbsp;search.<br>
+:type&nbsp;page_token:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;result&nbsp;dict&nbsp;with&nbsp;the&nbsp;following&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;list&nbsp;of&nbsp;places<br>
+&nbsp;&nbsp;&nbsp;&nbsp;html_attributions:&nbsp;set&nbsp;of&nbsp;attributions&nbsp;which&nbsp;must&nbsp;be&nbsp;displayed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;next_page_token:&nbsp;token&nbsp;for&nbsp;retrieving&nbsp;the&nbsp;next&nbsp;page&nbsp;of&nbsp;results</tt></dd></dl>
+
+<dl><dt><a name="Client-places_autocomplete"><strong>places_autocomplete</strong></a>(client, input_text, session_token, offset=None, location=None, radius=None, language=None, types=None, components=None, strict_bounds=False)</dt><dd><tt>Returns&nbsp;Place&nbsp;predictions&nbsp;given&nbsp;a&nbsp;textual&nbsp;search&nbsp;string&nbsp;and&nbsp;optional<br>
+geographic&nbsp;bounds.<br>
+&nbsp;<br>
+:param&nbsp;input_text:&nbsp;The&nbsp;text&nbsp;string&nbsp;on&nbsp;which&nbsp;to&nbsp;search.<br>
+:type&nbsp;input_text:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;session_token:&nbsp;A&nbsp;random&nbsp;string&nbsp;which&nbsp;identifies&nbsp;an&nbsp;autocomplete<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session&nbsp;for&nbsp;billing&nbsp;purposes.<br>
+:type&nbsp;session_token:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;offset:&nbsp;The&nbsp;position,&nbsp;in&nbsp;the&nbsp;input&nbsp;term,&nbsp;of&nbsp;the&nbsp;last&nbsp;character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;the&nbsp;service&nbsp;uses&nbsp;to&nbsp;match&nbsp;predictions.&nbsp;For&nbsp;example,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;the&nbsp;input&nbsp;is&nbsp;'Google'&nbsp;and&nbsp;the&nbsp;offset&nbsp;is&nbsp;3,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;service&nbsp;will&nbsp;match&nbsp;on&nbsp;'Goo'.<br>
+:type&nbsp;offset:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;radius:&nbsp;Distance&nbsp;in&nbsp;meters&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;results.<br>
+:type&nbsp;radius:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;types:&nbsp;Restricts&nbsp;the&nbsp;results&nbsp;to&nbsp;places&nbsp;matching&nbsp;the&nbsp;specified&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;full&nbsp;list&nbsp;of&nbsp;supported&nbsp;types&nbsp;is&nbsp;available&nbsp;here:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/web-service/autocomplete#place_types<br>
+:type&nbsp;types:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;components:&nbsp;A&nbsp;component&nbsp;filter&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;a&nbsp;geocode.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Currently,&nbsp;you&nbsp;can&nbsp;use&nbsp;components&nbsp;to&nbsp;filter&nbsp;by&nbsp;up&nbsp;to&nbsp;5&nbsp;countries&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;example:&nbsp;``{'country':&nbsp;['US',&nbsp;'AU']}``<br>
+:type&nbsp;components:&nbsp;dict<br>
+&nbsp;<br>
+:param&nbsp;strict_bounds:&nbsp;Returns&nbsp;only&nbsp;those&nbsp;places&nbsp;that&nbsp;are&nbsp;strictly&nbsp;within<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;region&nbsp;defined&nbsp;by&nbsp;location&nbsp;and&nbsp;radius.<br>
+:type&nbsp;strict_bounds:&nbsp;bool<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;predictions</tt></dd></dl>
+
+<dl><dt><a name="Client-places_autocomplete_query"><strong>places_autocomplete_query</strong></a>(client, input_text, offset=None, location=None, radius=None, language=None)</dt><dd><tt>Returns&nbsp;Place&nbsp;predictions&nbsp;given&nbsp;a&nbsp;textual&nbsp;search&nbsp;query,&nbsp;such&nbsp;as<br>
+"pizza&nbsp;near&nbsp;New&nbsp;York",&nbsp;and&nbsp;optional&nbsp;geographic&nbsp;bounds.<br>
+&nbsp;<br>
+:param&nbsp;input_text:&nbsp;The&nbsp;text&nbsp;query&nbsp;on&nbsp;which&nbsp;to&nbsp;search.<br>
+:type&nbsp;input_text:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;offset:&nbsp;The&nbsp;position,&nbsp;in&nbsp;the&nbsp;input&nbsp;term,&nbsp;of&nbsp;the&nbsp;last&nbsp;character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;the&nbsp;service&nbsp;uses&nbsp;to&nbsp;match&nbsp;predictions.&nbsp;For&nbsp;example,&nbsp;if&nbsp;the&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;'Google'&nbsp;and&nbsp;the&nbsp;offset&nbsp;is&nbsp;3,&nbsp;the&nbsp;service&nbsp;will&nbsp;match&nbsp;on&nbsp;'Goo'.<br>
+:type&nbsp;offset:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;radius:&nbsp;Distance&nbsp;in&nbsp;meters&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;results.<br>
+:type&nbsp;radius:&nbsp;number<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;predictions</tt></dd></dl>
+
+<dl><dt><a name="Client-places_nearby"><strong>places_nearby</strong></a>(client, location=None, radius=None, keyword=None, language=None, min_price=None, max_price=None, name=None, open_now=False, rank_by=None, type=None, page_token=None)</dt><dd><tt>Performs&nbsp;nearby&nbsp;search&nbsp;for&nbsp;places.<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;radius:&nbsp;Distance&nbsp;in&nbsp;meters&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;results.<br>
+:type&nbsp;radius:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;region:&nbsp;The&nbsp;region&nbsp;code,&nbsp;optional&nbsp;parameter.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;more&nbsp;@&nbsp;https://developers.google.com/places/web-service/search<br>
+:type&nbsp;region:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;keyword:&nbsp;A&nbsp;term&nbsp;to&nbsp;be&nbsp;matched&nbsp;against&nbsp;all&nbsp;content&nbsp;that&nbsp;Google&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexed&nbsp;for&nbsp;this&nbsp;place.<br>
+:type&nbsp;keyword:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;min_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;less&nbsp;than<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range&nbsp;from&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(most&nbsp;affordable)&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;min_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;max_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;greater<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;0&nbsp;(most&nbsp;affordable)&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;max_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;name:&nbsp;One&nbsp;or&nbsp;more&nbsp;terms&nbsp;to&nbsp;be&nbsp;matched&nbsp;against&nbsp;the&nbsp;names&nbsp;of&nbsp;places.<br>
+:type&nbsp;name:&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;open_now:&nbsp;Return&nbsp;only&nbsp;those&nbsp;places&nbsp;that&nbsp;are&nbsp;open&nbsp;for&nbsp;business&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;time&nbsp;the&nbsp;query&nbsp;is&nbsp;sent.<br>
+:type&nbsp;open_now:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;rank_by:&nbsp;Specifies&nbsp;the&nbsp;order&nbsp;in&nbsp;which&nbsp;results&nbsp;are&nbsp;listed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Possible&nbsp;values&nbsp;are:&nbsp;prominence&nbsp;(default),&nbsp;distance<br>
+:type&nbsp;rank_by:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Restricts&nbsp;the&nbsp;results&nbsp;to&nbsp;places&nbsp;matching&nbsp;the&nbsp;specified&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;full&nbsp;list&nbsp;of&nbsp;supported&nbsp;types&nbsp;is&nbsp;available&nbsp;here:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/supported_types<br>
+:type&nbsp;type:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;page_token:&nbsp;Token&nbsp;from&nbsp;a&nbsp;previous&nbsp;search&nbsp;that&nbsp;when&nbsp;provided&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;the&nbsp;next&nbsp;page&nbsp;of&nbsp;results&nbsp;for&nbsp;the&nbsp;same&nbsp;search.<br>
+:type&nbsp;page_token:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;result&nbsp;dict&nbsp;with&nbsp;the&nbsp;following&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;status&nbsp;code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;list&nbsp;of&nbsp;places<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html_attributions:&nbsp;set&nbsp;of&nbsp;attributions&nbsp;which&nbsp;must&nbsp;be&nbsp;displayed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next_page_token:&nbsp;token&nbsp;for&nbsp;retrieving&nbsp;the&nbsp;next&nbsp;page&nbsp;of&nbsp;results</tt></dd></dl>
+
+<dl><dt><a name="Client-places_photo"><strong>places_photo</strong></a>(client, photo_reference, max_width=None, max_height=None)</dt><dd><tt>Downloads&nbsp;a&nbsp;photo&nbsp;from&nbsp;the&nbsp;Places&nbsp;API.<br>
+&nbsp;<br>
+:param&nbsp;photo_reference:&nbsp;A&nbsp;string&nbsp;identifier&nbsp;that&nbsp;uniquely&nbsp;identifies&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;photo,&nbsp;as&nbsp;provided&nbsp;by&nbsp;either&nbsp;a&nbsp;Places&nbsp;search&nbsp;or&nbsp;Places&nbsp;detail&nbsp;request.<br>
+:type&nbsp;photo_reference:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;max_width:&nbsp;Specifies&nbsp;the&nbsp;maximum&nbsp;desired&nbsp;width,&nbsp;in&nbsp;pixels.<br>
+:type&nbsp;max_width:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;max_height:&nbsp;Specifies&nbsp;the&nbsp;maximum&nbsp;desired&nbsp;height,&nbsp;in&nbsp;pixels.<br>
+:type&nbsp;max_height:&nbsp;int<br>
+&nbsp;<br>
+:rtype:&nbsp;iterator&nbsp;containing&nbsp;the&nbsp;raw&nbsp;image&nbsp;data,&nbsp;which&nbsp;typically&nbsp;can&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;to&nbsp;save&nbsp;an&nbsp;image&nbsp;file&nbsp;locally.&nbsp;For&nbsp;example:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;```<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;=&nbsp;open(local_filename,&nbsp;'wb')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;chunk&nbsp;in&nbsp;client.<a href="#Client-places_photo">places_photo</a>(photo_reference,&nbsp;max_width=100):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;chunk:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f.write(chunk)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f.close()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;```</tt></dd></dl>
+
+<dl><dt><a name="Client-places_radar"><strong>places_radar</strong></a>(client, location, radius, keyword=None, min_price=None, max_price=None, name=None, open_now=False, type=None)</dt><dd><tt>Performs&nbsp;radar&nbsp;search&nbsp;for&nbsp;places.<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;for&nbsp;which&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;radius:&nbsp;Distance&nbsp;in&nbsp;meters&nbsp;within&nbsp;which&nbsp;to&nbsp;bias&nbsp;results.<br>
+:type&nbsp;radius:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;keyword:&nbsp;A&nbsp;term&nbsp;to&nbsp;be&nbsp;matched&nbsp;against&nbsp;all&nbsp;content&nbsp;that&nbsp;Google&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexed&nbsp;for&nbsp;this&nbsp;place.<br>
+:type&nbsp;keyword:&nbsp;string<br>
+&nbsp;<br>
+:param&nbsp;min_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;less&nbsp;than<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range&nbsp;from&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(most&nbsp;affordable)&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;min_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;max_price:&nbsp;Restricts&nbsp;results&nbsp;to&nbsp;only&nbsp;those&nbsp;places&nbsp;with&nbsp;no&nbsp;greater<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;this&nbsp;price&nbsp;level.&nbsp;Valid&nbsp;values&nbsp;are&nbsp;in&nbsp;the&nbsp;range<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;0&nbsp;(most&nbsp;affordable)&nbsp;to&nbsp;4&nbsp;(most&nbsp;expensive).<br>
+:type&nbsp;max_price:&nbsp;int<br>
+&nbsp;<br>
+:param&nbsp;name:&nbsp;One&nbsp;or&nbsp;more&nbsp;terms&nbsp;to&nbsp;be&nbsp;matched&nbsp;against&nbsp;the&nbsp;names&nbsp;of&nbsp;places.<br>
+:type&nbsp;name:&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;open_now:&nbsp;Return&nbsp;only&nbsp;those&nbsp;places&nbsp;that&nbsp;are&nbsp;open&nbsp;for&nbsp;business&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;time&nbsp;the&nbsp;query&nbsp;is&nbsp;sent.<br>
+:type&nbsp;open_now:&nbsp;bool<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Restricts&nbsp;the&nbsp;results&nbsp;to&nbsp;places&nbsp;matching&nbsp;the&nbsp;specified&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;full&nbsp;list&nbsp;of&nbsp;supported&nbsp;types&nbsp;is&nbsp;available&nbsp;here:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://developers.google.com/places/supported_types<br>
+:type&nbsp;type:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;result&nbsp;dict&nbsp;with&nbsp;the&nbsp;following&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status:&nbsp;status&nbsp;code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;results:&nbsp;list&nbsp;of&nbsp;places<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html_attributions:&nbsp;set&nbsp;of&nbsp;attributions&nbsp;which&nbsp;must&nbsp;be&nbsp;displayed</tt></dd></dl>
+
+<dl><dt><a name="Client-reverse_geocode"><strong>reverse_geocode</strong></a>(client, latlng, result_type=None, location_type=None, language=None)</dt><dd><tt>Reverse&nbsp;geocoding&nbsp;is&nbsp;the&nbsp;process&nbsp;of&nbsp;converting&nbsp;geographic&nbsp;coordinates&nbsp;into&nbsp;a<br>
+human-readable&nbsp;address.<br>
+&nbsp;<br>
+:param&nbsp;latlng:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;or&nbsp;place_id&nbsp;for&nbsp;which&nbsp;you&nbsp;wish<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;obtain&nbsp;the&nbsp;closest,&nbsp;human-readable&nbsp;address.<br>
+:type&nbsp;latlng:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;result_type:&nbsp;One&nbsp;or&nbsp;more&nbsp;address&nbsp;types&nbsp;to&nbsp;restrict&nbsp;results&nbsp;to.<br>
+:type&nbsp;result_type:&nbsp;string&nbsp;or&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;location_type:&nbsp;One&nbsp;or&nbsp;more&nbsp;location&nbsp;types&nbsp;to&nbsp;restrict&nbsp;results&nbsp;to.<br>
+:type&nbsp;location_type:&nbsp;list&nbsp;of&nbsp;strings<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;langauge:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;reverse&nbsp;geocoding&nbsp;results.</tt></dd></dl>
+
+<dl><dt><a name="Client-snap_to_roads"><strong>snap_to_roads</strong></a>(client, path, interpolate=False)</dt><dd><tt>Snaps&nbsp;a&nbsp;path&nbsp;to&nbsp;the&nbsp;most&nbsp;likely&nbsp;roads&nbsp;travelled.<br>
+&nbsp;<br>
+Takes&nbsp;up&nbsp;to&nbsp;100&nbsp;GPS&nbsp;points&nbsp;collected&nbsp;along&nbsp;a&nbsp;route,&nbsp;and&nbsp;returns&nbsp;a&nbsp;similar<br>
+set&nbsp;of&nbsp;data&nbsp;with&nbsp;the&nbsp;points&nbsp;snapped&nbsp;to&nbsp;the&nbsp;most&nbsp;likely&nbsp;roads&nbsp;the&nbsp;vehicle<br>
+was&nbsp;traveling&nbsp;along.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;The&nbsp;path&nbsp;to&nbsp;be&nbsp;snapped.<br>
+:type&nbsp;path:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;interpolate:&nbsp;Whether&nbsp;to&nbsp;interpolate&nbsp;a&nbsp;path&nbsp;to&nbsp;include&nbsp;all&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;forming&nbsp;the&nbsp;full&nbsp;road-geometry.&nbsp;When&nbsp;true,&nbsp;additional&nbsp;interpolated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;will&nbsp;also&nbsp;be&nbsp;returned,&nbsp;resulting&nbsp;in&nbsp;a&nbsp;path&nbsp;that&nbsp;smoothly&nbsp;follows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;geometry&nbsp;of&nbsp;the&nbsp;road,&nbsp;even&nbsp;around&nbsp;corners&nbsp;and&nbsp;through&nbsp;tunnels.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Interpolated&nbsp;paths&nbsp;may&nbsp;contain&nbsp;more&nbsp;points&nbsp;than&nbsp;the&nbsp;original&nbsp;path.<br>
+:type&nbsp;interpolate:&nbsp;bool<br>
+&nbsp;<br>
+:rtype:&nbsp;A&nbsp;list&nbsp;of&nbsp;snapped&nbsp;points.</tt></dd></dl>
+
+<dl><dt><a name="Client-snapped_speed_limits"><strong>snapped_speed_limits</strong></a>(client, path)</dt><dd><tt>Returns&nbsp;the&nbsp;posted&nbsp;speed&nbsp;limit&nbsp;(in&nbsp;km/h)&nbsp;for&nbsp;given&nbsp;road&nbsp;segments.<br>
+&nbsp;<br>
+The&nbsp;provided&nbsp;points&nbsp;will&nbsp;first&nbsp;be&nbsp;snapped&nbsp;to&nbsp;the&nbsp;most&nbsp;likely&nbsp;roads&nbsp;the<br>
+vehicle&nbsp;was&nbsp;traveling&nbsp;along.<br>
+&nbsp;<br>
+:param&nbsp;path:&nbsp;The&nbsp;path&nbsp;of&nbsp;points&nbsp;to&nbsp;be&nbsp;snapped.<br>
+:type&nbsp;path:&nbsp;a&nbsp;single&nbsp;location,&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;locations,&nbsp;where&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;is&nbsp;a&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:rtype:&nbsp;dict&nbsp;with&nbsp;a&nbsp;list&nbsp;of&nbsp;speed&nbsp;limits&nbsp;and&nbsp;a&nbsp;list&nbsp;of&nbsp;the&nbsp;snapped&nbsp;points.</tt></dd></dl>
+
+<dl><dt><a name="Client-speed_limits"><strong>speed_limits</strong></a>(client, place_ids)</dt><dd><tt>Returns&nbsp;the&nbsp;posted&nbsp;speed&nbsp;limit&nbsp;(in&nbsp;km/h)&nbsp;for&nbsp;given&nbsp;road&nbsp;segments.<br>
+&nbsp;<br>
+:param&nbsp;place_ids:&nbsp;The&nbsp;Place&nbsp;ID&nbsp;of&nbsp;the&nbsp;road&nbsp;segment.&nbsp;Place&nbsp;IDs&nbsp;are&nbsp;returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;the&nbsp;snap_to_roads&nbsp;function.&nbsp;You&nbsp;can&nbsp;pass&nbsp;up&nbsp;to&nbsp;100&nbsp;Place&nbsp;IDs.<br>
+:type&nbsp;place_ids:&nbsp;str&nbsp;or&nbsp;list<br>
+&nbsp;<br>
+:rtype:&nbsp;list&nbsp;of&nbsp;speed&nbsp;limits.</tt></dd></dl>
+
+<dl><dt><a name="Client-timezone"><strong>timezone</strong></a>(client, location, timestamp=None, language=None)</dt><dd><tt>Get&nbsp;time&nbsp;zone&nbsp;for&nbsp;a&nbsp;location&nbsp;on&nbsp;the&nbsp;earth,&nbsp;as&nbsp;well&nbsp;as&nbsp;that&nbsp;location's<br>
+time&nbsp;offset&nbsp;from&nbsp;UTC.<br>
+&nbsp;<br>
+:param&nbsp;location:&nbsp;The&nbsp;latitude/longitude&nbsp;value&nbsp;representing&nbsp;the&nbsp;location&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;look&nbsp;up.<br>
+:type&nbsp;location:&nbsp;string,&nbsp;dict,&nbsp;list,&nbsp;or&nbsp;tuple<br>
+&nbsp;<br>
+:param&nbsp;timestamp:&nbsp;Timestamp&nbsp;specifies&nbsp;the&nbsp;desired&nbsp;time&nbsp;as&nbsp;seconds&nbsp;since<br>
+&nbsp;&nbsp;&nbsp;&nbsp;midnight,&nbsp;January&nbsp;1,&nbsp;1970&nbsp;UTC.&nbsp;The&nbsp;Time&nbsp;Zone&nbsp;API&nbsp;uses&nbsp;the&nbsp;timestamp&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;whether&nbsp;or&nbsp;not&nbsp;Daylight&nbsp;Savings&nbsp;should&nbsp;be&nbsp;applied.&nbsp;Times<br>
+&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;1970&nbsp;can&nbsp;be&nbsp;expressed&nbsp;as&nbsp;negative&nbsp;values.&nbsp;Optional.&nbsp;Defaults&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``datetime.utcnow()``.<br>
+:type&nbsp;timestamp:&nbsp;int&nbsp;or&nbsp;datetime.datetime<br>
+&nbsp;<br>
+:param&nbsp;language:&nbsp;The&nbsp;language&nbsp;in&nbsp;which&nbsp;to&nbsp;return&nbsp;results.<br>
+:type&nbsp;language:&nbsp;string<br>
+&nbsp;<br>
+:rtype:&nbsp;dict</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__all__</strong> = ['Client']</td></tr></table>
+</body></html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module bag_packing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>bag_packing</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Cqfrog%5Cml_beta%5Cgituploaded%5Ccore%5Caddressmaster%5Cbag_packing.py">f:\qfrog\ml_beta\gituploaded\core\addressmaster\bag_packing.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="googlemaps.html">googlemaps</a><br>
+<a href="inspect.html">inspect</a><br>
+<a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+<a href="os.html">os</a><br>
+<a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="re.html">re</a><br>
+<a href="threading.html">threading</a><br>
+<a href="timeit.html">timeit</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="bag_packing.html#BagPacker">BagPacker</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="BagPacker">class <strong>BagPacker</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="BagPacker-__init__"><strong>__init__</strong></a>(self, pkgs)</dt><dd><tt>CONSRUCTOR&nbsp;TO&nbsp;INITIALISE&nbsp;DATAFRAME&nbsp;AND&nbsp;PREPARE&nbsp;DATAFRAME&nbsp;FOR&nbsp;FURTHER&nbsp;PROCESSING</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-pack_bags"><strong>pack_bags</strong></a>(self, params)</dt><dd><tt><a href="#BagPacker-pack_bags">pack_bags</a>()&nbsp;is&nbsp;a&nbsp;wrapper&nbsp;function&nbsp;which&nbsp;makes&nbsp;use&nbsp;of&nbsp;multiple&nbsp;static&nbsp;functions&nbsp;which&nbsp;includes&nbsp;<a href="#BagPacker-search_knowledge">search_knowledge</a>()&nbsp;,&nbsp;<a href="#BagPacker-get_geocode">get_geocode</a>()&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#BagPacker-update_knowledge_base">update_knowledge_base</a>()&nbsp;,&nbsp;<a href="#BagPacker-find_angle_on_map">find_angle_on_map</a>()&nbsp;,&nbsp;<a href="#BagPacker-divide_load">divide_load</a>()&nbsp;,&nbsp;<a href="#BagPacker-distribute_load">distribute_load</a>()&nbsp;,&nbsp;<a href="#BagPacker-load_vehicle">load_vehicle</a>().&nbsp;<a href="#BagPacker-pack_bags">pack_bags</a>()&nbsp;is&nbsp;a&nbsp;member&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;class&nbsp;<a href="#BagPacker">BagPacker</a>,&nbsp;input&nbsp;for&nbsp;this&nbsp;function&nbsp;is&nbsp;params&nbsp;which&nbsp;takes&nbsp;in&nbsp;a&nbsp;dict&nbsp;and&nbsp;returns&nbsp;a&nbsp;dict&nbsp;as&nbsp;final_result.&nbsp;Structure&nbsp;of&nbsp;input&nbsp;is&nbsp;:&nbsp;<br>
+&nbsp;<br>
+params=&nbsp;{&nbsp;'mobile_hubs'=[{'name':str('name&nbsp;of&nbsp;eloader')},{'name':str('name&nbsp;of&nbsp;eloadler')}],&nbsp;'max_cap'=int(maximum&nbsp;capacity&nbsp;of&nbsp;eloader),&nbsp;'pkgs_per_bag'=int(pkgs&nbsp;per&nbsp;bag&nbsp;can&nbsp;contain),&nbsp;'start_point'=[float(x_coordinate&nbsp;of&nbsp;starting&nbsp;point),float(y_coordinate&nbsp;of&nbsp;starting&nbsp;point)],&nbsp;'parking_list'=list([float(x_coordinate&nbsp;of&nbsp;parking&nbsp;point),float(y_coordinate&nbsp;of&nbsp;parking&nbsp;point)])&nbsp;}&nbsp;<br>
+&nbsp;<br>
+and&nbsp;output&nbsp;structure&nbsp;of&nbsp;dict&nbsp;which&nbsp;is&nbsp;returned&nbsp;is&nbsp;:<br>
+&nbsp;<br>
+final_result={&nbsp;'name&nbsp;of&nbsp;eloader':&nbsp;{&nbsp;'mean_pos'=[float(x_coordinate&nbsp;of&nbsp;mean&nbsp;position),float(y_coordinate&nbsp;of&nbsp;mean&nbsp;position)],&nbsp;'work_pair'=[{address:'address&nbsp;of&nbsp;package','pkg_ID':package&nbsp;ID,'shipment_ID':shipment&nbsp;ID,'tag_ID':tag&nbsp;ID}],&nbsp;'max_wait_time'=float(maximum&nbsp;wait&nbsp;time&nbsp;for&nbsp;the&nbsp;eloader&nbsp;in&nbsp;minutes),&nbsp;'parking_spot'=[float(x_coordinate&nbsp;of&nbsp;parking&nbsp;spot),float(y_coordinte&nbsp;of&nbsp;parking&nbsp;spot)],&nbsp;'dist_btw_start_parking'=float(distance&nbsp;between&nbsp;start&nbsp;point&nbsp;and&nbsp;parking&nbsp;spot&nbsp;in&nbsp;km),&nbsp;'time_btw_start_parking'=float(time&nbsp;between&nbsp;start&nbsp;point&nbsp;and&nbsp;parking&nbsp;spot&nbsp;in&nbsp;minutes)&nbsp;},&nbsp;'remaining'={&nbsp;THIS&nbsp;CONTAINS&nbsp;PACKAGES&nbsp;IF&nbsp;PACKAGES&nbsp;OVERFLOW&nbsp;MAX_CAP&nbsp;FOR&nbsp;ALL&nbsp;ELAOADER&nbsp;IN&nbsp;SAME&nbsp;FORMAT&nbsp;AS&nbsp;ELOADER}&nbsp;}</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-prepare_bags"><strong>prepare_bags</strong></a>(self, pkgs, params)</dt></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="BagPacker-clean_address"><strong>clean_address</strong></a>(addr_list)</dt><dd><tt><a href="#BagPacker-clean_address">clean_address</a>()&nbsp;function&nbsp;generates&nbsp;clean&nbsp;addresses&nbsp;with&nbsp;uniformity&nbsp;in&nbsp;it&nbsp;which&nbsp;makes&nbsp;them&nbsp;google&nbsp;searchable.&nbsp;It&nbsp;take&nbsp;a&nbsp;list&nbsp;of&nbsp;address&nbsp;and&nbsp;returns&nbsp;list&nbsp;of&nbsp;clean&nbsp;address.<br>
+This&nbsp;function&nbsp;bring&nbsp;uniformity&nbsp;in&nbsp;address&nbsp;by&nbsp;converting&nbsp;the&nbsp;address&nbsp;string&nbsp;to&nbsp;lowercase&nbsp;and&nbsp;then&nbsp;removing&nbsp;special&nbsp;character&nbsp;like&nbsp;(){}[]-,.&nbsp;from&nbsp;it&nbsp;and&nbsp;separating&nbsp;alpha&nbsp;and&nbsp;numeric&nbsp;words&nbsp;in&nbsp;address&nbsp;string.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-determine_loading_pattern"><strong>determine_loading_pattern</strong></a>(initial_load, dimensions)</dt><dd><tt><a href="#BagPacker-determine_loading_pattern">determine_loading_pattern</a>()&nbsp;takes&nbsp;input/parameter&nbsp;list(initial_load)&nbsp;and&nbsp;int(dimension).<br>
+intial_load&nbsp;is&nbsp;1D&nbsp;list&nbsp;of&nbsp;addresses&nbsp;to&nbsp;delivered&nbsp;and&nbsp;dimension&nbsp;is&nbsp;in&nbsp;3D&nbsp;(LENGTH,WIDTH,HEIGHT).<br>
+Function&nbsp;converts&nbsp;1D&nbsp;list&nbsp;to&nbsp;given&nbsp;dimension&nbsp;list&nbsp;in&nbsp;a&nbsp;zig-zag&nbsp;order&nbsp;or&nbsp;serpent&nbsp;like&nbsp;motion.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-distribute_load"><strong>distribute_load</strong></a>(quad, eloader_n, min_cap, max_cap)</dt><dd><tt><a href="#BagPacker-distribute_load">distribute_load</a>()&nbsp;takes&nbsp;input/parameter&nbsp;dict(quad),int(eloader_n),int(min_cap),int(max_cap).<br>
+quad&nbsp;is&nbsp;dict&nbsp;which&nbsp;contains&nbsp;data&nbsp;for&nbsp;every&nbsp;part&nbsp;of&nbsp;divided&nbsp;plain,eloader_n&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;total&nbsp;quad,<br>
+&nbsp;min_cap&nbsp;stands&nbsp;for&nbsp;minimum&nbsp;capacity&nbsp;that&nbsp;must&nbsp;be&nbsp;provided&nbsp;to&nbsp;eloader&nbsp;and&nbsp;max_cap&nbsp;stands&nbsp;for&nbsp;maximum&nbsp;capacity&nbsp;of&nbsp;eloaders.<br>
+Function&nbsp;returns&nbsp;dict(quad)&nbsp;with&nbsp;appropriate&nbsp;data&nbsp;for&nbsp;delivery&nbsp;in&nbsp;it.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-divide_load"><strong>divide_load</strong></a>(df, num_mobile_hubs, max_cap)</dt><dd><tt><a href="#BagPacker-divide_load">divide_load</a>()&nbsp;function&nbsp;takes&nbsp;input/parameter&nbsp;dataframe(df)&nbsp;,&nbsp;int(num_mobile_hubs),&nbsp;int(max_cap)&nbsp;where&nbsp;df&nbsp;indexes&nbsp;are&nbsp;breaked_addr,angle,shipment_ID,tag_ID,pkg_ID,x,y.<br>
+&nbsp;num_mobile_hubs&nbsp;stands&nbsp;for&nbsp;total&nbsp;number&nbsp;of&nbsp;eloaders&nbsp;and&nbsp;max_cap&nbsp;stand&nbsp;for&nbsp;maximum&nbsp;capacity&nbsp;of&nbsp;each&nbsp;eloader.<br>
+Function&nbsp;divide&nbsp;360&nbsp;deg&nbsp;from&nbsp;num_mobile_hubs&nbsp;and&nbsp;add&nbsp;address&nbsp;with&nbsp;respective&nbsp;angel&nbsp;which&nbsp;falls&nbsp;in&nbsp;its&nbsp;limit&nbsp;to&nbsp;itself.<br>
+e.g.&nbsp;num_mobile_hubs=2<br>
+&nbsp;max_cap=4<br>
+&nbsp;each&nbsp;eloader&nbsp;will&nbsp;cover&nbsp;180&nbsp;deg&nbsp;and&nbsp;first&nbsp;eloader&nbsp;gets&nbsp;all&nbsp;the&nbsp;address&nbsp;whose&nbsp;angel&nbsp;is&nbsp;smaller&nbsp;than&nbsp;180&nbsp;deg&nbsp;and&nbsp;<br>
+&nbsp;second&nbsp;eloader&nbsp;will&nbsp;get&nbsp;all&nbsp;the&nbsp;angel&nbsp;whose&nbsp;angel&nbsp;is&nbsp;greater&nbsp;than&nbsp;180&nbsp;deg.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-fetch_using_ID"><strong>fetch_using_ID</strong></a>(use_ID, ID_value)</dt><dd><tt>USE&nbsp;ID&nbsp;is&nbsp;String&nbsp;type&nbsp;and&nbsp;contains&nbsp;the&nbsp;which&nbsp;ID&nbsp;you&nbsp;want&nbsp;to&nbsp;use&nbsp;i.e&nbsp;pkg_ID,shipment_ID,etc.&nbsp;and&nbsp;ID_value&nbsp;is&nbsp;the&nbsp;32&nbsp;character&nbsp;long&nbsp;value&nbsp;of&nbsp;stated&nbsp;ID.<br>
+This&nbsp;function&nbsp;filters&nbsp;dataframe&nbsp;for&nbsp;given&nbsp;ID&nbsp;and&nbsp;returns&nbsp;a&nbsp;dict&nbsp;with&nbsp;all&nbsp;columns&nbsp;as&nbsp;key&nbsp;,&nbsp;if&nbsp;more&nbsp;than&nbsp;one&nbsp;match&nbsp;found&nbsp;than&nbsp;serial&nbsp;number&nbsp;of&nbsp;that&nbsp;row&nbsp;is&nbsp;key&nbsp;and&nbsp;other&nbsp;columns&nbsp;comes&nbsp;under&nbsp;it.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-find_angle_on_map"><strong>find_angle_on_map</strong></a>(df, center_pt)</dt><dd><tt><a href="#BagPacker-find_angle_on_map">find_angle_on_map</a>()&nbsp;takes&nbsp;input/parameter&nbsp;dataframe(df)&nbsp;and&nbsp;list([x&nbsp;coords&nbsp;of&nbsp;city&nbsp;centre,y&nbsp;coords&nbsp;of&nbsp;city&nbsp;centre])&nbsp;where&nbsp;df&nbsp;contains&nbsp;columns&nbsp;x,y&nbsp;necessarily.&nbsp;<br>
+&nbsp;Function&nbsp;returns&nbsp;a&nbsp;dataframe&nbsp;with&nbsp;indexes&nbsp;of&nbsp;x,,y,angle(other&nbsp;indexes&nbsp;are&nbsp;subject&nbsp;to&nbsp;input/parameter).<br>
+Angel&nbsp;between&nbsp;two&nbsp;points&nbsp;are&nbsp;calculated&nbsp;using&nbsp;:<br>
+&nbsp;DPhi=log(tan(x/2+pi/4)/tan(x_of_city_centre/2+pi/4))</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-find_center"><strong>find_center</strong></a>(df)</dt><dd><tt><a href="#BagPacker-find_center">find_center</a>()&nbsp;function&nbsp;takes&nbsp;input/parameter&nbsp;dataframe(df)&nbsp;which&nbsp;consist&nbsp;of&nbsp;columns&nbsp;x,y&nbsp;necessarily&nbsp;for&nbsp;all&nbsp;given&nbsp;addresses.<br>
+&nbsp;Function&nbsp;returns&nbsp;a&nbsp;list&nbsp;called&nbsp;city_centre&nbsp;as&nbsp;['x&nbsp;coordinate&nbsp;of&nbsp;mean&nbsp;point&nbsp;for&nbsp;all&nbsp;packages','y&nbsp;coordinate&nbsp;of&nbsp;mean&nbsp;point&nbsp;for&nbsp;all&nbsp;packages'].<br>
+&nbsp;This&nbsp;function&nbsp;act&nbsp;for&nbsp;finding&nbsp;best&nbsp;point&nbsp;to&nbsp;divide&nbsp;the&nbsp;plain&nbsp;into&nbsp;respective&nbsp;part&nbsp;depending&nbsp;on&nbsp;addresses&nbsp;and&nbsp;number&nbsp;of&nbsp;eloader.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;if&nbsp;raising&nbsp;Math&nbsp;error&nbsp;or&nbsp;warning&nbsp;,input/parameter&nbsp;must&nbsp;be&nbsp;empty&nbsp;dataframe.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-get_geocode"><strong>get_geocode</strong></a>(df, save_data=False, get_address=False)</dt><dd><tt><a href="#BagPacker-get_geocode">get_geocode</a>()&nbsp;function&nbsp;provides&nbsp;coordinates&nbsp;for&nbsp;a&nbsp;given&nbsp;address&nbsp;using&nbsp;&lt;a&nbsp;href='https://github.com/googlemaps/google-maps-services-python'&gt;googlemaps&nbsp;api&nbsp;&lt;/a&gt;.&nbsp;cleaned&nbsp;address&nbsp;from&nbsp;dataframe&nbsp;are&nbsp;searched&nbsp;from&nbsp;googlemaps&nbsp;and&nbsp;geo&nbsp;coordinates&nbsp;are&nbsp;returns&nbsp;a&nbsp;dataframe&nbsp;with&nbsp;columns&nbsp;address,&nbsp;shipment_ID,&nbsp;pkg_ID,&nbsp;tag_ID,&nbsp;x,&nbsp;y,&nbsp;located&nbsp;and&nbsp;list&nbsp;not_located&nbsp;which&nbsp;contains&nbsp;address&nbsp;for&nbsp;which&nbsp;google&nbsp;maps&nbsp;doesnt&nbsp;have&nbsp;a&nbsp;result(None).<br>
+This&nbsp;function&nbsp;have&nbsp;multithreading&nbsp;for&nbsp;speed&nbsp;purpose&nbsp;which&nbsp;is&nbsp;targeted&nbsp;on&nbsp;a&nbsp;nested&nbsp;function&nbsp;called&nbsp;geocode_multithread(address,pkg_ID,shipment_ID,tag_ID).</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-get_short_path"><strong>get_short_path</strong></a>(coords_list=None)</dt><dd><tt><a href="#BagPacker-get_short_path">get_short_path</a>()&nbsp;fucntion&nbsp;takes&nbsp;input/parameter&nbsp;list([coords_list]).<br>
+coors_list&nbsp;is&nbsp;list&nbsp;of&nbsp;list&nbsp;which&nbsp;contains&nbsp;coordinates&nbsp;e.g.&nbsp;[[28.77,77.45],[29.43,33.56]]&nbsp;.<br>
+Function&nbsp;make&nbsp;use&nbsp;of&nbsp;googlemap&nbsp;api&nbsp;for&nbsp;getting&nbsp;distance(km),time(min)&nbsp;.<br>
+Function&nbsp;returns&nbsp;list([total_distance,total_time])</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-load_vehicle"><strong>load_vehicle</strong></a>(df, pair_n, calc_park_spot=False)</dt><dd><tt><a href="#BagPacker-load_vehicle">load_vehicle</a>()&nbsp;function&nbsp;takes&nbsp;input/parameter&nbsp;dataframe(df),int(pair_n),bool(calc_park_spot).&nbsp;<br>
+df&nbsp;must&nbsp;consist&nbsp;indexes&nbsp;breaked_addr,x,y,angles,pkg_ID,shipment_ID,tag_ID&nbsp;<br>
+pair_n&nbsp;stands&nbsp;for&nbsp;number&nbsp;of&nbsp;package&nbsp;combined&nbsp;as&nbsp;clusters<br>
+calc_park_spot&nbsp;stands&nbsp;for&nbsp;calcuating&nbsp;parking&nbsp;spot&nbsp;which&nbsp;is&nbsp;default&nbsp;set&nbsp;to&nbsp;False.If&nbsp;set&nbsp;True,&nbsp;<a href="#BagPacker-get_short_path">get_short_path</a>()&nbsp;is&nbsp;called&nbsp;from&nbsp;this&nbsp;function.<br>
+Function&nbsp;returns&nbsp;a&nbsp;dict&nbsp;which&nbsp;is&nbsp;{'mean_pos':{'loc':,'address':},'max_rider_return_time':,'work_pair':[]}.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;make&nbsp;sure&nbsp;df&nbsp;is&nbsp;not&nbsp;empty&nbsp;and&nbsp;contains&nbsp;appropriate&nbsp;columns.</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-search_knowledge"><strong>search_knowledge</strong></a>(knowledge_df, address=None, is_block=True)</dt><dd><tt><a href="#BagPacker-search_knowledge">search_knowledge</a>()&nbsp;function&nbsp;takes&nbsp;input&nbsp;dataframe(knowledge_input),&nbsp;dataframe/str(address),&nbsp;bool(is_block).<br>
+Function&nbsp;returns&nbsp;a&nbsp;dataframe&nbsp;with&nbsp;following&nbsp;columns&nbsp;i.e.&nbsp;address,&nbsp;x,&nbsp;y,&nbsp;located,&nbsp;pkg_ID,shipment_ID,tag_ID.<br>
+This&nbsp;function&nbsp;is&nbsp;employed&nbsp;for&nbsp;searching&nbsp;exact&nbsp;or&nbsp;matching&nbsp;address&nbsp;from&nbsp;previous&nbsp;knowledge&nbsp;base&nbsp;to&nbsp;reduce&nbsp;google&nbsp;map&nbsp;api&nbsp;call&nbsp;and&nbsp;getting&nbsp;geo&nbsp;coordinates&nbsp;directly&nbsp;from&nbsp;knowledge&nbsp;base.<br>
+Multithreaded&nbsp;function&nbsp;consist&nbsp;of&nbsp;a&nbsp;nested&nbsp;function&nbsp;as&nbsp;target&nbsp;called&nbsp;search_brain(address,pkg_ID,shipment_ID,tag_ID).</tt></dd></dl>
+
+<dl><dt><a name="BagPacker-update_knowledge_base"><strong>update_knowledge_base</strong></a>(knowledge_df, df)</dt><dd><tt><a href="#BagPacker-update_knowledge_base">update_knowledge_base</a>()&nbsp;function&nbsp;takes&nbsp;input/parameter&nbsp;dataframe(knowledge_df),dataframe(df)&nbsp;where&nbsp;knwowledge_df&nbsp;is&nbsp;the&nbsp;knowledge&nbsp;base&nbsp;of&nbsp;previous&nbsp;deliveries.<br>
+Function&nbsp;returns&nbsp;nothing.&nbsp;Sole&nbsp;purpose&nbsp;of&nbsp;this&nbsp;function&nbsp;is&nbsp;to&nbsp;save&nbsp;new&nbsp;knowledge&nbsp;and&nbsp;update&nbsp;it&nbsp;for&nbsp;future&nbsp;purpose.<br>
+&nbsp;df&nbsp;is&nbsp;taken&nbsp;as&nbsp;parameter&nbsp;along&nbsp;with&nbsp;knowledge_df&nbsp;and&nbsp;df&nbsp;is&nbsp;later&nbsp;merged&nbsp;with&nbsp;knowledge_base.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>df</strong> = None</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>logger</strong> = &lt;Logger bag_packing (WARNING)&gt;</td></tr></table>
+</body></html>

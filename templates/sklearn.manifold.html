@@ -1,0 +1,1334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package sklearn.manifold</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sklearn.html"><font color="#ffffff">sklearn</font></a>.manifold</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cspidern3mo%5Cappdata%5Clocal%5Cprograms%5Cpython%5Cpython36%5Clib%5Csite-packages%5Csklearn%5Cmanifold%5C__init__.py">c:\users\spidern3mo\appdata\local\programs\python\python36\lib\site-packages\sklearn\manifold\__init__.py</a></font></td></tr></table>
+    <p><tt>The&nbsp;:mod:`sklearn.manifold`&nbsp;module&nbsp;implements&nbsp;data&nbsp;embedding&nbsp;techniques.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sklearn.manifold._barnes_hut_tsne.html">_barnes_hut_tsne</a><br>
+<a href="sklearn.manifold._utils.html">_utils</a><br>
+<a href="sklearn.manifold.isomap.html">isomap</a><br>
+</td><td width="25%" valign=top><a href="sklearn.manifold.locally_linear.html">locally_linear</a><br>
+<a href="sklearn.manifold.mds.html">mds</a><br>
+<a href="sklearn.manifold.setup.html">setup</a><br>
+</td><td width="25%" valign=top><a href="sklearn.manifold.spectral_embedding_.html">spectral_embedding_</a><br>
+<a href="sklearn.manifold.t_sne.html">t_sne</a><br>
+<a href="sklearn.manifold.tests.html"><strong>tests</strong>&nbsp;(package)</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sklearn.manifold.isomap.html#Isomap">sklearn.manifold.isomap.Isomap</a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)
+</font></dt><dt><font face="helvetica, arial"><a href="sklearn.manifold.locally_linear.html#LocallyLinearEmbedding">sklearn.manifold.locally_linear.LocallyLinearEmbedding</a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)
+</font></dt><dt><font face="helvetica, arial"><a href="sklearn.manifold.mds.html#MDS">sklearn.manifold.mds.MDS</a>
+</font></dt><dt><font face="helvetica, arial"><a href="sklearn.manifold.spectral_embedding_.html#SpectralEmbedding">sklearn.manifold.spectral_embedding_.SpectralEmbedding</a>
+</font></dt><dt><font face="helvetica, arial"><a href="sklearn.manifold.t_sne.html#TSNE">sklearn.manifold.t_sne.TSNE</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sklearn.manifold.isomap.html#Isomap">sklearn.manifold.isomap.Isomap</a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)
+</font></dt><dt><font face="helvetica, arial"><a href="sklearn.manifold.locally_linear.html#LocallyLinearEmbedding">sklearn.manifold.locally_linear.LocallyLinearEmbedding</a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Isomap">class <strong>Isomap</strong></a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Isomap">Isomap</a>&nbsp;Embedding<br>
+&nbsp;<br>
+Non-linear&nbsp;dimensionality&nbsp;reduction&nbsp;through&nbsp;Isometric&nbsp;Mapping<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;isomap&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+n_neighbors&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;neighbors&nbsp;to&nbsp;consider&nbsp;for&nbsp;each&nbsp;point.<br>
+&nbsp;<br>
+n_components&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;coordinates&nbsp;for&nbsp;the&nbsp;manifold<br>
+&nbsp;<br>
+eigen_solver&nbsp;:&nbsp;['auto'|'arpack'|'dense']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'auto'&nbsp;:&nbsp;Attempt&nbsp;to&nbsp;choose&nbsp;the&nbsp;most&nbsp;efficient&nbsp;solver<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;given&nbsp;problem.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'arpack'&nbsp;:&nbsp;Use&nbsp;Arnoldi&nbsp;decomposition&nbsp;to&nbsp;find&nbsp;the&nbsp;eigenvalues<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;eigenvectors.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'dense'&nbsp;:&nbsp;Use&nbsp;a&nbsp;direct&nbsp;solver&nbsp;(i.e.&nbsp;LAPACK)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;eigenvalue&nbsp;decomposition.<br>
+&nbsp;<br>
+tol&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Convergence&nbsp;tolerance&nbsp;passed&nbsp;to&nbsp;arpack&nbsp;or&nbsp;lobpcg.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;used&nbsp;if&nbsp;eigen_solver&nbsp;==&nbsp;'dense'.<br>
+&nbsp;<br>
+max_iter&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;for&nbsp;the&nbsp;arpack&nbsp;solver.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;used&nbsp;if&nbsp;eigen_solver&nbsp;==&nbsp;'dense'.<br>
+&nbsp;<br>
+path_method&nbsp;:&nbsp;string&nbsp;['auto'|'FW'|'D']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Method&nbsp;to&nbsp;use&nbsp;in&nbsp;finding&nbsp;shortest&nbsp;path.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'auto'&nbsp;:&nbsp;attempt&nbsp;to&nbsp;choose&nbsp;the&nbsp;best&nbsp;algorithm&nbsp;automatically.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'FW'&nbsp;:&nbsp;Floyd-Warshall&nbsp;algorithm.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'D'&nbsp;:&nbsp;Dijkstra's&nbsp;algorithm.<br>
+&nbsp;<br>
+neighbors_algorithm&nbsp;:&nbsp;string&nbsp;['auto'|'brute'|'kd_tree'|'ball_tree']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Algorithm&nbsp;to&nbsp;use&nbsp;for&nbsp;nearest&nbsp;neighbors&nbsp;search,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;to&nbsp;neighbors.NearestNeighbors&nbsp;instance.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;parallel&nbsp;jobs&nbsp;to&nbsp;run.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+embedding_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;embedding&nbsp;vectors.<br>
+&nbsp;<br>
+kernel_pca_&nbsp;:&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`KernelPCA`&nbsp;object&nbsp;used&nbsp;to&nbsp;implement&nbsp;the&nbsp;embedding.<br>
+&nbsp;<br>
+training_data_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;training&nbsp;data.<br>
+&nbsp;<br>
+nbrs_&nbsp;:&nbsp;sklearn.neighbors.NearestNeighbors&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;nearest&nbsp;neighbors&nbsp;instance,&nbsp;including&nbsp;BallTree&nbsp;or&nbsp;KDtree<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;applicable.<br>
+&nbsp;<br>
+dist_matrix_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;geodesic&nbsp;distance&nbsp;matrix&nbsp;of&nbsp;training&nbsp;data.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.datasets&nbsp;import&nbsp;load_digits<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.manifold&nbsp;import&nbsp;<a href="#Isomap">Isomap</a><br>
+&gt;&gt;&gt;&nbsp;X,&nbsp;_&nbsp;=&nbsp;load_digits(return_X_y=True)<br>
+&gt;&gt;&gt;&nbsp;X.shape<br>
+(1797,&nbsp;64)<br>
+&gt;&gt;&gt;&nbsp;embedding&nbsp;=&nbsp;<a href="#Isomap">Isomap</a>(n_components=2)<br>
+&gt;&gt;&gt;&nbsp;X_transformed&nbsp;=&nbsp;embedding.<a href="#Isomap-fit_transform">fit_transform</a>(X[:100])<br>
+&gt;&gt;&gt;&nbsp;X_transformed.shape<br>
+(100,&nbsp;2)<br>
+&nbsp;<br>
+References<br>
+----------<br>
+&nbsp;<br>
+..&nbsp;[1]&nbsp;Tenenbaum,&nbsp;J.B.;&nbsp;De&nbsp;Silva,&nbsp;V.;&nbsp;&amp;&nbsp;Langford,&nbsp;J.C.&nbsp;A&nbsp;global&nbsp;geometric<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;framework&nbsp;for&nbsp;nonlinear&nbsp;dimensionality&nbsp;reduction.&nbsp;Science&nbsp;290&nbsp;(5500)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sklearn.manifold.isomap.html#Isomap">Isomap</a></dd>
+<dd><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a></dd>
+<dd><a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Isomap-__init__"><strong>__init__</strong></a>(self, n_neighbors=5, n_components=2, eigen_solver='auto', tol=0, max_iter=None, path_method='auto', neighbors_algorithm='auto', n_jobs=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Isomap-fit"><strong>fit</strong></a>(self, X, y=None)</dt><dd><tt>Compute&nbsp;the&nbsp;embedding&nbsp;vectors&nbsp;for&nbsp;data&nbsp;X<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;{array-like,&nbsp;sparse&nbsp;matrix,&nbsp;BallTree,&nbsp;KDTree,&nbsp;NearestNeighbors}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Sample&nbsp;data,&nbsp;shape&nbsp;=&nbsp;(n_samples,&nbsp;n_features),&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpy&nbsp;array,&nbsp;precomputed&nbsp;tree,&nbsp;or&nbsp;NearestNeighbors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;object.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self&nbsp;:&nbsp;returns&nbsp;an&nbsp;instance&nbsp;of&nbsp;self.</tt></dd></dl>
+
+<dl><dt><a name="Isomap-fit_transform"><strong>fit_transform</strong></a>(self, X, y=None)</dt><dd><tt>Fit&nbsp;the&nbsp;model&nbsp;from&nbsp;data&nbsp;in&nbsp;X&nbsp;and&nbsp;transform&nbsp;X.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;{array-like,&nbsp;sparse&nbsp;matrix,&nbsp;BallTree,&nbsp;KDTree}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Training&nbsp;vector,&nbsp;where&nbsp;n_samples&nbsp;in&nbsp;the&nbsp;number&nbsp;of&nbsp;samples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;n_features&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;features.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)</tt></dd></dl>
+
+<dl><dt><a name="Isomap-reconstruction_error"><strong>reconstruction_error</strong></a>(self)</dt><dd><tt>Compute&nbsp;the&nbsp;reconstruction&nbsp;error&nbsp;for&nbsp;the&nbsp;embedding.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+reconstruction_error&nbsp;:&nbsp;float<br>
+&nbsp;<br>
+Notes<br>
+-------<br>
+The&nbsp;cost&nbsp;function&nbsp;of&nbsp;an&nbsp;isomap&nbsp;embedding&nbsp;is<br>
+&nbsp;<br>
+``E&nbsp;=&nbsp;frobenius_norm[K(D)&nbsp;-&nbsp;K(D_fit)]&nbsp;/&nbsp;n_samples``<br>
+&nbsp;<br>
+Where&nbsp;D&nbsp;is&nbsp;the&nbsp;matrix&nbsp;of&nbsp;distances&nbsp;for&nbsp;the&nbsp;input&nbsp;data&nbsp;X,<br>
+D_fit&nbsp;is&nbsp;the&nbsp;matrix&nbsp;of&nbsp;distances&nbsp;for&nbsp;the&nbsp;output&nbsp;embedding&nbsp;X_fit,<br>
+and&nbsp;K&nbsp;is&nbsp;the&nbsp;isomap&nbsp;kernel:<br>
+&nbsp;<br>
+``K(D)&nbsp;=&nbsp;-0.5&nbsp;*&nbsp;(I&nbsp;-&nbsp;1/n_samples)&nbsp;*&nbsp;D^2&nbsp;*&nbsp;(I&nbsp;-&nbsp;1/n_samples)``</tt></dd></dl>
+
+<dl><dt><a name="Isomap-transform"><strong>transform</strong></a>(self, X)</dt><dd><tt>Transform&nbsp;X.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;implemented&nbsp;by&nbsp;linking&nbsp;the&nbsp;points&nbsp;X&nbsp;into&nbsp;the&nbsp;graph&nbsp;of&nbsp;geodesic<br>
+distances&nbsp;of&nbsp;the&nbsp;training&nbsp;data.&nbsp;First&nbsp;the&nbsp;`n_neighbors`&nbsp;nearest<br>
+neighbors&nbsp;of&nbsp;X&nbsp;are&nbsp;found&nbsp;in&nbsp;the&nbsp;training&nbsp;data,&nbsp;and&nbsp;from&nbsp;these&nbsp;the<br>
+shortest&nbsp;geodesic&nbsp;distances&nbsp;from&nbsp;each&nbsp;point&nbsp;in&nbsp;X&nbsp;to&nbsp;each&nbsp;point&nbsp;in<br>
+the&nbsp;training&nbsp;data&nbsp;are&nbsp;computed&nbsp;in&nbsp;order&nbsp;to&nbsp;construct&nbsp;the&nbsp;kernel.<br>
+The&nbsp;embedding&nbsp;of&nbsp;X&nbsp;is&nbsp;the&nbsp;projection&nbsp;of&nbsp;this&nbsp;kernel&nbsp;onto&nbsp;the<br>
+embedding&nbsp;vectors&nbsp;of&nbsp;the&nbsp;training&nbsp;set.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><a name="Isomap-__getstate__"><strong>__getstate__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Isomap-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="Isomap-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt><a name="Isomap-get_params"><strong>get_params</strong></a>(self, deep=True)</dt><dd><tt>Get&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+deep&nbsp;:&nbsp;boolean,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;will&nbsp;return&nbsp;the&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contained&nbsp;subobjects&nbsp;that&nbsp;are&nbsp;estimators.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+params&nbsp;:&nbsp;mapping&nbsp;of&nbsp;string&nbsp;to&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;names&nbsp;mapped&nbsp;to&nbsp;their&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="Isomap-set_params"><strong>set_params</strong></a>(self, **params)</dt><dd><tt>Set&nbsp;the&nbsp;parameters&nbsp;of&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+The&nbsp;method&nbsp;works&nbsp;on&nbsp;simple&nbsp;estimators&nbsp;as&nbsp;well&nbsp;as&nbsp;on&nbsp;nested&nbsp;objects<br>
+(such&nbsp;as&nbsp;pipelines).&nbsp;The&nbsp;latter&nbsp;have&nbsp;parameters&nbsp;of&nbsp;the&nbsp;form<br>
+``&lt;component&gt;__&lt;parameter&gt;``&nbsp;so&nbsp;that&nbsp;it's&nbsp;possible&nbsp;to&nbsp;update&nbsp;each<br>
+component&nbsp;of&nbsp;a&nbsp;nested&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="LocallyLinearEmbedding">class <strong>LocallyLinearEmbedding</strong></a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>, <a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Locally&nbsp;Linear&nbsp;Embedding<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;locally_linear_embedding&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+n_neighbors&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;neighbors&nbsp;to&nbsp;consider&nbsp;for&nbsp;each&nbsp;point.<br>
+&nbsp;<br>
+n_components&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;coordinates&nbsp;for&nbsp;the&nbsp;manifold<br>
+&nbsp;<br>
+reg&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regularization&nbsp;constant,&nbsp;multiplies&nbsp;the&nbsp;trace&nbsp;of&nbsp;the&nbsp;local&nbsp;covariance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix&nbsp;of&nbsp;the&nbsp;distances.<br>
+&nbsp;<br>
+eigen_solver&nbsp;:&nbsp;string,&nbsp;{'auto',&nbsp;'arpack',&nbsp;'dense'}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;auto&nbsp;:&nbsp;algorithm&nbsp;will&nbsp;attempt&nbsp;to&nbsp;choose&nbsp;the&nbsp;best&nbsp;method&nbsp;for&nbsp;input&nbsp;data<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arpack&nbsp;:&nbsp;use&nbsp;arnoldi&nbsp;iteration&nbsp;in&nbsp;shift-invert&nbsp;mode.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;this&nbsp;method,&nbsp;M&nbsp;may&nbsp;be&nbsp;a&nbsp;dense&nbsp;matrix,&nbsp;sparse&nbsp;matrix,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;general&nbsp;linear&nbsp;operator.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Warning:&nbsp;ARPACK&nbsp;can&nbsp;be&nbsp;unstable&nbsp;for&nbsp;some&nbsp;problems.&nbsp;&nbsp;It&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;to&nbsp;try&nbsp;several&nbsp;random&nbsp;seeds&nbsp;in&nbsp;order&nbsp;to&nbsp;check&nbsp;results.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dense&nbsp;&nbsp;:&nbsp;use&nbsp;standard&nbsp;dense&nbsp;matrix&nbsp;operations&nbsp;for&nbsp;the&nbsp;eigenvalue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decomposition.&nbsp;&nbsp;For&nbsp;this&nbsp;method,&nbsp;M&nbsp;must&nbsp;be&nbsp;an&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;matrix&nbsp;type.&nbsp;&nbsp;This&nbsp;method&nbsp;should&nbsp;be&nbsp;avoided&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;problems.<br>
+&nbsp;<br>
+tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;'arpack'&nbsp;method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Not&nbsp;used&nbsp;if&nbsp;eigen_solver=='dense'.<br>
+&nbsp;<br>
+max_iter&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;for&nbsp;the&nbsp;arpack&nbsp;solver.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Not&nbsp;used&nbsp;if&nbsp;eigen_solver=='dense'.<br>
+&nbsp;<br>
+method&nbsp;:&nbsp;string&nbsp;('standard',&nbsp;'hessian',&nbsp;'modified'&nbsp;or&nbsp;'ltsa')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;standard&nbsp;:&nbsp;use&nbsp;the&nbsp;standard&nbsp;locally&nbsp;linear&nbsp;embedding&nbsp;algorithm.&nbsp;&nbsp;see<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference&nbsp;[1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hessian&nbsp;&nbsp;:&nbsp;use&nbsp;the&nbsp;Hessian&nbsp;eigenmap&nbsp;method.&nbsp;This&nbsp;method&nbsp;requires<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;``n_neighbors&nbsp;&gt;&nbsp;n_components&nbsp;*&nbsp;(1&nbsp;+&nbsp;(n_components&nbsp;+&nbsp;1)&nbsp;/&nbsp;2``<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;modified&nbsp;:&nbsp;use&nbsp;the&nbsp;modified&nbsp;locally&nbsp;linear&nbsp;embedding&nbsp;algorithm.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ltsa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;use&nbsp;local&nbsp;tangent&nbsp;space&nbsp;alignment&nbsp;algorithm<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[4]<br>
+&nbsp;<br>
+hessian_tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;Hessian&nbsp;eigenmapping&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;used&nbsp;if&nbsp;``method&nbsp;==&nbsp;'hessian'``<br>
+&nbsp;<br>
+modified_tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;modified&nbsp;LLE&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;used&nbsp;if&nbsp;``method&nbsp;==&nbsp;'modified'``<br>
+&nbsp;<br>
+neighbors_algorithm&nbsp;:&nbsp;string&nbsp;['auto'|'brute'|'kd_tree'|'ball_tree']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;algorithm&nbsp;to&nbsp;use&nbsp;for&nbsp;nearest&nbsp;neighbors&nbsp;search,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;to&nbsp;neighbors.NearestNeighbors&nbsp;instance<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;RandomState&nbsp;instance,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;`np.random`.&nbsp;Used&nbsp;when&nbsp;``eigen_solver``&nbsp;==&nbsp;'arpack'.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;parallel&nbsp;jobs&nbsp;to&nbsp;run.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+embedding_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;[n_samples,&nbsp;n_components]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;embedding&nbsp;vectors<br>
+&nbsp;<br>
+reconstruction_error_&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Reconstruction&nbsp;error&nbsp;associated&nbsp;with&nbsp;`embedding_`<br>
+&nbsp;<br>
+nbrs_&nbsp;:&nbsp;NearestNeighbors&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;nearest&nbsp;neighbors&nbsp;instance,&nbsp;including&nbsp;BallTree&nbsp;or&nbsp;KDtree<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;applicable.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.datasets&nbsp;import&nbsp;load_digits<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.manifold&nbsp;import&nbsp;<a href="#LocallyLinearEmbedding">LocallyLinearEmbedding</a><br>
+&gt;&gt;&gt;&nbsp;X,&nbsp;_&nbsp;=&nbsp;load_digits(return_X_y=True)<br>
+&gt;&gt;&gt;&nbsp;X.shape<br>
+(1797,&nbsp;64)<br>
+&gt;&gt;&gt;&nbsp;embedding&nbsp;=&nbsp;<a href="#LocallyLinearEmbedding">LocallyLinearEmbedding</a>(n_components=2)<br>
+&gt;&gt;&gt;&nbsp;X_transformed&nbsp;=&nbsp;embedding.<a href="#LocallyLinearEmbedding-fit_transform">fit_transform</a>(X[:100])<br>
+&gt;&gt;&gt;&nbsp;X_transformed.shape<br>
+(100,&nbsp;2)<br>
+&nbsp;<br>
+References<br>
+----------<br>
+&nbsp;<br>
+..&nbsp;[1]&nbsp;`Roweis,&nbsp;S.&nbsp;&amp;&nbsp;Saul,&nbsp;L.&nbsp;Nonlinear&nbsp;dimensionality&nbsp;reduction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;locally&nbsp;linear&nbsp;embedding.&nbsp;&nbsp;Science&nbsp;290:2323&nbsp;(2000).`<br>
+..&nbsp;[2]&nbsp;`Donoho,&nbsp;D.&nbsp;&amp;&nbsp;Grimes,&nbsp;C.&nbsp;Hessian&nbsp;eigenmaps:&nbsp;Locally<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linear&nbsp;embedding&nbsp;techniques&nbsp;for&nbsp;high-dimensional&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Proc&nbsp;Natl&nbsp;Acad&nbsp;Sci&nbsp;U&nbsp;S&nbsp;A.&nbsp;&nbsp;100:5591&nbsp;(2003).`<br>
+..&nbsp;[3]&nbsp;`Zhang,&nbsp;Z.&nbsp;&amp;&nbsp;Wang,&nbsp;J.&nbsp;MLLE:&nbsp;Modified&nbsp;Locally&nbsp;Linear<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Embedding&nbsp;Using&nbsp;Multiple&nbsp;Weights.`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.382">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.382</a><br>
+..&nbsp;[4]&nbsp;`Zhang,&nbsp;Z.&nbsp;&amp;&nbsp;Zha,&nbsp;H.&nbsp;Principal&nbsp;manifolds&nbsp;and&nbsp;nonlinear<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dimensionality&nbsp;reduction&nbsp;via&nbsp;tangent&nbsp;space&nbsp;alignment.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Journal&nbsp;of&nbsp;Shanghai&nbsp;Univ.&nbsp;&nbsp;8:406&nbsp;(2004)`<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sklearn.manifold.locally_linear.html#LocallyLinearEmbedding">LocallyLinearEmbedding</a></dd>
+<dd><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a></dd>
+<dd><a href="sklearn.base.html#TransformerMixin">sklearn.base.TransformerMixin</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="LocallyLinearEmbedding-__init__"><strong>__init__</strong></a>(self, n_neighbors=5, n_components=2, reg=0.001, eigen_solver='auto', tol=1e-06, max_iter=100, method='standard', hessian_tol=0.0001, modified_tol=1e-12, neighbors_algorithm='auto', random_state=None, n_jobs=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-fit"><strong>fit</strong></a>(self, X, y=None)</dt><dd><tt>Compute&nbsp;the&nbsp;embedding&nbsp;vectors&nbsp;for&nbsp;data&nbsp;X<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like&nbsp;of&nbsp;shape&nbsp;[n_samples,&nbsp;n_features]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;training&nbsp;set.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self&nbsp;:&nbsp;returns&nbsp;an&nbsp;instance&nbsp;of&nbsp;self.</tt></dd></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-fit_transform"><strong>fit_transform</strong></a>(self, X, y=None)</dt><dd><tt>Compute&nbsp;the&nbsp;embedding&nbsp;vectors&nbsp;for&nbsp;data&nbsp;X&nbsp;and&nbsp;transform&nbsp;X.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like&nbsp;of&nbsp;shape&nbsp;[n_samples,&nbsp;n_features]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;training&nbsp;set.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)</tt></dd></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-transform"><strong>transform</strong></a>(self, X)</dt><dd><tt>Transform&nbsp;new&nbsp;points&nbsp;into&nbsp;embedding&nbsp;space.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;=&nbsp;[n_samples,&nbsp;n_features]<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array,&nbsp;shape&nbsp;=&nbsp;[n_samples,&nbsp;n_components]<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+Because&nbsp;of&nbsp;scaling&nbsp;performed&nbsp;by&nbsp;this&nbsp;method,&nbsp;it&nbsp;is&nbsp;discouraged&nbsp;to&nbsp;use<br>
+it&nbsp;together&nbsp;with&nbsp;methods&nbsp;that&nbsp;are&nbsp;not&nbsp;scale-invariant&nbsp;(like&nbsp;SVMs)</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><a name="LocallyLinearEmbedding-__getstate__"><strong>__getstate__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-get_params"><strong>get_params</strong></a>(self, deep=True)</dt><dd><tt>Get&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+deep&nbsp;:&nbsp;boolean,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;will&nbsp;return&nbsp;the&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contained&nbsp;subobjects&nbsp;that&nbsp;are&nbsp;estimators.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+params&nbsp;:&nbsp;mapping&nbsp;of&nbsp;string&nbsp;to&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;names&nbsp;mapped&nbsp;to&nbsp;their&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="LocallyLinearEmbedding-set_params"><strong>set_params</strong></a>(self, **params)</dt><dd><tt>Set&nbsp;the&nbsp;parameters&nbsp;of&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+The&nbsp;method&nbsp;works&nbsp;on&nbsp;simple&nbsp;estimators&nbsp;as&nbsp;well&nbsp;as&nbsp;on&nbsp;nested&nbsp;objects<br>
+(such&nbsp;as&nbsp;pipelines).&nbsp;The&nbsp;latter&nbsp;have&nbsp;parameters&nbsp;of&nbsp;the&nbsp;form<br>
+``&lt;component&gt;__&lt;parameter&gt;``&nbsp;so&nbsp;that&nbsp;it's&nbsp;possible&nbsp;to&nbsp;update&nbsp;each<br>
+component&nbsp;of&nbsp;a&nbsp;nested&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MDS">class <strong>MDS</strong></a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Multidimensional&nbsp;scaling<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;multidimensional_scaling&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+n_components&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;dimensions&nbsp;in&nbsp;which&nbsp;to&nbsp;immerse&nbsp;the&nbsp;dissimilarities.<br>
+&nbsp;<br>
+metric&nbsp;:&nbsp;boolean,&nbsp;optional,&nbsp;default:&nbsp;True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;``True``,&nbsp;perform&nbsp;metric&nbsp;<a href="#MDS">MDS</a>;&nbsp;otherwise,&nbsp;perform&nbsp;nonmetric&nbsp;<a href="#MDS">MDS</a>.<br>
+&nbsp;<br>
+n_init&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;times&nbsp;the&nbsp;SMACOF&nbsp;algorithm&nbsp;will&nbsp;be&nbsp;run&nbsp;with&nbsp;different<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initializations.&nbsp;The&nbsp;final&nbsp;results&nbsp;will&nbsp;be&nbsp;the&nbsp;best&nbsp;output&nbsp;of&nbsp;the&nbsp;runs,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;determined&nbsp;by&nbsp;the&nbsp;run&nbsp;with&nbsp;the&nbsp;smallest&nbsp;final&nbsp;stress.<br>
+&nbsp;<br>
+max_iter&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;300<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;of&nbsp;the&nbsp;SMACOF&nbsp;algorithm&nbsp;for&nbsp;a&nbsp;single&nbsp;run.<br>
+&nbsp;<br>
+verbose&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Level&nbsp;of&nbsp;verbosity.<br>
+&nbsp;<br>
+eps&nbsp;:&nbsp;float,&nbsp;optional,&nbsp;default:&nbsp;1e-3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Relative&nbsp;tolerance&nbsp;with&nbsp;respect&nbsp;to&nbsp;stress&nbsp;at&nbsp;which&nbsp;to&nbsp;declare<br>
+&nbsp;&nbsp;&nbsp;&nbsp;convergence.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;jobs&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;computation.&nbsp;If&nbsp;multiple<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initializations&nbsp;are&nbsp;used&nbsp;(``n_init``),&nbsp;each&nbsp;run&nbsp;of&nbsp;the&nbsp;algorithm&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;computed&nbsp;in&nbsp;parallel.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;generator&nbsp;used&nbsp;to&nbsp;initialize&nbsp;the&nbsp;centers.&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;RandomState&nbsp;instance,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used&nbsp;by&nbsp;`np.random`.<br>
+&nbsp;<br>
+dissimilarity&nbsp;:&nbsp;'euclidean'&nbsp;|&nbsp;'precomputed',&nbsp;optional,&nbsp;default:&nbsp;'euclidean'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dissimilarity&nbsp;measure&nbsp;to&nbsp;use:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'euclidean':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pairwise&nbsp;Euclidean&nbsp;distances&nbsp;between&nbsp;points&nbsp;in&nbsp;the&nbsp;dataset.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'precomputed':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pre-computed&nbsp;dissimilarities&nbsp;are&nbsp;passed&nbsp;directly&nbsp;to&nbsp;``fit``&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;``fit_transform``.<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+embedding_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;dataset&nbsp;in&nbsp;the&nbsp;embedding&nbsp;space.<br>
+&nbsp;<br>
+stress_&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;final&nbsp;value&nbsp;of&nbsp;the&nbsp;stress&nbsp;(sum&nbsp;of&nbsp;squared&nbsp;distance&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disparities&nbsp;and&nbsp;the&nbsp;distances&nbsp;for&nbsp;all&nbsp;constrained&nbsp;points).<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.datasets&nbsp;import&nbsp;load_digits<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.manifold&nbsp;import&nbsp;<a href="#MDS">MDS</a><br>
+&gt;&gt;&gt;&nbsp;X,&nbsp;_&nbsp;=&nbsp;load_digits(return_X_y=True)<br>
+&gt;&gt;&gt;&nbsp;X.shape<br>
+(1797,&nbsp;64)<br>
+&gt;&gt;&gt;&nbsp;embedding&nbsp;=&nbsp;<a href="#MDS">MDS</a>(n_components=2)<br>
+&gt;&gt;&gt;&nbsp;X_transformed&nbsp;=&nbsp;embedding.<a href="#MDS-fit_transform">fit_transform</a>(X[:100])<br>
+&gt;&gt;&gt;&nbsp;X_transformed.shape<br>
+(100,&nbsp;2)<br>
+&nbsp;<br>
+References<br>
+----------<br>
+"Modern&nbsp;Multidimensional&nbsp;Scaling&nbsp;-&nbsp;Theory&nbsp;and&nbsp;Applications"&nbsp;Borg,&nbsp;I.;<br>
+Groenen&nbsp;P.&nbsp;Springer&nbsp;Series&nbsp;in&nbsp;Statistics&nbsp;(1997)<br>
+&nbsp;<br>
+"Nonmetric&nbsp;multidimensional&nbsp;scaling:&nbsp;a&nbsp;numerical&nbsp;method"&nbsp;Kruskal,&nbsp;J.<br>
+Psychometrika,&nbsp;29&nbsp;(1964)<br>
+&nbsp;<br>
+"Multidimensional&nbsp;scaling&nbsp;by&nbsp;optimizing&nbsp;goodness&nbsp;of&nbsp;fit&nbsp;to&nbsp;a&nbsp;nonmetric<br>
+hypothesis"&nbsp;Kruskal,&nbsp;J.&nbsp;Psychometrika,&nbsp;29,&nbsp;(1964)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sklearn.manifold.mds.html#MDS">MDS</a></dd>
+<dd><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MDS-__init__"><strong>__init__</strong></a>(self, n_components=2, metric=True, n_init=4, max_iter=300, verbose=0, eps=0.001, n_jobs=None, random_state=None, dissimilarity='euclidean')</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="MDS-fit"><strong>fit</strong></a>(self, X, y=None, init=None)</dt><dd><tt>Computes&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;points&nbsp;in&nbsp;the&nbsp;embedding&nbsp;space<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)&nbsp;or&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input&nbsp;data.&nbsp;If&nbsp;``dissimilarity=='precomputed'``,&nbsp;the&nbsp;input&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;the&nbsp;dissimilarity&nbsp;matrix.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+init&nbsp;:&nbsp;ndarray,&nbsp;shape&nbsp;(n_samples,),&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Starting&nbsp;configuration&nbsp;of&nbsp;the&nbsp;embedding&nbsp;to&nbsp;initialize&nbsp;the&nbsp;SMACOF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;algorithm.&nbsp;By&nbsp;default,&nbsp;the&nbsp;algorithm&nbsp;is&nbsp;initialized&nbsp;with&nbsp;a&nbsp;randomly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;chosen&nbsp;array.</tt></dd></dl>
+
+<dl><dt><a name="MDS-fit_transform"><strong>fit_transform</strong></a>(self, X, y=None, init=None)</dt><dd><tt>Fit&nbsp;the&nbsp;data&nbsp;from&nbsp;X,&nbsp;and&nbsp;returns&nbsp;the&nbsp;embedded&nbsp;coordinates<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)&nbsp;or&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Input&nbsp;data.&nbsp;If&nbsp;``dissimilarity=='precomputed'``,&nbsp;the&nbsp;input&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;the&nbsp;dissimilarity&nbsp;matrix.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+init&nbsp;:&nbsp;ndarray,&nbsp;shape&nbsp;(n_samples,),&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Starting&nbsp;configuration&nbsp;of&nbsp;the&nbsp;embedding&nbsp;to&nbsp;initialize&nbsp;the&nbsp;SMACOF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;algorithm.&nbsp;By&nbsp;default,&nbsp;the&nbsp;algorithm&nbsp;is&nbsp;initialized&nbsp;with&nbsp;a&nbsp;randomly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;chosen&nbsp;array.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><a name="MDS-__getstate__"><strong>__getstate__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MDS-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="MDS-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt><a name="MDS-get_params"><strong>get_params</strong></a>(self, deep=True)</dt><dd><tt>Get&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+deep&nbsp;:&nbsp;boolean,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;will&nbsp;return&nbsp;the&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contained&nbsp;subobjects&nbsp;that&nbsp;are&nbsp;estimators.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+params&nbsp;:&nbsp;mapping&nbsp;of&nbsp;string&nbsp;to&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;names&nbsp;mapped&nbsp;to&nbsp;their&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="MDS-set_params"><strong>set_params</strong></a>(self, **params)</dt><dd><tt>Set&nbsp;the&nbsp;parameters&nbsp;of&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+The&nbsp;method&nbsp;works&nbsp;on&nbsp;simple&nbsp;estimators&nbsp;as&nbsp;well&nbsp;as&nbsp;on&nbsp;nested&nbsp;objects<br>
+(such&nbsp;as&nbsp;pipelines).&nbsp;The&nbsp;latter&nbsp;have&nbsp;parameters&nbsp;of&nbsp;the&nbsp;form<br>
+``&lt;component&gt;__&lt;parameter&gt;``&nbsp;so&nbsp;that&nbsp;it's&nbsp;possible&nbsp;to&nbsp;update&nbsp;each<br>
+component&nbsp;of&nbsp;a&nbsp;nested&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SpectralEmbedding">class <strong>SpectralEmbedding</strong></a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Spectral&nbsp;embedding&nbsp;for&nbsp;non-linear&nbsp;dimensionality&nbsp;reduction.<br>
+&nbsp;<br>
+Forms&nbsp;an&nbsp;affinity&nbsp;matrix&nbsp;given&nbsp;by&nbsp;the&nbsp;specified&nbsp;function&nbsp;and<br>
+applies&nbsp;spectral&nbsp;decomposition&nbsp;to&nbsp;the&nbsp;corresponding&nbsp;graph&nbsp;laplacian.<br>
+The&nbsp;resulting&nbsp;transformation&nbsp;is&nbsp;given&nbsp;by&nbsp;the&nbsp;value&nbsp;of&nbsp;the<br>
+eigenvectors&nbsp;for&nbsp;each&nbsp;data&nbsp;point.<br>
+&nbsp;<br>
+Note&nbsp;:&nbsp;Laplacian&nbsp;Eigenmaps&nbsp;is&nbsp;the&nbsp;actual&nbsp;algorithm&nbsp;implemented&nbsp;here.<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;spectral_embedding&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+-----------<br>
+n_components&nbsp;:&nbsp;integer,&nbsp;default:&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dimension&nbsp;of&nbsp;the&nbsp;projected&nbsp;subspace.<br>
+&nbsp;<br>
+affinity&nbsp;:&nbsp;string&nbsp;or&nbsp;callable,&nbsp;default&nbsp;:&nbsp;"nearest_neighbors"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;How&nbsp;to&nbsp;construct&nbsp;the&nbsp;affinity&nbsp;matrix.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'nearest_neighbors'&nbsp;:&nbsp;construct&nbsp;affinity&nbsp;matrix&nbsp;by&nbsp;knn&nbsp;graph<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'rbf'&nbsp;:&nbsp;construct&nbsp;affinity&nbsp;matrix&nbsp;by&nbsp;rbf&nbsp;kernel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;'precomputed'&nbsp;:&nbsp;interpret&nbsp;X&nbsp;as&nbsp;precomputed&nbsp;affinity&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;callable&nbsp;:&nbsp;use&nbsp;passed&nbsp;in&nbsp;function&nbsp;as&nbsp;affinity<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;function&nbsp;takes&nbsp;in&nbsp;data&nbsp;matrix&nbsp;(n_samples,&nbsp;n_features)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;return&nbsp;affinity&nbsp;matrix&nbsp;(n_samples,&nbsp;n_samples).<br>
+&nbsp;<br>
+gamma&nbsp;:&nbsp;float,&nbsp;optional,&nbsp;default&nbsp;:&nbsp;1/n_features<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Kernel&nbsp;coefficient&nbsp;for&nbsp;rbf&nbsp;kernel.<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;pseudo&nbsp;random&nbsp;number&nbsp;generator&nbsp;used&nbsp;for&nbsp;the&nbsp;initialization&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lobpcg&nbsp;eigenvectors.&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;RandomState&nbsp;instance,&nbsp;random_state&nbsp;is&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number&nbsp;generator&nbsp;is&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;RandomState&nbsp;instance&nbsp;used&nbsp;by&nbsp;`np.random`.&nbsp;Used&nbsp;when&nbsp;``solver``&nbsp;==<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'amg'.<br>
+&nbsp;<br>
+eigen_solver&nbsp;:&nbsp;{None,&nbsp;'arpack',&nbsp;'lobpcg',&nbsp;or&nbsp;'amg'}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;eigenvalue&nbsp;decomposition&nbsp;strategy&nbsp;to&nbsp;use.&nbsp;AMG&nbsp;requires&nbsp;pyamg<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;installed.&nbsp;It&nbsp;can&nbsp;be&nbsp;faster&nbsp;on&nbsp;very&nbsp;large,&nbsp;sparse&nbsp;problems,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;may&nbsp;also&nbsp;lead&nbsp;to&nbsp;instabilities.<br>
+&nbsp;<br>
+n_neighbors&nbsp;:&nbsp;int,&nbsp;default&nbsp;:&nbsp;max(n_samples/10&nbsp;,&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;nearest&nbsp;neighbors&nbsp;for&nbsp;nearest_neighbors&nbsp;graph&nbsp;building.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;parallel&nbsp;jobs&nbsp;to&nbsp;run.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+&nbsp;<br>
+embedding_&nbsp;:&nbsp;array,&nbsp;shape&nbsp;=&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Spectral&nbsp;embedding&nbsp;of&nbsp;the&nbsp;training&nbsp;matrix.<br>
+&nbsp;<br>
+affinity_matrix_&nbsp;:&nbsp;array,&nbsp;shape&nbsp;=&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Affinity_matrix&nbsp;constructed&nbsp;from&nbsp;samples&nbsp;or&nbsp;precomputed.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.datasets&nbsp;import&nbsp;load_digits<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.manifold&nbsp;import&nbsp;<a href="#SpectralEmbedding">SpectralEmbedding</a><br>
+&gt;&gt;&gt;&nbsp;X,&nbsp;_&nbsp;=&nbsp;load_digits(return_X_y=True)<br>
+&gt;&gt;&gt;&nbsp;X.shape<br>
+(1797,&nbsp;64)<br>
+&gt;&gt;&gt;&nbsp;embedding&nbsp;=&nbsp;<a href="#SpectralEmbedding">SpectralEmbedding</a>(n_components=2)<br>
+&gt;&gt;&gt;&nbsp;X_transformed&nbsp;=&nbsp;embedding.<a href="#SpectralEmbedding-fit_transform">fit_transform</a>(X[:100])<br>
+&gt;&gt;&gt;&nbsp;X_transformed.shape<br>
+(100,&nbsp;2)<br>
+&nbsp;<br>
+References<br>
+----------<br>
+&nbsp;<br>
+-&nbsp;A&nbsp;Tutorial&nbsp;on&nbsp;Spectral&nbsp;Clustering,&nbsp;2007<br>
+&nbsp;&nbsp;Ulrike&nbsp;von&nbsp;Luxburg<br>
+&nbsp;&nbsp;<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323</a><br>
+&nbsp;<br>
+-&nbsp;On&nbsp;Spectral&nbsp;Clustering:&nbsp;Analysis&nbsp;and&nbsp;an&nbsp;algorithm,&nbsp;2001<br>
+&nbsp;&nbsp;Andrew&nbsp;Y.&nbsp;Ng,&nbsp;Michael&nbsp;I.&nbsp;Jordan,&nbsp;Yair&nbsp;Weiss<br>
+&nbsp;&nbsp;<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.8100">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.8100</a><br>
+&nbsp;<br>
+-&nbsp;Normalized&nbsp;cuts&nbsp;and&nbsp;image&nbsp;segmentation,&nbsp;2000<br>
+&nbsp;&nbsp;Jianbo&nbsp;Shi,&nbsp;Jitendra&nbsp;Malik<br>
+&nbsp;&nbsp;<a href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324">http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sklearn.manifold.spectral_embedding_.html#SpectralEmbedding">SpectralEmbedding</a></dd>
+<dd><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SpectralEmbedding-__init__"><strong>__init__</strong></a>(self, n_components=2, affinity='nearest_neighbors', gamma=None, random_state=None, eigen_solver=None, n_neighbors=None, n_jobs=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="SpectralEmbedding-fit"><strong>fit</strong></a>(self, X, y=None)</dt><dd><tt>Fit&nbsp;the&nbsp;model&nbsp;from&nbsp;data&nbsp;in&nbsp;X.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Training&nbsp;vector,&nbsp;where&nbsp;n_samples&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;samples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;n_features&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;features.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;affinity&nbsp;is&nbsp;"precomputed"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_samples),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Interpret&nbsp;X&nbsp;as&nbsp;precomputed&nbsp;adjacency&nbsp;graph&nbsp;computed&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;samples.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self&nbsp;:&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;the&nbsp;instance&nbsp;itself.</tt></dd></dl>
+
+<dl><dt><a name="SpectralEmbedding-fit_transform"><strong>fit_transform</strong></a>(self, X, y=None)</dt><dd><tt>Fit&nbsp;the&nbsp;model&nbsp;from&nbsp;data&nbsp;in&nbsp;X&nbsp;and&nbsp;transform&nbsp;X.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Training&nbsp;vector,&nbsp;where&nbsp;n_samples&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;samples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;n_features&nbsp;is&nbsp;the&nbsp;number&nbsp;of&nbsp;features.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;affinity&nbsp;is&nbsp;"precomputed"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_samples),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Interpret&nbsp;X&nbsp;as&nbsp;precomputed&nbsp;adjacency&nbsp;graph&nbsp;computed&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;samples.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><a name="SpectralEmbedding-__getstate__"><strong>__getstate__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SpectralEmbedding-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="SpectralEmbedding-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt><a name="SpectralEmbedding-get_params"><strong>get_params</strong></a>(self, deep=True)</dt><dd><tt>Get&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+deep&nbsp;:&nbsp;boolean,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;will&nbsp;return&nbsp;the&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contained&nbsp;subobjects&nbsp;that&nbsp;are&nbsp;estimators.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+params&nbsp;:&nbsp;mapping&nbsp;of&nbsp;string&nbsp;to&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;names&nbsp;mapped&nbsp;to&nbsp;their&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="SpectralEmbedding-set_params"><strong>set_params</strong></a>(self, **params)</dt><dd><tt>Set&nbsp;the&nbsp;parameters&nbsp;of&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+The&nbsp;method&nbsp;works&nbsp;on&nbsp;simple&nbsp;estimators&nbsp;as&nbsp;well&nbsp;as&nbsp;on&nbsp;nested&nbsp;objects<br>
+(such&nbsp;as&nbsp;pipelines).&nbsp;The&nbsp;latter&nbsp;have&nbsp;parameters&nbsp;of&nbsp;the&nbsp;form<br>
+``&lt;component&gt;__&lt;parameter&gt;``&nbsp;so&nbsp;that&nbsp;it's&nbsp;possible&nbsp;to&nbsp;update&nbsp;each<br>
+component&nbsp;of&nbsp;a&nbsp;nested&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TSNE">class <strong>TSNE</strong></a>(<a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>t-distributed&nbsp;Stochastic&nbsp;Neighbor&nbsp;Embedding.<br>
+&nbsp;<br>
+t-SNE&nbsp;[1]&nbsp;is&nbsp;a&nbsp;tool&nbsp;to&nbsp;visualize&nbsp;high-dimensional&nbsp;data.&nbsp;It&nbsp;converts<br>
+similarities&nbsp;between&nbsp;data&nbsp;points&nbsp;to&nbsp;joint&nbsp;probabilities&nbsp;and&nbsp;tries<br>
+to&nbsp;minimize&nbsp;the&nbsp;Kullback-Leibler&nbsp;divergence&nbsp;between&nbsp;the&nbsp;joint<br>
+probabilities&nbsp;of&nbsp;the&nbsp;low-dimensional&nbsp;embedding&nbsp;and&nbsp;the<br>
+high-dimensional&nbsp;data.&nbsp;t-SNE&nbsp;has&nbsp;a&nbsp;cost&nbsp;function&nbsp;that&nbsp;is&nbsp;not&nbsp;convex,<br>
+i.e.&nbsp;with&nbsp;different&nbsp;initializations&nbsp;we&nbsp;can&nbsp;get&nbsp;different&nbsp;results.<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;highly&nbsp;recommended&nbsp;to&nbsp;use&nbsp;another&nbsp;dimensionality&nbsp;reduction<br>
+method&nbsp;(e.g.&nbsp;PCA&nbsp;for&nbsp;dense&nbsp;data&nbsp;or&nbsp;TruncatedSVD&nbsp;for&nbsp;sparse&nbsp;data)<br>
+to&nbsp;reduce&nbsp;the&nbsp;number&nbsp;of&nbsp;dimensions&nbsp;to&nbsp;a&nbsp;reasonable&nbsp;amount&nbsp;(e.g.&nbsp;50)<br>
+if&nbsp;the&nbsp;number&nbsp;of&nbsp;features&nbsp;is&nbsp;very&nbsp;high.&nbsp;This&nbsp;will&nbsp;suppress&nbsp;some<br>
+noise&nbsp;and&nbsp;speed&nbsp;up&nbsp;the&nbsp;computation&nbsp;of&nbsp;pairwise&nbsp;distances&nbsp;between<br>
+samples.&nbsp;For&nbsp;more&nbsp;tips&nbsp;see&nbsp;Laurens&nbsp;van&nbsp;der&nbsp;Maaten's&nbsp;FAQ&nbsp;[2].<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;t_sne&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+n_components&nbsp;:&nbsp;int,&nbsp;optional&nbsp;(default:&nbsp;2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dimension&nbsp;of&nbsp;the&nbsp;embedded&nbsp;space.<br>
+&nbsp;<br>
+perplexity&nbsp;:&nbsp;float,&nbsp;optional&nbsp;(default:&nbsp;30)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;perplexity&nbsp;is&nbsp;related&nbsp;to&nbsp;the&nbsp;number&nbsp;of&nbsp;nearest&nbsp;neighbors&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;used&nbsp;in&nbsp;other&nbsp;manifold&nbsp;learning&nbsp;algorithms.&nbsp;Larger&nbsp;datasets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;usually&nbsp;require&nbsp;a&nbsp;larger&nbsp;perplexity.&nbsp;Consider&nbsp;selecting&nbsp;a&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;between&nbsp;5&nbsp;and&nbsp;50.&nbsp;The&nbsp;choice&nbsp;is&nbsp;not&nbsp;extremely&nbsp;critical&nbsp;since&nbsp;t-SNE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;quite&nbsp;insensitive&nbsp;to&nbsp;this&nbsp;parameter.<br>
+&nbsp;<br>
+early_exaggeration&nbsp;:&nbsp;float,&nbsp;optional&nbsp;(default:&nbsp;12.0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Controls&nbsp;how&nbsp;tight&nbsp;natural&nbsp;clusters&nbsp;in&nbsp;the&nbsp;original&nbsp;space&nbsp;are&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;embedded&nbsp;space&nbsp;and&nbsp;how&nbsp;much&nbsp;space&nbsp;will&nbsp;be&nbsp;between&nbsp;them.&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;larger&nbsp;values,&nbsp;the&nbsp;space&nbsp;between&nbsp;natural&nbsp;clusters&nbsp;will&nbsp;be&nbsp;larger<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;embedded&nbsp;space.&nbsp;Again,&nbsp;the&nbsp;choice&nbsp;of&nbsp;this&nbsp;parameter&nbsp;is&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;very&nbsp;critical.&nbsp;If&nbsp;the&nbsp;cost&nbsp;function&nbsp;increases&nbsp;during&nbsp;initial<br>
+&nbsp;&nbsp;&nbsp;&nbsp;optimization,&nbsp;the&nbsp;early&nbsp;exaggeration&nbsp;factor&nbsp;or&nbsp;the&nbsp;learning&nbsp;rate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;might&nbsp;be&nbsp;too&nbsp;high.<br>
+&nbsp;<br>
+learning_rate&nbsp;:&nbsp;float,&nbsp;optional&nbsp;(default:&nbsp;200.0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;learning&nbsp;rate&nbsp;for&nbsp;t-SNE&nbsp;is&nbsp;usually&nbsp;in&nbsp;the&nbsp;range&nbsp;[10.0,&nbsp;1000.0].&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;learning&nbsp;rate&nbsp;is&nbsp;too&nbsp;high,&nbsp;the&nbsp;data&nbsp;may&nbsp;look&nbsp;like&nbsp;a&nbsp;'ball'&nbsp;with&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;point&nbsp;approximately&nbsp;equidistant&nbsp;from&nbsp;its&nbsp;nearest&nbsp;neighbours.&nbsp;If&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;learning&nbsp;rate&nbsp;is&nbsp;too&nbsp;low,&nbsp;most&nbsp;points&nbsp;may&nbsp;look&nbsp;compressed&nbsp;in&nbsp;a&nbsp;dense<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cloud&nbsp;with&nbsp;few&nbsp;outliers.&nbsp;If&nbsp;the&nbsp;cost&nbsp;function&nbsp;gets&nbsp;stuck&nbsp;in&nbsp;a&nbsp;bad&nbsp;local<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;increasing&nbsp;the&nbsp;learning&nbsp;rate&nbsp;may&nbsp;help.<br>
+&nbsp;<br>
+n_iter&nbsp;:&nbsp;int,&nbsp;optional&nbsp;(default:&nbsp;1000)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;for&nbsp;the&nbsp;optimization.&nbsp;Should&nbsp;be&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;250.<br>
+&nbsp;<br>
+n_iter_without_progress&nbsp;:&nbsp;int,&nbsp;optional&nbsp;(default:&nbsp;300)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;without&nbsp;progress&nbsp;before&nbsp;we&nbsp;abort&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;optimization,&nbsp;used&nbsp;after&nbsp;250&nbsp;initial&nbsp;iterations&nbsp;with&nbsp;early<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exaggeration.&nbsp;Note&nbsp;that&nbsp;progress&nbsp;is&nbsp;only&nbsp;checked&nbsp;every&nbsp;50&nbsp;iterations&nbsp;so<br>
+&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;rounded&nbsp;to&nbsp;the&nbsp;next&nbsp;multiple&nbsp;of&nbsp;50.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;0.17<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameter&nbsp;*n_iter_without_progress*&nbsp;to&nbsp;control&nbsp;stopping&nbsp;criteria.<br>
+&nbsp;<br>
+min_grad_norm&nbsp;:&nbsp;float,&nbsp;optional&nbsp;(default:&nbsp;1e-7)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;gradient&nbsp;norm&nbsp;is&nbsp;below&nbsp;this&nbsp;threshold,&nbsp;the&nbsp;optimization&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;stopped.<br>
+&nbsp;<br>
+metric&nbsp;:&nbsp;string&nbsp;or&nbsp;callable,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;metric&nbsp;to&nbsp;use&nbsp;when&nbsp;calculating&nbsp;distance&nbsp;between&nbsp;instances&nbsp;in&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;feature&nbsp;array.&nbsp;If&nbsp;metric&nbsp;is&nbsp;a&nbsp;string,&nbsp;it&nbsp;must&nbsp;be&nbsp;one&nbsp;of&nbsp;the&nbsp;options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;allowed&nbsp;by&nbsp;scipy.spatial.distance.pdist&nbsp;for&nbsp;its&nbsp;metric&nbsp;parameter,&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;metric&nbsp;listed&nbsp;in&nbsp;pairwise.PAIRWISE_DISTANCE_FUNCTIONS.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;metric&nbsp;is&nbsp;"precomputed",&nbsp;X&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;a&nbsp;distance&nbsp;matrix.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Alternatively,&nbsp;if&nbsp;metric&nbsp;is&nbsp;a&nbsp;callable&nbsp;function,&nbsp;it&nbsp;is&nbsp;called&nbsp;on&nbsp;each<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pair&nbsp;of&nbsp;instances&nbsp;(rows)&nbsp;and&nbsp;the&nbsp;resulting&nbsp;value&nbsp;recorded.&nbsp;The&nbsp;callable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;take&nbsp;two&nbsp;arrays&nbsp;from&nbsp;X&nbsp;as&nbsp;input&nbsp;and&nbsp;return&nbsp;a&nbsp;value&nbsp;indicating<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;distance&nbsp;between&nbsp;them.&nbsp;The&nbsp;default&nbsp;is&nbsp;"euclidean"&nbsp;which&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;interpreted&nbsp;as&nbsp;squared&nbsp;euclidean&nbsp;distance.<br>
+&nbsp;<br>
+init&nbsp;:&nbsp;string&nbsp;or&nbsp;numpy&nbsp;array,&nbsp;optional&nbsp;(default:&nbsp;"random")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Initialization&nbsp;of&nbsp;embedding.&nbsp;Possible&nbsp;options&nbsp;are&nbsp;'random',&nbsp;'pca',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;a&nbsp;numpy&nbsp;array&nbsp;of&nbsp;shape&nbsp;(n_samples,&nbsp;n_components).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;PCA&nbsp;initialization&nbsp;cannot&nbsp;be&nbsp;used&nbsp;with&nbsp;precomputed&nbsp;distances&nbsp;and&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;usually&nbsp;more&nbsp;globally&nbsp;stable&nbsp;than&nbsp;random&nbsp;initialization.<br>
+&nbsp;<br>
+verbose&nbsp;:&nbsp;int,&nbsp;optional&nbsp;(default:&nbsp;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Verbosity&nbsp;level.<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default:&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;RandomState&nbsp;instance,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;`np.random`.&nbsp;&nbsp;Note&nbsp;that&nbsp;different&nbsp;initializations&nbsp;might&nbsp;result&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;local&nbsp;minima&nbsp;of&nbsp;the&nbsp;cost&nbsp;function.<br>
+&nbsp;<br>
+method&nbsp;:&nbsp;string&nbsp;(default:&nbsp;'barnes_hut')<br>
+&nbsp;&nbsp;&nbsp;&nbsp;By&nbsp;default&nbsp;the&nbsp;gradient&nbsp;calculation&nbsp;algorithm&nbsp;uses&nbsp;Barnes-Hut<br>
+&nbsp;&nbsp;&nbsp;&nbsp;approximation&nbsp;running&nbsp;in&nbsp;O(NlogN)&nbsp;time.&nbsp;method='exact'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;run&nbsp;on&nbsp;the&nbsp;slower,&nbsp;but&nbsp;exact,&nbsp;algorithm&nbsp;in&nbsp;O(N^2)&nbsp;time.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exact&nbsp;algorithm&nbsp;should&nbsp;be&nbsp;used&nbsp;when&nbsp;nearest-neighbor&nbsp;errors&nbsp;need<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;better&nbsp;than&nbsp;3%.&nbsp;However,&nbsp;the&nbsp;exact&nbsp;method&nbsp;cannot&nbsp;scale&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;millions&nbsp;of&nbsp;examples.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;0.17<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approximate&nbsp;optimization&nbsp;*method*&nbsp;via&nbsp;the&nbsp;Barnes-Hut.<br>
+&nbsp;<br>
+angle&nbsp;:&nbsp;float&nbsp;(default:&nbsp;0.5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;used&nbsp;if&nbsp;method='barnes_hut'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;is&nbsp;the&nbsp;trade-off&nbsp;between&nbsp;speed&nbsp;and&nbsp;accuracy&nbsp;for&nbsp;Barnes-Hut&nbsp;T-SNE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'angle'&nbsp;is&nbsp;the&nbsp;angular&nbsp;size&nbsp;(referred&nbsp;to&nbsp;as&nbsp;theta&nbsp;in&nbsp;[3])&nbsp;of&nbsp;a&nbsp;distant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;node&nbsp;as&nbsp;measured&nbsp;from&nbsp;a&nbsp;point.&nbsp;If&nbsp;this&nbsp;size&nbsp;is&nbsp;below&nbsp;'angle'&nbsp;then&nbsp;it&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;as&nbsp;a&nbsp;summary&nbsp;node&nbsp;of&nbsp;all&nbsp;points&nbsp;contained&nbsp;within&nbsp;it.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;not&nbsp;very&nbsp;sensitive&nbsp;to&nbsp;changes&nbsp;in&nbsp;this&nbsp;parameter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;the&nbsp;range&nbsp;of&nbsp;0.2&nbsp;-&nbsp;0.8.&nbsp;Angle&nbsp;less&nbsp;than&nbsp;0.2&nbsp;has&nbsp;quickly&nbsp;increasing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;computation&nbsp;time&nbsp;and&nbsp;angle&nbsp;greater&nbsp;0.8&nbsp;has&nbsp;quickly&nbsp;increasing&nbsp;error.<br>
+&nbsp;<br>
+Attributes<br>
+----------<br>
+embedding_&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stores&nbsp;the&nbsp;embedding&nbsp;vectors.<br>
+&nbsp;<br>
+kl_divergence_&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Kullback-Leibler&nbsp;divergence&nbsp;after&nbsp;optimization.<br>
+&nbsp;<br>
+n_iter_&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;iterations&nbsp;run.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;import&nbsp;numpy&nbsp;as&nbsp;np<br>
+&gt;&gt;&gt;&nbsp;from&nbsp;sklearn.manifold&nbsp;import&nbsp;<a href="#TSNE">TSNE</a><br>
+&gt;&gt;&gt;&nbsp;X&nbsp;=&nbsp;np.array([[0,&nbsp;0,&nbsp;0],&nbsp;[0,&nbsp;1,&nbsp;1],&nbsp;[1,&nbsp;0,&nbsp;1],&nbsp;[1,&nbsp;1,&nbsp;1]])<br>
+&gt;&gt;&gt;&nbsp;X_embedded&nbsp;=&nbsp;<a href="#TSNE">TSNE</a>(n_components=2).<a href="#TSNE-fit_transform">fit_transform</a>(X)<br>
+&gt;&gt;&gt;&nbsp;X_embedded.shape<br>
+(4,&nbsp;2)<br>
+&nbsp;<br>
+References<br>
+----------<br>
+&nbsp;<br>
+[1]&nbsp;van&nbsp;der&nbsp;Maaten,&nbsp;L.J.P.;&nbsp;Hinton,&nbsp;G.E.&nbsp;Visualizing&nbsp;High-Dimensional&nbsp;Data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Using&nbsp;t-SNE.&nbsp;Journal&nbsp;of&nbsp;Machine&nbsp;Learning&nbsp;Research&nbsp;9:2579-2605,&nbsp;2008.<br>
+&nbsp;<br>
+[2]&nbsp;van&nbsp;der&nbsp;Maaten,&nbsp;L.J.P.&nbsp;t-Distributed&nbsp;Stochastic&nbsp;Neighbor&nbsp;Embedding<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://lvdmaaten.github.io/tsne/<br>
+&nbsp;<br>
+[3]&nbsp;L.J.P.&nbsp;van&nbsp;der&nbsp;Maaten.&nbsp;Accelerating&nbsp;t-SNE&nbsp;using&nbsp;Tree-Based&nbsp;Algorithms.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Journal&nbsp;of&nbsp;Machine&nbsp;Learning&nbsp;Research&nbsp;15(Oct):3221-3245,&nbsp;2014.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;https://lvdmaaten.github.io/publications/papers/JMLR_2014.pdf<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sklearn.manifold.t_sne.html#TSNE">TSNE</a></dd>
+<dd><a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="TSNE-__init__"><strong>__init__</strong></a>(self, n_components=2, perplexity=30.0, early_exaggeration=12.0, learning_rate=200.0, n_iter=1000, n_iter_without_progress=300, min_grad_norm=1e-07, metric='euclidean', init='random', verbose=0, random_state=None, method='barnes_hut', angle=0.5)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="TSNE-fit"><strong>fit</strong></a>(self, X, y=None)</dt><dd><tt>Fit&nbsp;X&nbsp;into&nbsp;an&nbsp;embedded&nbsp;space.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)&nbsp;or&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;metric&nbsp;is&nbsp;'precomputed'&nbsp;X&nbsp;must&nbsp;be&nbsp;a&nbsp;square&nbsp;distance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix.&nbsp;Otherwise&nbsp;it&nbsp;contains&nbsp;a&nbsp;sample&nbsp;per&nbsp;row.&nbsp;If&nbsp;the&nbsp;method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;'exact',&nbsp;X&nbsp;may&nbsp;be&nbsp;a&nbsp;sparse&nbsp;matrix&nbsp;of&nbsp;type&nbsp;'csr',&nbsp;'csc'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;'coo'.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored</tt></dd></dl>
+
+<dl><dt><a name="TSNE-fit_transform"><strong>fit_transform</strong></a>(self, X, y=None)</dt><dd><tt>Fit&nbsp;X&nbsp;into&nbsp;an&nbsp;embedded&nbsp;space&nbsp;and&nbsp;return&nbsp;that&nbsp;transformed<br>
+output.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;array,&nbsp;shape&nbsp;(n_samples,&nbsp;n_features)&nbsp;or&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;metric&nbsp;is&nbsp;'precomputed'&nbsp;X&nbsp;must&nbsp;be&nbsp;a&nbsp;square&nbsp;distance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix.&nbsp;Otherwise&nbsp;it&nbsp;contains&nbsp;a&nbsp;sample&nbsp;per&nbsp;row.<br>
+&nbsp;<br>
+y&nbsp;:&nbsp;Ignored<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X_new&nbsp;:&nbsp;array,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Embedding&nbsp;of&nbsp;the&nbsp;training&nbsp;data&nbsp;in&nbsp;low-dimensional&nbsp;space.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>n_iter_final</strong></dt>
+<dd><tt>DEPRECATED:&nbsp;Attribute&nbsp;n_iter_final&nbsp;was&nbsp;deprecated&nbsp;in&nbsp;version&nbsp;0.19&nbsp;and&nbsp;will&nbsp;be&nbsp;removed&nbsp;in&nbsp;0.21.&nbsp;Use&nbsp;``n_iter_``&nbsp;instead</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><a name="TSNE-__getstate__"><strong>__getstate__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="TSNE-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="TSNE-__setstate__"><strong>__setstate__</strong></a>(self, state)</dt></dl>
+
+<dl><dt><a name="TSNE-get_params"><strong>get_params</strong></a>(self, deep=True)</dt><dd><tt>Get&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+deep&nbsp;:&nbsp;boolean,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;will&nbsp;return&nbsp;the&nbsp;parameters&nbsp;for&nbsp;this&nbsp;estimator&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;contained&nbsp;subobjects&nbsp;that&nbsp;are&nbsp;estimators.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+params&nbsp;:&nbsp;mapping&nbsp;of&nbsp;string&nbsp;to&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;names&nbsp;mapped&nbsp;to&nbsp;their&nbsp;values.</tt></dd></dl>
+
+<dl><dt><a name="TSNE-set_params"><strong>set_params</strong></a>(self, **params)</dt><dd><tt>Set&nbsp;the&nbsp;parameters&nbsp;of&nbsp;this&nbsp;estimator.<br>
+&nbsp;<br>
+The&nbsp;method&nbsp;works&nbsp;on&nbsp;simple&nbsp;estimators&nbsp;as&nbsp;well&nbsp;as&nbsp;on&nbsp;nested&nbsp;objects<br>
+(such&nbsp;as&nbsp;pipelines).&nbsp;The&nbsp;latter&nbsp;have&nbsp;parameters&nbsp;of&nbsp;the&nbsp;form<br>
+``&lt;component&gt;__&lt;parameter&gt;``&nbsp;so&nbsp;that&nbsp;it's&nbsp;possible&nbsp;to&nbsp;update&nbsp;each<br>
+component&nbsp;of&nbsp;a&nbsp;nested&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+self</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="sklearn.base.html#BaseEstimator">sklearn.base.BaseEstimator</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-locally_linear_embedding"><strong>locally_linear_embedding</strong></a>(X, n_neighbors, n_components, reg=0.001, eigen_solver='auto', tol=1e-06, max_iter=100, method='standard', hessian_tol=0.0001, modified_tol=1e-12, random_state=None, n_jobs=None)</dt><dd><tt>Perform&nbsp;a&nbsp;Locally&nbsp;Linear&nbsp;Embedding&nbsp;analysis&nbsp;on&nbsp;the&nbsp;data.<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;locally_linear_embedding&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;{array-like,&nbsp;NearestNeighbors}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Sample&nbsp;data,&nbsp;shape&nbsp;=&nbsp;(n_samples,&nbsp;n_features),&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpy&nbsp;array&nbsp;or&nbsp;a&nbsp;NearestNeighbors&nbsp;object.<br>
+&nbsp;<br>
+n_neighbors&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;neighbors&nbsp;to&nbsp;consider&nbsp;for&nbsp;each&nbsp;point.<br>
+&nbsp;<br>
+n_components&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;coordinates&nbsp;for&nbsp;the&nbsp;manifold.<br>
+&nbsp;<br>
+reg&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;regularization&nbsp;constant,&nbsp;multiplies&nbsp;the&nbsp;trace&nbsp;of&nbsp;the&nbsp;local&nbsp;covariance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix&nbsp;of&nbsp;the&nbsp;distances.<br>
+&nbsp;<br>
+eigen_solver&nbsp;:&nbsp;string,&nbsp;{'auto',&nbsp;'arpack',&nbsp;'dense'}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;auto&nbsp;:&nbsp;algorithm&nbsp;will&nbsp;attempt&nbsp;to&nbsp;choose&nbsp;the&nbsp;best&nbsp;method&nbsp;for&nbsp;input&nbsp;data<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;arpack&nbsp;:&nbsp;use&nbsp;arnoldi&nbsp;iteration&nbsp;in&nbsp;shift-invert&nbsp;mode.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;this&nbsp;method,&nbsp;M&nbsp;may&nbsp;be&nbsp;a&nbsp;dense&nbsp;matrix,&nbsp;sparse&nbsp;matrix,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;general&nbsp;linear&nbsp;operator.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Warning:&nbsp;ARPACK&nbsp;can&nbsp;be&nbsp;unstable&nbsp;for&nbsp;some&nbsp;problems.&nbsp;&nbsp;It&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;to&nbsp;try&nbsp;several&nbsp;random&nbsp;seeds&nbsp;in&nbsp;order&nbsp;to&nbsp;check&nbsp;results.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dense&nbsp;&nbsp;:&nbsp;use&nbsp;standard&nbsp;dense&nbsp;matrix&nbsp;operations&nbsp;for&nbsp;the&nbsp;eigenvalue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decomposition.&nbsp;&nbsp;For&nbsp;this&nbsp;method,&nbsp;M&nbsp;must&nbsp;be&nbsp;an&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;matrix&nbsp;type.&nbsp;&nbsp;This&nbsp;method&nbsp;should&nbsp;be&nbsp;avoided&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;problems.<br>
+&nbsp;<br>
+tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;'arpack'&nbsp;method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Not&nbsp;used&nbsp;if&nbsp;eigen_solver=='dense'.<br>
+&nbsp;<br>
+max_iter&nbsp;:&nbsp;integer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;for&nbsp;the&nbsp;arpack&nbsp;solver.<br>
+&nbsp;<br>
+method&nbsp;:&nbsp;{'standard',&nbsp;'hessian',&nbsp;'modified',&nbsp;'ltsa'}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;standard&nbsp;:&nbsp;use&nbsp;the&nbsp;standard&nbsp;locally&nbsp;linear&nbsp;embedding&nbsp;algorithm.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[1]_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hessian&nbsp;&nbsp;:&nbsp;use&nbsp;the&nbsp;Hessian&nbsp;eigenmap&nbsp;method.&nbsp;&nbsp;This&nbsp;method&nbsp;requires<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n_neighbors&nbsp;&gt;&nbsp;n_components&nbsp;*&nbsp;(1&nbsp;+&nbsp;(n_components&nbsp;+&nbsp;1)&nbsp;/&nbsp;2.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[2]_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;modified&nbsp;:&nbsp;use&nbsp;the&nbsp;modified&nbsp;locally&nbsp;linear&nbsp;embedding&nbsp;algorithm.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[3]_<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ltsa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;use&nbsp;local&nbsp;tangent&nbsp;space&nbsp;alignment&nbsp;algorithm<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;see&nbsp;reference&nbsp;[4]_<br>
+&nbsp;<br>
+hessian_tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;Hessian&nbsp;eigenmapping&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;used&nbsp;if&nbsp;method&nbsp;==&nbsp;'hessian'<br>
+&nbsp;<br>
+modified_tol&nbsp;:&nbsp;float,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tolerance&nbsp;for&nbsp;modified&nbsp;LLE&nbsp;method.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;used&nbsp;if&nbsp;method&nbsp;==&nbsp;'modified'<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;RandomState&nbsp;instance,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;`np.random`.&nbsp;Used&nbsp;when&nbsp;``solver``&nbsp;==&nbsp;'arpack'.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;parallel&nbsp;jobs&nbsp;to&nbsp;run&nbsp;for&nbsp;neighbors&nbsp;search.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Y&nbsp;:&nbsp;array-like,&nbsp;shape&nbsp;[n_samples,&nbsp;n_components]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Embedding&nbsp;vectors.<br>
+&nbsp;<br>
+squared_error&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Reconstruction&nbsp;error&nbsp;for&nbsp;the&nbsp;embedding&nbsp;vectors.&nbsp;Equivalent&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``norm(Y&nbsp;-&nbsp;W&nbsp;Y,&nbsp;'fro')**2``,&nbsp;where&nbsp;W&nbsp;are&nbsp;the&nbsp;reconstruction&nbsp;weights.<br>
+&nbsp;<br>
+References<br>
+----------<br>
+&nbsp;<br>
+..&nbsp;[1]&nbsp;`Roweis,&nbsp;S.&nbsp;&amp;&nbsp;Saul,&nbsp;L.&nbsp;Nonlinear&nbsp;dimensionality&nbsp;reduction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;locally&nbsp;linear&nbsp;embedding.&nbsp;&nbsp;Science&nbsp;290:2323&nbsp;(2000).`<br>
+..&nbsp;[2]&nbsp;`Donoho,&nbsp;D.&nbsp;&amp;&nbsp;Grimes,&nbsp;C.&nbsp;Hessian&nbsp;eigenmaps:&nbsp;Locally<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linear&nbsp;embedding&nbsp;techniques&nbsp;for&nbsp;high-dimensional&nbsp;data.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Proc&nbsp;Natl&nbsp;Acad&nbsp;Sci&nbsp;U&nbsp;S&nbsp;A.&nbsp;&nbsp;100:5591&nbsp;(2003).`<br>
+..&nbsp;[3]&nbsp;`Zhang,&nbsp;Z.&nbsp;&amp;&nbsp;Wang,&nbsp;J.&nbsp;MLLE:&nbsp;Modified&nbsp;Locally&nbsp;Linear<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Embedding&nbsp;Using&nbsp;Multiple&nbsp;Weights.`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.382">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.382</a><br>
+..&nbsp;[4]&nbsp;`Zhang,&nbsp;Z.&nbsp;&amp;&nbsp;Zha,&nbsp;H.&nbsp;Principal&nbsp;manifolds&nbsp;and&nbsp;nonlinear<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dimensionality&nbsp;reduction&nbsp;via&nbsp;tangent&nbsp;space&nbsp;alignment.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Journal&nbsp;of&nbsp;Shanghai&nbsp;Univ.&nbsp;&nbsp;8:406&nbsp;(2004)`</tt></dd></dl>
+ <dl><dt><a name="-smacof"><strong>smacof</strong></a>(dissimilarities, metric=True, n_components=2, init=None, n_init=8, n_jobs=None, max_iter=300, verbose=0, eps=0.001, random_state=None, return_n_iter=False)</dt><dd><tt>Computes&nbsp;multidimensional&nbsp;scaling&nbsp;using&nbsp;the&nbsp;SMACOF&nbsp;algorithm.<br>
+&nbsp;<br>
+The&nbsp;SMACOF&nbsp;(Scaling&nbsp;by&nbsp;MAjorizing&nbsp;a&nbsp;COmplicated&nbsp;Function)&nbsp;algorithm&nbsp;is&nbsp;a<br>
+multidimensional&nbsp;scaling&nbsp;algorithm&nbsp;which&nbsp;minimizes&nbsp;an&nbsp;objective&nbsp;function<br>
+(the&nbsp;*stress*)&nbsp;using&nbsp;a&nbsp;majorization&nbsp;technique.&nbsp;Stress&nbsp;majorization,&nbsp;also<br>
+known&nbsp;as&nbsp;the&nbsp;Guttman&nbsp;Transform,&nbsp;guarantees&nbsp;a&nbsp;monotone&nbsp;convergence&nbsp;of<br>
+stress,&nbsp;and&nbsp;is&nbsp;more&nbsp;powerful&nbsp;than&nbsp;traditional&nbsp;techniques&nbsp;such&nbsp;as&nbsp;gradient<br>
+descent.<br>
+&nbsp;<br>
+The&nbsp;SMACOF&nbsp;algorithm&nbsp;for&nbsp;metric&nbsp;<a href="#MDS">MDS</a>&nbsp;can&nbsp;summarized&nbsp;by&nbsp;the&nbsp;following&nbsp;steps:<br>
+&nbsp;<br>
+1.&nbsp;Set&nbsp;an&nbsp;initial&nbsp;start&nbsp;configuration,&nbsp;randomly&nbsp;or&nbsp;not.<br>
+2.&nbsp;Compute&nbsp;the&nbsp;stress<br>
+3.&nbsp;Compute&nbsp;the&nbsp;Guttman&nbsp;Transform<br>
+4.&nbsp;Iterate&nbsp;2&nbsp;and&nbsp;3&nbsp;until&nbsp;convergence.<br>
+&nbsp;<br>
+The&nbsp;nonmetric&nbsp;algorithm&nbsp;adds&nbsp;a&nbsp;monotonic&nbsp;regression&nbsp;step&nbsp;before&nbsp;computing<br>
+the&nbsp;stress.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+dissimilarities&nbsp;:&nbsp;ndarray,&nbsp;shape&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Pairwise&nbsp;dissimilarities&nbsp;between&nbsp;the&nbsp;points.&nbsp;Must&nbsp;be&nbsp;symmetric.<br>
+&nbsp;<br>
+metric&nbsp;:&nbsp;boolean,&nbsp;optional,&nbsp;default:&nbsp;True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Compute&nbsp;metric&nbsp;or&nbsp;nonmetric&nbsp;SMACOF&nbsp;algorithm.<br>
+&nbsp;<br>
+n_components&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;dimensions&nbsp;in&nbsp;which&nbsp;to&nbsp;immerse&nbsp;the&nbsp;dissimilarities.&nbsp;If&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``init``&nbsp;array&nbsp;is&nbsp;provided,&nbsp;this&nbsp;option&nbsp;is&nbsp;overridden&nbsp;and&nbsp;the&nbsp;shape&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``init``&nbsp;is&nbsp;used&nbsp;to&nbsp;determine&nbsp;the&nbsp;dimensionality&nbsp;of&nbsp;the&nbsp;embedding<br>
+&nbsp;&nbsp;&nbsp;&nbsp;space.<br>
+&nbsp;<br>
+init&nbsp;:&nbsp;ndarray,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components),&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Starting&nbsp;configuration&nbsp;of&nbsp;the&nbsp;embedding&nbsp;to&nbsp;initialize&nbsp;the&nbsp;algorithm.&nbsp;By<br>
+&nbsp;&nbsp;&nbsp;&nbsp;default,&nbsp;the&nbsp;algorithm&nbsp;is&nbsp;initialized&nbsp;with&nbsp;a&nbsp;randomly&nbsp;chosen&nbsp;array.<br>
+&nbsp;<br>
+n_init&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;8<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Number&nbsp;of&nbsp;times&nbsp;the&nbsp;SMACOF&nbsp;algorithm&nbsp;will&nbsp;be&nbsp;run&nbsp;with&nbsp;different<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initializations.&nbsp;The&nbsp;final&nbsp;results&nbsp;will&nbsp;be&nbsp;the&nbsp;best&nbsp;output&nbsp;of&nbsp;the&nbsp;runs,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;determined&nbsp;by&nbsp;the&nbsp;run&nbsp;with&nbsp;the&nbsp;smallest&nbsp;final&nbsp;stress.&nbsp;If&nbsp;``init``&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;provided,&nbsp;this&nbsp;option&nbsp;is&nbsp;overridden&nbsp;and&nbsp;a&nbsp;single&nbsp;run&nbsp;is&nbsp;performed.<br>
+&nbsp;<br>
+n_jobs&nbsp;:&nbsp;int&nbsp;or&nbsp;None,&nbsp;optional&nbsp;(default=None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;jobs&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;computation.&nbsp;If&nbsp;multiple<br>
+&nbsp;&nbsp;&nbsp;&nbsp;initializations&nbsp;are&nbsp;used&nbsp;(``n_init``),&nbsp;each&nbsp;run&nbsp;of&nbsp;the&nbsp;algorithm&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;computed&nbsp;in&nbsp;parallel.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``None``&nbsp;means&nbsp;1&nbsp;unless&nbsp;in&nbsp;a&nbsp;:obj:`joblib.parallel_backend`&nbsp;context.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``-1``&nbsp;means&nbsp;using&nbsp;all&nbsp;processors.&nbsp;See&nbsp;:term:`Glossary&nbsp;&lt;n_jobs&gt;`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+max_iter&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;300<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum&nbsp;number&nbsp;of&nbsp;iterations&nbsp;of&nbsp;the&nbsp;SMACOF&nbsp;algorithm&nbsp;for&nbsp;a&nbsp;single&nbsp;run.<br>
+&nbsp;<br>
+verbose&nbsp;:&nbsp;int,&nbsp;optional,&nbsp;default:&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Level&nbsp;of&nbsp;verbosity.<br>
+&nbsp;<br>
+eps&nbsp;:&nbsp;float,&nbsp;optional,&nbsp;default:&nbsp;1e-3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Relative&nbsp;tolerance&nbsp;with&nbsp;respect&nbsp;to&nbsp;stress&nbsp;at&nbsp;which&nbsp;to&nbsp;declare<br>
+&nbsp;&nbsp;&nbsp;&nbsp;convergence.<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;generator&nbsp;used&nbsp;to&nbsp;initialize&nbsp;the&nbsp;centers.&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;seed&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;RandomState&nbsp;instance,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used&nbsp;by&nbsp;`np.random`.<br>
+&nbsp;<br>
+return_n_iter&nbsp;:&nbsp;bool,&nbsp;optional,&nbsp;default:&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;or&nbsp;not&nbsp;to&nbsp;return&nbsp;the&nbsp;number&nbsp;of&nbsp;iterations.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+X&nbsp;:&nbsp;ndarray,&nbsp;shape&nbsp;(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordinates&nbsp;of&nbsp;the&nbsp;points&nbsp;in&nbsp;a&nbsp;``n_components``-space.<br>
+&nbsp;<br>
+stress&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;final&nbsp;value&nbsp;of&nbsp;the&nbsp;stress&nbsp;(sum&nbsp;of&nbsp;squared&nbsp;distance&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;disparities&nbsp;and&nbsp;the&nbsp;distances&nbsp;for&nbsp;all&nbsp;constrained&nbsp;points).<br>
+&nbsp;<br>
+n_iter&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;number&nbsp;of&nbsp;iterations&nbsp;corresponding&nbsp;to&nbsp;the&nbsp;best&nbsp;stress.&nbsp;Returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;if&nbsp;``return_n_iter``&nbsp;is&nbsp;set&nbsp;to&nbsp;``True``.<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+"Modern&nbsp;Multidimensional&nbsp;Scaling&nbsp;-&nbsp;Theory&nbsp;and&nbsp;Applications"&nbsp;Borg,&nbsp;I.;<br>
+Groenen&nbsp;P.&nbsp;Springer&nbsp;Series&nbsp;in&nbsp;Statistics&nbsp;(1997)<br>
+&nbsp;<br>
+"Nonmetric&nbsp;multidimensional&nbsp;scaling:&nbsp;a&nbsp;numerical&nbsp;method"&nbsp;Kruskal,&nbsp;J.<br>
+Psychometrika,&nbsp;29&nbsp;(1964)<br>
+&nbsp;<br>
+"Multidimensional&nbsp;scaling&nbsp;by&nbsp;optimizing&nbsp;goodness&nbsp;of&nbsp;fit&nbsp;to&nbsp;a&nbsp;nonmetric<br>
+hypothesis"&nbsp;Kruskal,&nbsp;J.&nbsp;Psychometrika,&nbsp;29,&nbsp;(1964)</tt></dd></dl>
+ <dl><dt><a name="-spectral_embedding"><strong>spectral_embedding</strong></a>(adjacency, n_components=8, eigen_solver=None, random_state=None, eigen_tol=0.0, norm_laplacian=True, drop_first=True)</dt><dd><tt>Project&nbsp;the&nbsp;sample&nbsp;on&nbsp;the&nbsp;first&nbsp;eigenvectors&nbsp;of&nbsp;the&nbsp;graph&nbsp;Laplacian.<br>
+&nbsp;<br>
+The&nbsp;adjacency&nbsp;matrix&nbsp;is&nbsp;used&nbsp;to&nbsp;compute&nbsp;a&nbsp;normalized&nbsp;graph&nbsp;Laplacian<br>
+whose&nbsp;spectrum&nbsp;(especially&nbsp;the&nbsp;eigenvectors&nbsp;associated&nbsp;to&nbsp;the<br>
+smallest&nbsp;eigenvalues)&nbsp;has&nbsp;an&nbsp;interpretation&nbsp;in&nbsp;terms&nbsp;of&nbsp;minimal<br>
+number&nbsp;of&nbsp;cuts&nbsp;necessary&nbsp;to&nbsp;split&nbsp;the&nbsp;graph&nbsp;into&nbsp;comparably&nbsp;sized<br>
+components.<br>
+&nbsp;<br>
+This&nbsp;embedding&nbsp;can&nbsp;also&nbsp;'work'&nbsp;even&nbsp;if&nbsp;the&nbsp;``adjacency``&nbsp;variable&nbsp;is<br>
+not&nbsp;strictly&nbsp;the&nbsp;adjacency&nbsp;matrix&nbsp;of&nbsp;a&nbsp;graph&nbsp;but&nbsp;more&nbsp;generally<br>
+an&nbsp;affinity&nbsp;or&nbsp;similarity&nbsp;matrix&nbsp;between&nbsp;samples&nbsp;(for&nbsp;instance&nbsp;the<br>
+heat&nbsp;kernel&nbsp;of&nbsp;a&nbsp;euclidean&nbsp;distance&nbsp;matrix&nbsp;or&nbsp;a&nbsp;k-NN&nbsp;matrix).<br>
+&nbsp;<br>
+However&nbsp;care&nbsp;must&nbsp;taken&nbsp;to&nbsp;always&nbsp;make&nbsp;the&nbsp;affinity&nbsp;matrix&nbsp;symmetric<br>
+so&nbsp;that&nbsp;the&nbsp;eigenvector&nbsp;decomposition&nbsp;works&nbsp;as&nbsp;expected.<br>
+&nbsp;<br>
+Note&nbsp;:&nbsp;Laplacian&nbsp;Eigenmaps&nbsp;is&nbsp;the&nbsp;actual&nbsp;algorithm&nbsp;implemented&nbsp;here.<br>
+&nbsp;<br>
+Read&nbsp;more&nbsp;in&nbsp;the&nbsp;:ref:`User&nbsp;Guide&nbsp;&lt;spectral_embedding&gt;`.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+adjacency&nbsp;:&nbsp;array-like&nbsp;or&nbsp;sparse&nbsp;matrix,&nbsp;shape:&nbsp;(n_samples,&nbsp;n_samples)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;adjacency&nbsp;matrix&nbsp;of&nbsp;the&nbsp;graph&nbsp;to&nbsp;embed.<br>
+&nbsp;<br>
+n_components&nbsp;:&nbsp;integer,&nbsp;optional,&nbsp;default&nbsp;8<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dimension&nbsp;of&nbsp;the&nbsp;projection&nbsp;subspace.<br>
+&nbsp;<br>
+eigen_solver&nbsp;:&nbsp;{None,&nbsp;'arpack',&nbsp;'lobpcg',&nbsp;or&nbsp;'amg'},&nbsp;default&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;eigenvalue&nbsp;decomposition&nbsp;strategy&nbsp;to&nbsp;use.&nbsp;AMG&nbsp;requires&nbsp;pyamg<br>
+&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;installed.&nbsp;It&nbsp;can&nbsp;be&nbsp;faster&nbsp;on&nbsp;very&nbsp;large,&nbsp;sparse&nbsp;problems,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;may&nbsp;also&nbsp;lead&nbsp;to&nbsp;instabilities.<br>
+&nbsp;<br>
+random_state&nbsp;:&nbsp;int,&nbsp;RandomState&nbsp;instance&nbsp;or&nbsp;None,&nbsp;optional,&nbsp;default:&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;pseudo&nbsp;random&nbsp;number&nbsp;generator&nbsp;used&nbsp;for&nbsp;the&nbsp;initialization&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lobpcg&nbsp;eigenvectors&nbsp;decomposition.&nbsp;&nbsp;If&nbsp;int,&nbsp;random_state&nbsp;is&nbsp;the&nbsp;seed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;by&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;RandomState&nbsp;instance,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;random_state&nbsp;is&nbsp;the&nbsp;random&nbsp;number&nbsp;generator;&nbsp;If&nbsp;None,&nbsp;the&nbsp;random&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;generator&nbsp;is&nbsp;the&nbsp;RandomState&nbsp;instance&nbsp;used&nbsp;by&nbsp;`np.random`.&nbsp;Used&nbsp;when<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``solver``&nbsp;==&nbsp;'amg'.<br>
+&nbsp;<br>
+eigen_tol&nbsp;:&nbsp;float,&nbsp;optional,&nbsp;default=0.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stopping&nbsp;criterion&nbsp;for&nbsp;eigendecomposition&nbsp;of&nbsp;the&nbsp;Laplacian&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;using&nbsp;arpack&nbsp;eigen_solver.<br>
+&nbsp;<br>
+norm_laplacian&nbsp;:&nbsp;bool,&nbsp;optional,&nbsp;default=True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;True,&nbsp;then&nbsp;compute&nbsp;normalized&nbsp;Laplacian.<br>
+&nbsp;<br>
+drop_first&nbsp;:&nbsp;bool,&nbsp;optional,&nbsp;default=True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Whether&nbsp;to&nbsp;drop&nbsp;the&nbsp;first&nbsp;eigenvector.&nbsp;For&nbsp;spectral&nbsp;embedding,&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;True&nbsp;as&nbsp;the&nbsp;first&nbsp;eigenvector&nbsp;should&nbsp;be&nbsp;constant&nbsp;vector&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;connected&nbsp;graph,&nbsp;but&nbsp;for&nbsp;spectral&nbsp;clustering,&nbsp;this&nbsp;should&nbsp;be&nbsp;kept&nbsp;as<br>
+&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;to&nbsp;retain&nbsp;the&nbsp;first&nbsp;eigenvector.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+embedding&nbsp;:&nbsp;array,&nbsp;shape=(n_samples,&nbsp;n_components)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;reduced&nbsp;samples.<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+Spectral&nbsp;Embedding&nbsp;(Laplacian&nbsp;Eigenmaps)&nbsp;is&nbsp;most&nbsp;useful&nbsp;when&nbsp;the&nbsp;graph<br>
+has&nbsp;one&nbsp;connected&nbsp;component.&nbsp;If&nbsp;there&nbsp;graph&nbsp;has&nbsp;many&nbsp;components,&nbsp;the&nbsp;first<br>
+few&nbsp;eigenvectors&nbsp;will&nbsp;simply&nbsp;uncover&nbsp;the&nbsp;connected&nbsp;components&nbsp;of&nbsp;the&nbsp;graph.<br>
+&nbsp;<br>
+References<br>
+----------<br>
+*&nbsp;https://en.wikipedia.org/wiki/LOBPCG<br>
+&nbsp;<br>
+*&nbsp;Toward&nbsp;the&nbsp;Optimal&nbsp;Preconditioned&nbsp;Eigensolver:&nbsp;Locally&nbsp;Optimal<br>
+&nbsp;&nbsp;Block&nbsp;Preconditioned&nbsp;Conjugate&nbsp;Gradient&nbsp;Method<br>
+&nbsp;&nbsp;Andrew&nbsp;V.&nbsp;Knyazev<br>
+&nbsp;&nbsp;https://doi.org/10.1137%2FS1064827500366124</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__all__</strong> = ['locally_linear_embedding', 'LocallyLinearEmbedding', 'Isomap', 'MDS', 'smacof', 'SpectralEmbedding', 'spectral_embedding', 'TSNE']</td></tr></table>
+</body></html>

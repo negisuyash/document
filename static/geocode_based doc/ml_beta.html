@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module ml_beta</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>ml_beta</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:f%3A%5Cqfrog%5Cml_beta%5Cgituploaded%5Ccomparator%5Cgeocode_based%5Cml_beta.py">f:\qfrog\ml_beta\gituploaded\comparator\geocode_based\ml_beta.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;coding:&nbsp;utf-8</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="get_geocode.html">get_geocode</a><br>
+<a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+<a href="pickle.html">pickle</a><br>
+</td><td width="25%" valign=top><a href="sklearn.tree.html">sklearn.tree</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-find_geocode"><strong>find_geocode</strong></a>(address=None)</dt><dd><tt><a href="#-find_geocode">find_geocode</a>()&nbsp;function&nbsp;takes&nbsp;dataframe(address)&nbsp;as&nbsp;input/parameter.<br>
+Columns&nbsp;of&nbsp;address&nbsp;must&nbsp;consist&nbsp;of&nbsp;breaked_addr,x_coor,y_coor.<br>
+Function&nbsp;searches&nbsp;for&nbsp;matching&nbsp;address&nbsp;or&nbsp;exact&nbsp;address&nbsp;in&nbsp;previously&nbsp;stored&nbsp;knowledge&nbsp;base&nbsp;for&nbsp;geocode.<br>
+Returns&nbsp;a&nbsp;dataframe&nbsp;with&nbsp;columns&nbsp;breaked_addr,x,y&nbsp;for&nbsp;address.</tt></dd></dl>
+ <dl><dt><a name="-fit_model"><strong>fit_model</strong></a>()</dt><dd><tt><a href="#-fit_model">fit_model</a>()&nbsp;function&nbsp;takes&nbsp;no&nbsp;input/parameter.<br>
+&nbsp;Returns&nbsp;nothing.<br>
+&nbsp;Function&nbsp;prepare&nbsp;data&nbsp;and&nbsp;fit&nbsp;that&nbsp;data&nbsp;in&nbsp;given&nbsp;order&nbsp;so&nbsp;that&nbsp;a&nbsp;sense&nbsp;could&nbsp;be&nbsp;made&nbsp;between&nbsp;x_coor,y_coor,d_hub.<br>
+This&nbsp;function&nbsp;requires&nbsp;database&nbsp;of&nbsp;previous&nbsp;knowledge&nbsp;from&nbsp;./datasets/train_data_prep.csv&nbsp;and&nbsp;prepare&nbsp;and&nbsp;save&nbsp;model&nbsp;for&nbsp;further&nbsp;use.<br>
+ERROR&nbsp;HANDLING&nbsp;TIP:&nbsp;path&nbsp;for&nbsp;model&nbsp;must&nbsp;be&nbsp;./model/trained_model.SPIDERN3MO.</tt></dd></dl>
+ <dl><dt><a name="-get_hub"><strong>get_hub</strong></a>()</dt><dd><tt><a href="#-get_hub">get_hub</a>()&nbsp;is&nbsp;a&nbsp;utility&nbsp;function&nbsp;which&nbsp;returns&nbsp;list&nbsp;of&nbsp;active&nbsp;hubs&nbsp;from&nbsp;database.<br>
+This&nbsp;function&nbsp;takes&nbsp;no&nbsp;input/parameter&nbsp;and&nbsp;returns&nbsp;a&nbsp;list&nbsp;of&nbsp;hubs.</tt></dd></dl>
+ <dl><dt><a name="-get_prediction"><strong>get_prediction</strong></a>(address=None)</dt><dd><tt><a href="#-get_prediction">get_prediction</a>()&nbsp;takes&nbsp;dataframe(address)&nbsp;as&nbsp;input/parameter.<br>
+This&nbsp;function&nbsp;loads&nbsp;a&nbsp;saved&nbsp;model&nbsp;for&nbsp;getting&nbsp;its&nbsp;predicition./naddress&nbsp;dataframe&nbsp;must&nbsp;consist&nbsp;columns&nbsp;x,y.<br>
+This&nbsp;function&nbsp;is&nbsp;<a href="#-find_geocode">find_geocode</a>()&nbsp;dependent.<br>
+Returns&nbsp;dataframe&nbsp;with&nbsp;x,y,breaked_addr,d_hub.<br>
+d_hub&nbsp;column&nbsp;is&nbsp;the&nbsp;prediction&nbsp;for&nbsp;given&nbsp;set&nbsp;of&nbsp;addresses</tt></dd></dl>
+</td></tr></table>
+</body></html>

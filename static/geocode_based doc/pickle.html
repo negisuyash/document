@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module pickle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pickle</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cspidern3mo%5Cappdata%5Clocal%5Cprograms%5Cpython%5Cpython36%5Clib%5Cpickle.py">c:\users\spidern3mo\appdata\local\programs\python\python36\lib\pickle.py</a></font></td></tr></table>
+    <p><tt>Create&nbsp;portable&nbsp;serialized&nbsp;representations&nbsp;of&nbsp;Python&nbsp;objects.<br>
+&nbsp;<br>
+See&nbsp;module&nbsp;copyreg&nbsp;for&nbsp;a&nbsp;mechanism&nbsp;for&nbsp;registering&nbsp;custom&nbsp;picklers.<br>
+See&nbsp;module&nbsp;pickletools&nbsp;source&nbsp;for&nbsp;extensive&nbsp;comments.<br>
+&nbsp;<br>
+Classes:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Pickler">Pickler</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Unpickler">Unpickler</a><br>
+&nbsp;<br>
+Functions:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-dump">dump</a>(<a href="builtins.html#object">object</a>,&nbsp;file)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-dumps">dumps</a>(<a href="builtins.html#object">object</a>)&nbsp;-&gt;&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-load">load</a>(file)&nbsp;-&gt;&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-loads">loads</a>(string)&nbsp;-&gt;&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;<br>
+Misc&nbsp;variables:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;__version__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;format_version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;compatible_formats</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="_compat_pickle.html">_compat_pickle</a><br>
+<a href="codecs.html">codecs</a><br>
+</td><td width="25%" valign=top><a href="io.html">io</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#Exception">builtins.Exception</a>(<a href="builtins.html#BaseException">builtins.BaseException</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="_pickle.html#PickleError">_pickle.PickleError</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="_pickle.html#PicklingError">_pickle.PicklingError</a>
+</font></dt><dt><font face="helvetica, arial"><a href="_pickle.html#UnpicklingError">_pickle.UnpicklingError</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="_pickle.html#Pickler">_pickle.Pickler</a>
+</font></dt><dt><font face="helvetica, arial"><a href="_pickle.html#Unpickler">_pickle.Unpickler</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PickleError">class <strong>PickleError</strong></a>(<a href="builtins.html#Exception">builtins.Exception</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Common&nbsp;base&nbsp;class&nbsp;for&nbsp;all&nbsp;non-exit&nbsp;exceptions.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="_pickle.html#PickleError">PickleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="PickleError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="PickleError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="PickleError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="PickleError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="PickleError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#PickleError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Pickler">class <strong>Pickler</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;takes&nbsp;a&nbsp;binary&nbsp;file&nbsp;for&nbsp;writing&nbsp;a&nbsp;pickle&nbsp;data&nbsp;stream.<br>
+&nbsp;<br>
+The&nbsp;optional&nbsp;*protocol*&nbsp;argument&nbsp;tells&nbsp;the&nbsp;pickler&nbsp;to&nbsp;use&nbsp;the&nbsp;given<br>
+protocol;&nbsp;supported&nbsp;protocols&nbsp;are&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3&nbsp;and&nbsp;4.&nbsp;&nbsp;The&nbsp;default<br>
+protocol&nbsp;is&nbsp;3;&nbsp;a&nbsp;backward-incompatible&nbsp;protocol&nbsp;designed&nbsp;for&nbsp;Python&nbsp;3.<br>
+&nbsp;<br>
+Specifying&nbsp;a&nbsp;negative&nbsp;protocol&nbsp;version&nbsp;selects&nbsp;the&nbsp;highest&nbsp;protocol<br>
+version&nbsp;supported.&nbsp;&nbsp;The&nbsp;higher&nbsp;the&nbsp;protocol&nbsp;used,&nbsp;the&nbsp;more&nbsp;recent&nbsp;the<br>
+version&nbsp;of&nbsp;Python&nbsp;needed&nbsp;to&nbsp;read&nbsp;the&nbsp;pickle&nbsp;produced.<br>
+&nbsp;<br>
+The&nbsp;*file*&nbsp;argument&nbsp;must&nbsp;have&nbsp;a&nbsp;write()&nbsp;method&nbsp;that&nbsp;accepts&nbsp;a&nbsp;single<br>
+bytes&nbsp;argument.&nbsp;It&nbsp;can&nbsp;thus&nbsp;be&nbsp;a&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;binary<br>
+writing,&nbsp;an&nbsp;io.BytesIO&nbsp;instance,&nbsp;or&nbsp;any&nbsp;other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets<br>
+this&nbsp;interface.<br>
+&nbsp;<br>
+If&nbsp;*fix_imports*&nbsp;is&nbsp;True&nbsp;and&nbsp;protocol&nbsp;is&nbsp;less&nbsp;than&nbsp;3,&nbsp;pickle&nbsp;will&nbsp;try<br>
+to&nbsp;map&nbsp;the&nbsp;new&nbsp;Python&nbsp;3&nbsp;names&nbsp;to&nbsp;the&nbsp;old&nbsp;module&nbsp;names&nbsp;used&nbsp;in&nbsp;Python<br>
+2,&nbsp;so&nbsp;that&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stream&nbsp;is&nbsp;readable&nbsp;with&nbsp;Python&nbsp;2.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Pickler-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Pickler-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Pickler-__sizeof__"><strong>__sizeof__</strong></a>(self, /)</dt><dd><tt>Returns&nbsp;size&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes.</tt></dd></dl>
+
+<dl><dt><a name="Pickler-clear_memo"><strong>clear_memo</strong></a>(self, /)</dt><dd><tt>Clears&nbsp;the&nbsp;pickler's&nbsp;"memo".<br>
+&nbsp;<br>
+The&nbsp;memo&nbsp;is&nbsp;the&nbsp;data&nbsp;structure&nbsp;that&nbsp;remembers&nbsp;which&nbsp;objects&nbsp;the<br>
+pickler&nbsp;has&nbsp;already&nbsp;seen,&nbsp;so&nbsp;that&nbsp;shared&nbsp;or&nbsp;recursive&nbsp;objects&nbsp;are<br>
+pickled&nbsp;by&nbsp;reference&nbsp;and&nbsp;not&nbsp;by&nbsp;value.&nbsp;&nbsp;This&nbsp;method&nbsp;is&nbsp;useful&nbsp;when<br>
+re-using&nbsp;picklers.</tt></dd></dl>
+
+<dl><dt><a name="Pickler-dump"><strong>dump</strong></a>(self, obj, /)</dt><dd><tt>Write&nbsp;a&nbsp;pickled&nbsp;representation&nbsp;of&nbsp;the&nbsp;given&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;the&nbsp;open&nbsp;file.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>bin</strong></dt>
+</dl>
+<dl><dt><strong>dispatch_table</strong></dt>
+</dl>
+<dl><dt><strong>fast</strong></dt>
+</dl>
+<dl><dt><strong>memo</strong></dt>
+</dl>
+<dl><dt><strong>persistent_id</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="PicklingError">class <strong>PicklingError</strong></a>(<a href="_pickle.html#PickleError">PickleError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Common&nbsp;base&nbsp;class&nbsp;for&nbsp;all&nbsp;non-exit&nbsp;exceptions.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="_pickle.html#PicklingError">PicklingError</a></dd>
+<dd><a href="_pickle.html#PickleError">PickleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="_pickle.html#PickleError">PickleError</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="PicklingError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="PicklingError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="PicklingError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="PicklingError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#PicklingError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Unpickler">class <strong>Unpickler</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;takes&nbsp;a&nbsp;binary&nbsp;file&nbsp;for&nbsp;reading&nbsp;a&nbsp;pickle&nbsp;data&nbsp;stream.<br>
+&nbsp;<br>
+The&nbsp;protocol&nbsp;version&nbsp;of&nbsp;the&nbsp;pickle&nbsp;is&nbsp;detected&nbsp;automatically,&nbsp;so&nbsp;no<br>
+protocol&nbsp;argument&nbsp;is&nbsp;needed.&nbsp;&nbsp;Bytes&nbsp;past&nbsp;the&nbsp;pickled&nbsp;<a href="builtins.html#object">object</a>'s<br>
+representation&nbsp;are&nbsp;ignored.<br>
+&nbsp;<br>
+The&nbsp;argument&nbsp;*file*&nbsp;must&nbsp;have&nbsp;two&nbsp;methods,&nbsp;a&nbsp;read()&nbsp;method&nbsp;that&nbsp;takes<br>
+an&nbsp;integer&nbsp;argument,&nbsp;and&nbsp;a&nbsp;readline()&nbsp;method&nbsp;that&nbsp;requires&nbsp;no<br>
+arguments.&nbsp;&nbsp;Both&nbsp;methods&nbsp;should&nbsp;return&nbsp;bytes.&nbsp;&nbsp;Thus&nbsp;*file*&nbsp;can&nbsp;be&nbsp;a<br>
+binary&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;reading,&nbsp;an&nbsp;io.BytesIO&nbsp;<a href="builtins.html#object">object</a>,&nbsp;or&nbsp;any<br>
+other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets&nbsp;this&nbsp;interface.<br>
+&nbsp;<br>
+Optional&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;*fix_imports*,&nbsp;*encoding*&nbsp;and&nbsp;*errors*,<br>
+which&nbsp;are&nbsp;used&nbsp;to&nbsp;control&nbsp;compatibility&nbsp;support&nbsp;for&nbsp;pickle&nbsp;stream<br>
+generated&nbsp;by&nbsp;Python&nbsp;2.&nbsp;&nbsp;If&nbsp;*fix_imports*&nbsp;is&nbsp;True,&nbsp;pickle&nbsp;will&nbsp;try&nbsp;to<br>
+map&nbsp;the&nbsp;old&nbsp;Python&nbsp;2&nbsp;names&nbsp;to&nbsp;the&nbsp;new&nbsp;names&nbsp;used&nbsp;in&nbsp;Python&nbsp;3.&nbsp;&nbsp;The<br>
+*encoding*&nbsp;and&nbsp;*errors*&nbsp;tell&nbsp;pickle&nbsp;how&nbsp;to&nbsp;decode&nbsp;8-bit&nbsp;string<br>
+instances&nbsp;pickled&nbsp;by&nbsp;Python&nbsp;2;&nbsp;these&nbsp;default&nbsp;to&nbsp;'ASCII'&nbsp;and&nbsp;'strict',<br>
+respectively.&nbsp;&nbsp;The&nbsp;*encoding*&nbsp;can&nbsp;be&nbsp;'bytes'&nbsp;to&nbsp;read&nbsp;these&nbsp;8-bit<br>
+string&nbsp;instances&nbsp;as&nbsp;bytes&nbsp;objects.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Unpickler-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Unpickler-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Unpickler-__sizeof__"><strong>__sizeof__</strong></a>(self, /)</dt><dd><tt>Returns&nbsp;size&nbsp;in&nbsp;memory,&nbsp;in&nbsp;bytes.</tt></dd></dl>
+
+<dl><dt><a name="Unpickler-find_class"><strong>find_class</strong></a>(self, module_name, global_name, /)</dt><dd><tt>Return&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;a&nbsp;specified&nbsp;module.<br>
+&nbsp;<br>
+If&nbsp;necessary,&nbsp;the&nbsp;module&nbsp;will&nbsp;be&nbsp;imported.&nbsp;Subclasses&nbsp;may&nbsp;override<br>
+this&nbsp;method&nbsp;(e.g.&nbsp;to&nbsp;restrict&nbsp;unpickling&nbsp;of&nbsp;arbitrary&nbsp;classes&nbsp;and<br>
+functions).<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;is&nbsp;called&nbsp;whenever&nbsp;a&nbsp;class&nbsp;or&nbsp;a&nbsp;function&nbsp;<a href="builtins.html#object">object</a>&nbsp;is<br>
+needed.&nbsp;&nbsp;Both&nbsp;arguments&nbsp;passed&nbsp;are&nbsp;str&nbsp;objects.</tt></dd></dl>
+
+<dl><dt><a name="Unpickler-load"><strong>load</strong></a>(self, /)</dt><dd><tt>Load&nbsp;a&nbsp;pickle.<br>
+&nbsp;<br>
+Read&nbsp;a&nbsp;pickled&nbsp;<a href="builtins.html#object">object</a>&nbsp;representation&nbsp;from&nbsp;the&nbsp;open&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;given<br>
+in&nbsp;the&nbsp;constructor,&nbsp;and&nbsp;return&nbsp;the&nbsp;reconstituted&nbsp;<a href="builtins.html#object">object</a>&nbsp;hierarchy<br>
+specified&nbsp;therein.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>memo</strong></dt>
+</dl>
+<dl><dt><strong>persistent_load</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="UnpicklingError">class <strong>UnpicklingError</strong></a>(<a href="_pickle.html#PickleError">PickleError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Common&nbsp;base&nbsp;class&nbsp;for&nbsp;all&nbsp;non-exit&nbsp;exceptions.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="_pickle.html#UnpicklingError">UnpicklingError</a></dd>
+<dd><a href="_pickle.html#PickleError">PickleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="_pickle.html#PickleError">PickleError</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="UnpicklingError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="UnpicklingError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="UnpicklingError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="UnpicklingError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#UnpicklingError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-dump"><strong>dump</strong></a>(obj, file, protocol=None, *, fix_imports=True)</dt><dd><tt>Write&nbsp;a&nbsp;pickled&nbsp;representation&nbsp;of&nbsp;obj&nbsp;to&nbsp;the&nbsp;open&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;file.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;``<a href="#Pickler">Pickler</a>(file,&nbsp;protocol).<a href="#-dump">dump</a>(obj)``,&nbsp;but&nbsp;may<br>
+be&nbsp;more&nbsp;efficient.<br>
+&nbsp;<br>
+The&nbsp;optional&nbsp;*protocol*&nbsp;argument&nbsp;tells&nbsp;the&nbsp;pickler&nbsp;to&nbsp;use&nbsp;the&nbsp;given<br>
+protocol&nbsp;supported&nbsp;protocols&nbsp;are&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3&nbsp;and&nbsp;4.&nbsp;&nbsp;The&nbsp;default<br>
+protocol&nbsp;is&nbsp;3;&nbsp;a&nbsp;backward-incompatible&nbsp;protocol&nbsp;designed&nbsp;for&nbsp;Python&nbsp;3.<br>
+&nbsp;<br>
+Specifying&nbsp;a&nbsp;negative&nbsp;protocol&nbsp;version&nbsp;selects&nbsp;the&nbsp;highest&nbsp;protocol<br>
+version&nbsp;supported.&nbsp;&nbsp;The&nbsp;higher&nbsp;the&nbsp;protocol&nbsp;used,&nbsp;the&nbsp;more&nbsp;recent&nbsp;the<br>
+version&nbsp;of&nbsp;Python&nbsp;needed&nbsp;to&nbsp;read&nbsp;the&nbsp;pickle&nbsp;produced.<br>
+&nbsp;<br>
+The&nbsp;*file*&nbsp;argument&nbsp;must&nbsp;have&nbsp;a&nbsp;write()&nbsp;method&nbsp;that&nbsp;accepts&nbsp;a&nbsp;single<br>
+bytes&nbsp;argument.&nbsp;&nbsp;It&nbsp;can&nbsp;thus&nbsp;be&nbsp;a&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;binary<br>
+writing,&nbsp;an&nbsp;io.BytesIO&nbsp;instance,&nbsp;or&nbsp;any&nbsp;other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets<br>
+this&nbsp;interface.<br>
+&nbsp;<br>
+If&nbsp;*fix_imports*&nbsp;is&nbsp;True&nbsp;and&nbsp;protocol&nbsp;is&nbsp;less&nbsp;than&nbsp;3,&nbsp;pickle&nbsp;will&nbsp;try<br>
+to&nbsp;map&nbsp;the&nbsp;new&nbsp;Python&nbsp;3&nbsp;names&nbsp;to&nbsp;the&nbsp;old&nbsp;module&nbsp;names&nbsp;used&nbsp;in&nbsp;Python<br>
+2,&nbsp;so&nbsp;that&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stream&nbsp;is&nbsp;readable&nbsp;with&nbsp;Python&nbsp;2.</tt></dd></dl>
+ <dl><dt><a name="-dumps"><strong>dumps</strong></a>(obj, protocol=None, *, fix_imports=True)</dt><dd><tt>Return&nbsp;the&nbsp;pickled&nbsp;representation&nbsp;of&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;as&nbsp;a&nbsp;bytes&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;<br>
+The&nbsp;optional&nbsp;*protocol*&nbsp;argument&nbsp;tells&nbsp;the&nbsp;pickler&nbsp;to&nbsp;use&nbsp;the&nbsp;given<br>
+protocol;&nbsp;supported&nbsp;protocols&nbsp;are&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3&nbsp;and&nbsp;4.&nbsp;&nbsp;The&nbsp;default<br>
+protocol&nbsp;is&nbsp;3;&nbsp;a&nbsp;backward-incompatible&nbsp;protocol&nbsp;designed&nbsp;for&nbsp;Python&nbsp;3.<br>
+&nbsp;<br>
+Specifying&nbsp;a&nbsp;negative&nbsp;protocol&nbsp;version&nbsp;selects&nbsp;the&nbsp;highest&nbsp;protocol<br>
+version&nbsp;supported.&nbsp;&nbsp;The&nbsp;higher&nbsp;the&nbsp;protocol&nbsp;used,&nbsp;the&nbsp;more&nbsp;recent&nbsp;the<br>
+version&nbsp;of&nbsp;Python&nbsp;needed&nbsp;to&nbsp;read&nbsp;the&nbsp;pickle&nbsp;produced.<br>
+&nbsp;<br>
+If&nbsp;*fix_imports*&nbsp;is&nbsp;True&nbsp;and&nbsp;*protocol*&nbsp;is&nbsp;less&nbsp;than&nbsp;3,&nbsp;pickle&nbsp;will<br>
+try&nbsp;to&nbsp;map&nbsp;the&nbsp;new&nbsp;Python&nbsp;3&nbsp;names&nbsp;to&nbsp;the&nbsp;old&nbsp;module&nbsp;names&nbsp;used&nbsp;in<br>
+Python&nbsp;2,&nbsp;so&nbsp;that&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stream&nbsp;is&nbsp;readable&nbsp;with&nbsp;Python&nbsp;2.</tt></dd></dl>
+ <dl><dt><a name="-load"><strong>load</strong></a>(file, *, fix_imports=True, encoding='ASCII', errors='strict')</dt><dd><tt>Read&nbsp;and&nbsp;return&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;the&nbsp;pickle&nbsp;data&nbsp;stored&nbsp;in&nbsp;a&nbsp;file.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;equivalent&nbsp;to&nbsp;``<a href="#Unpickler">Unpickler</a>(file).<a href="#-load">load</a>()``,&nbsp;but&nbsp;may&nbsp;be&nbsp;more<br>
+efficient.<br>
+&nbsp;<br>
+The&nbsp;protocol&nbsp;version&nbsp;of&nbsp;the&nbsp;pickle&nbsp;is&nbsp;detected&nbsp;automatically,&nbsp;so&nbsp;no<br>
+protocol&nbsp;argument&nbsp;is&nbsp;needed.&nbsp;&nbsp;Bytes&nbsp;past&nbsp;the&nbsp;pickled&nbsp;<a href="builtins.html#object">object</a>'s<br>
+representation&nbsp;are&nbsp;ignored.<br>
+&nbsp;<br>
+The&nbsp;argument&nbsp;*file*&nbsp;must&nbsp;have&nbsp;two&nbsp;methods,&nbsp;a&nbsp;read()&nbsp;method&nbsp;that&nbsp;takes<br>
+an&nbsp;integer&nbsp;argument,&nbsp;and&nbsp;a&nbsp;readline()&nbsp;method&nbsp;that&nbsp;requires&nbsp;no<br>
+arguments.&nbsp;&nbsp;Both&nbsp;methods&nbsp;should&nbsp;return&nbsp;bytes.&nbsp;&nbsp;Thus&nbsp;*file*&nbsp;can&nbsp;be&nbsp;a<br>
+binary&nbsp;file&nbsp;<a href="builtins.html#object">object</a>&nbsp;opened&nbsp;for&nbsp;reading,&nbsp;an&nbsp;io.BytesIO&nbsp;<a href="builtins.html#object">object</a>,&nbsp;or&nbsp;any<br>
+other&nbsp;custom&nbsp;<a href="builtins.html#object">object</a>&nbsp;that&nbsp;meets&nbsp;this&nbsp;interface.<br>
+&nbsp;<br>
+Optional&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;*fix_imports*,&nbsp;*encoding*&nbsp;and&nbsp;*errors*,<br>
+which&nbsp;are&nbsp;used&nbsp;to&nbsp;control&nbsp;compatibility&nbsp;support&nbsp;for&nbsp;pickle&nbsp;stream<br>
+generated&nbsp;by&nbsp;Python&nbsp;2.&nbsp;&nbsp;If&nbsp;*fix_imports*&nbsp;is&nbsp;True,&nbsp;pickle&nbsp;will&nbsp;try&nbsp;to<br>
+map&nbsp;the&nbsp;old&nbsp;Python&nbsp;2&nbsp;names&nbsp;to&nbsp;the&nbsp;new&nbsp;names&nbsp;used&nbsp;in&nbsp;Python&nbsp;3.&nbsp;&nbsp;The<br>
+*encoding*&nbsp;and&nbsp;*errors*&nbsp;tell&nbsp;pickle&nbsp;how&nbsp;to&nbsp;decode&nbsp;8-bit&nbsp;string<br>
+instances&nbsp;pickled&nbsp;by&nbsp;Python&nbsp;2;&nbsp;these&nbsp;default&nbsp;to&nbsp;'ASCII'&nbsp;and&nbsp;'strict',<br>
+respectively.&nbsp;&nbsp;The&nbsp;*encoding*&nbsp;can&nbsp;be&nbsp;'bytes'&nbsp;to&nbsp;read&nbsp;these&nbsp;8-bit<br>
+string&nbsp;instances&nbsp;as&nbsp;bytes&nbsp;objects.</tt></dd></dl>
+ <dl><dt><a name="-loads"><strong>loads</strong></a>(data, *, fix_imports=True, encoding='ASCII', errors='strict')</dt><dd><tt>Read&nbsp;and&nbsp;return&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;the&nbsp;given&nbsp;pickle&nbsp;data.<br>
+&nbsp;<br>
+The&nbsp;protocol&nbsp;version&nbsp;of&nbsp;the&nbsp;pickle&nbsp;is&nbsp;detected&nbsp;automatically,&nbsp;so&nbsp;no<br>
+protocol&nbsp;argument&nbsp;is&nbsp;needed.&nbsp;&nbsp;Bytes&nbsp;past&nbsp;the&nbsp;pickled&nbsp;<a href="builtins.html#object">object</a>'s<br>
+representation&nbsp;are&nbsp;ignored.<br>
+&nbsp;<br>
+Optional&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;*fix_imports*,&nbsp;*encoding*&nbsp;and&nbsp;*errors*,<br>
+which&nbsp;are&nbsp;used&nbsp;to&nbsp;control&nbsp;compatibility&nbsp;support&nbsp;for&nbsp;pickle&nbsp;stream<br>
+generated&nbsp;by&nbsp;Python&nbsp;2.&nbsp;&nbsp;If&nbsp;*fix_imports*&nbsp;is&nbsp;True,&nbsp;pickle&nbsp;will&nbsp;try&nbsp;to<br>
+map&nbsp;the&nbsp;old&nbsp;Python&nbsp;2&nbsp;names&nbsp;to&nbsp;the&nbsp;new&nbsp;names&nbsp;used&nbsp;in&nbsp;Python&nbsp;3.&nbsp;&nbsp;The<br>
+*encoding*&nbsp;and&nbsp;*errors*&nbsp;tell&nbsp;pickle&nbsp;how&nbsp;to&nbsp;decode&nbsp;8-bit&nbsp;string<br>
+instances&nbsp;pickled&nbsp;by&nbsp;Python&nbsp;2;&nbsp;these&nbsp;default&nbsp;to&nbsp;'ASCII'&nbsp;and&nbsp;'strict',<br>
+respectively.&nbsp;&nbsp;The&nbsp;*encoding*&nbsp;can&nbsp;be&nbsp;'bytes'&nbsp;to&nbsp;read&nbsp;these&nbsp;8-bit<br>
+string&nbsp;instances&nbsp;as&nbsp;bytes&nbsp;objects.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>ADDITEMS</strong> = b'\x90'<br>
+<strong>APPEND</strong> = b'a'<br>
+<strong>APPENDS</strong> = b'e'<br>
+<strong>BINBYTES</strong> = b'B'<br>
+<strong>BINBYTES8</strong> = b'\x8e'<br>
+<strong>BINFLOAT</strong> = b'G'<br>
+<strong>BINGET</strong> = b'h'<br>
+<strong>BININT</strong> = b'J'<br>
+<strong>BININT1</strong> = b'K'<br>
+<strong>BININT2</strong> = b'M'<br>
+<strong>BINPERSID</strong> = b'Q'<br>
+<strong>BINPUT</strong> = b'q'<br>
+<strong>BINSTRING</strong> = b'T'<br>
+<strong>BINUNICODE</strong> = b'X'<br>
+<strong>BINUNICODE8</strong> = b'\x8d'<br>
+<strong>BUILD</strong> = b'b'<br>
+<strong>DEFAULT_PROTOCOL</strong> = 3<br>
+<strong>DICT</strong> = b'd'<br>
+<strong>DUP</strong> = b'2'<br>
+<strong>EMPTY_DICT</strong> = b'}'<br>
+<strong>EMPTY_LIST</strong> = b']'<br>
+<strong>EMPTY_SET</strong> = b'\x8f'<br>
+<strong>EMPTY_TUPLE</strong> = b')'<br>
+<strong>EXT1</strong> = b'\x82'<br>
+<strong>EXT2</strong> = b'\x83'<br>
+<strong>EXT4</strong> = b'\x84'<br>
+<strong>FALSE</strong> = b'I00\n'<br>
+<strong>FLOAT</strong> = b'F'<br>
+<strong>FRAME</strong> = b'\x95'<br>
+<strong>FROZENSET</strong> = b'\x91'<br>
+<strong>GET</strong> = b'g'<br>
+<strong>GLOBAL</strong> = b'c'<br>
+<strong>HIGHEST_PROTOCOL</strong> = 4<br>
+<strong>INST</strong> = b'i'<br>
+<strong>INT</strong> = b'I'<br>
+<strong>LIST</strong> = b'l'<br>
+<strong>LONG</strong> = b'L'<br>
+<strong>LONG1</strong> = b'\x8a'<br>
+<strong>LONG4</strong> = b'\x8b'<br>
+<strong>LONG_BINGET</strong> = b'j'<br>
+<strong>LONG_BINPUT</strong> = b'r'<br>
+<strong>MARK</strong> = b'('<br>
+<strong>MEMOIZE</strong> = b'\x94'<br>
+<strong>NEWFALSE</strong> = b'\x89'<br>
+<strong>NEWOBJ</strong> = b'\x81'<br>
+<strong>NEWOBJ_EX</strong> = b'\x92'<br>
+<strong>NEWTRUE</strong> = b'\x88'<br>
+<strong>NONE</strong> = b'N'<br>
+<strong>OBJ</strong> = b'o'<br>
+<strong>PERSID</strong> = b'P'<br>
+<strong>POP</strong> = b'0'<br>
+<strong>POP_MARK</strong> = b'1'<br>
+<strong>PROTO</strong> = b'\x80'<br>
+<strong>PUT</strong> = b'p'<br>
+<strong>REDUCE</strong> = b'R'<br>
+<strong>SETITEM</strong> = b's'<br>
+<strong>SETITEMS</strong> = b'u'<br>
+<strong>SHORT_BINBYTES</strong> = b'C'<br>
+<strong>SHORT_BINSTRING</strong> = b'U'<br>
+<strong>SHORT_BINUNICODE</strong> = b'\x8c'<br>
+<strong>STACK_GLOBAL</strong> = b'\x93'<br>
+<strong>STOP</strong> = b'.'<br>
+<strong>STRING</strong> = b'S'<br>
+<strong>TRUE</strong> = b'I01\n'<br>
+<strong>TUPLE</strong> = b't'<br>
+<strong>TUPLE1</strong> = b'\x85'<br>
+<strong>TUPLE2</strong> = b'\x86'<br>
+<strong>TUPLE3</strong> = b'\x87'<br>
+<strong>UNICODE</strong> = b'V'<br>
+<strong>__all__</strong> = ['PickleError', 'PicklingError', 'UnpicklingError', 'Pickler', 'Unpickler', 'dump', 'dumps', 'load', 'loads', 'ADDITEMS', 'APPEND', 'APPENDS', 'BINBYTES', 'BINBYTES8', 'BINFLOAT', 'BINGET', 'BININT', 'BININT1', 'BININT2', 'BINPERSID', ...]</td></tr></table>
+</body></html>
